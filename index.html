@@ -611,7 +611,37 @@ nav {
 
 .progress-fill {
   background: var(--accent);  /* Progress bar ikut warna */
+  
 }
+    /* CTA Button - Text Fixed Putih, Background Ikut Random Theme */
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: var(--accent);  /* Ikut random theme (hijau/merah/biru/dll.) */
+  color: #ffffff !important;  /* Fixed putih, nggak berubah */
+  border-radius: var(--border-radius);  /* 16px atau sesuai theme */
+  font-weight: 600;
+  text-decoration: none;
+  transition: var(--transition);
+  font-size: 1rem;
+  box-shadow: var(--shadow);  /* Shadow subtle */
+  border: none;
+  cursor: pointer;
+  text-align: center;
+  min-width: 200px;  /* Biar konsisten */
+}
+
+.cta-button:hover {
+  background: var(--accent-hover);  /* Hover ikut theme */
+  color: #ffffff !important;  /* Tetap putih */
+  transform: translateY(-2px);  /* Lift effect */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+}
+
+.cta-button:active {
+  transform: translateY(0);  /* Press effect */
+}
+
 
 
   </style>
@@ -658,7 +688,11 @@ nav {
       </div>
       <span class="rating-text">4.9 / 5 (1000+ Review)</span>
     </div>
-    <a href="https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20saya%20mau%20pesan%20jasa%20jokinya.%20Bisa%20info%20harga?" class="cta-button">Pesan Sekarang</a>
+    <!-- Tambah CTA Button di Intro Section (Opsional) -->
+<div style="text-align: center; margin-top: 2rem;">
+  <a href="https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20saya%20mau%20pesan%20jasa%20jokinya.%20Bisa%20info%20harga?" class="cta-button">Pesan Sekarang</a>
+</div>
+
   </section>
 
   <!-- Stats Section - Kepercayaan & Keberhasilan -->
@@ -1297,6 +1331,7 @@ window.addEventListener('load', () => {
 </html>
 
        
+
 
 
 
