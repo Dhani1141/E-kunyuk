@@ -541,9 +541,63 @@
       .modal-content { padding: 1.5rem; width: 95%; }
       .stats-container { gap: 1rem; }
     }
+    /* Particles Background - Full Screen, Subtle */
+#particles-js {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Di belakang semuanya */
+  pointer-events: none; /* Nggak ganggu click */
+}
+
+/* Toggle Button untuk Pause Particles (Opsional - Buat kalau mau matiin sementara) */
+.particles-toggle {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background: var(--glass-bg);
+  backdrop-filter: var(--blur);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  font-size: 0.8rem;
+  cursor: pointer;
+  z-index: 999;
+  transition: var(--transition);
+  display: none; /* Hide default, uncomment di HTML kalau mau tampil */
+}
+
+.particles-toggle:hover {
+  color: var(--accent);
+  background: rgba(16, 185, 129, 0.1);
+}
+
+/* Update Navbar Z-Index (Kalau belum ada, tambahin di nav rule) */
+nav {
+  /* ... CSS nav yang udah ada ... */
+  z-index: 1000; /* Pastikan di atas particles */
+}
+
+/* Responsivitas untuk Particles (Tambah di @media max-width: 768px) */
+@media (max-width: 768px) {
+  /* ... CSS media yang udah ada ... */
+  #particles-js canvas { /* Kurangi ukuran di mobile */
+    transform: scale(0.8);
+  }
+}
+
   </style>
+  <!-- Particles.js CDN - Ringan & Subtle -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
+
 </head>
 <body>
+  <!-- Particles Container -->
+<div id="particles-js"></div>
+
   <!-- Navbar -->
   <nav>
     <div class="nav-container">
@@ -973,11 +1027,119 @@ cards.forEach(card => cardsObserver.observe(card));
         star.style.filter = 'none';
       });
     });
+
+    // Particles.js Init - Subtle Background (Dots + Lines, Mouse Interactive)
+function initParticles() {
+  particlesJS('particles-js', {
+    particles: {
+      number: {
+        value: 30,  // Jumlah partikel (kurangi ke 15 kalau lag)
+        density: {
+          enable: true,
+          value_area: 800
+        }
+      },
+      color: {
+        value: ['#ffffff', '#10b981', '#b3b3b3']  // Warna putih, hijau accent, abu
+      },
+      shape: {
+        type: 'circle',  // Dots bulat
+        stroke: {
+          width: 0,
+          color: '#000000'
+        }
+      },
+      opacity: {
+        value: 0.3,  // Subtle, nggak terlalu terang
+        random: true,
+        anim: {
+          enable: true,
+          speed: 1,
+          opacity_min: 0.1,
+          sync: false
+        }
+      },
+      size: {
+        value: 3,
+        random: true,
+        anim: {
+          enable: false
+        }
+      },
+      line_linked: {
+        enable: true,  // Connect lines tipis
+        distance: 150,
+        color: '#10b981',  // Hijau accent
+        opacity: 0.2,
+        width: 1
+      },
+      move: {
+        enable: true,
+        speed: 2,  // Lambat biar smooth
+        direction: 'none',
+        random: true,
+        straight: false,
+        out_mode: 'out',
+        bounce: false,
+        attract: {
+          enable: false
+        }
+      }
+    },
+    interactivity: {
+      detect_on: 'canvas',
+      events: {
+        onhover: {
+          enable: true,
+          mode: 'grab'  // Partikel ikut mouse hover
+        },
+        onclick: {
+          enable: true,
+          mode: 'push'  // Klik tambah partikel sementara
+        },
+        resize: true
+      },
+      modes: {
+        grab: {
+          distance: 200,
+          line_linked: {
+            opacity: 0.5
+          }
+        },
+        push: {
+          particles_nb: 4
+        }
+      }
+    },
+    retina_detect: true
+  });
+}
+
+// Jalankan Particles on Load
+window.addEventListener('load', () => {
+  initParticles();  // Init setelah load
+  // ... (typewriter code yang udah ada tetap di sini)
+});
+
+// Fungsi Toggle Particles (Opsional - Kalau pakai button)
+function toggleParticles() {
+  const particlesContainer = document.getElementById('particles-js');
+  if (particlesContainer.style.display === 'none') {
+    particlesContainer.style.display = 'block';
+    initParticles();  // Restart
+    document.querySelector('.particles-toggle').textContent = 'Pause Effects';
+  } else {
+    particlesContainer.style.display = 'none';
+    document.querySelector('.particles-toggle').textContent = 'Resume Effects';
+  }
+}
+
   </script>
 </body>
 </html>
 
        
+
 
 
 
