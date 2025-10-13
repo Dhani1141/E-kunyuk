@@ -23,6 +23,19 @@
       --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
       --border-radius: 16px;
     }
+      /* Fallback Themes (JS akan override) */
+  --accent-red: #ef4444;
+  --accent-red-hover: #dc2626;
+  --accent-blue: #3b82f6;
+  --accent-blue-hover: #2563eb;
+  --accent-purple: #8b5cf6;
+  --accent-purple-hover: #7c3aed;
+  --accent-orange: #f97316;
+  --accent-orange-hover: #ea580c;
+  --accent-cyan: #06b6d4;
+  --accent-cyan-hover: #0891b2;
+  /* Hijau udah ada: --accent: #10b981; --accent-hover: #059669; */
+}
 
     * {
       margin: 0;
@@ -588,6 +601,18 @@ nav {
     transform: scale(0.8);
   }
 }
+    .cta-button, .stat-icon, .progress-fill, .stars i {
+  color: var(--accent);  /* Akan berubah random */
+}
+
+.cta-button:hover, .stat-icon:hover {
+  color: var(--accent-hover);
+}
+
+.progress-fill {
+  background: var(--accent);  /* Progress bar ikut warna */
+}
+
 
   </style>
   <!-- Particles.js CDN - Ringan & Subtle -->
@@ -1134,11 +1159,145 @@ function toggleParticles() {
   }
 }
 
+// Random Theme Changer - Update Accent Color on Refresh
+const themes = [
+  { name: 'Green', accent: '#10b981', hover: '#059669' },      // Default hijau
+  { name: 'Red', accent: '#ef4444', hover: '#dc2626' },        // Merah
+  { name: 'Blue', accent: '#3b82f6', hover: '#2563eb' },       // Biru
+  { name: 'Purple', accent: '#8b5cf6', hover: '#7c3aed' },     // Ungu
+  { name: 'Orange', accent: '#f97316', hover: '#ea580c' },     // Orange
+  { name: 'Cyan', accent: '#06b6d4', hover: '#0891b2' }        // Cyan/biru muda
+];
+
+function setRandomTheme() {
+  // Pilih random theme
+  const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+  
+  // Update CSS Variables (global)
+  document.documentElement.style.setProperty('--accent', randomTheme.accent);
+  document.documentElement.style.setProperty('--accent-hover', randomTheme.hover);
+  
+  // Update Particles Colors to Match Theme (re-init dengan warna baru)
+  pJSDom = [];  // Clear existing particles kalau ada
+  initParticlesWithTheme(randomTheme);  // Fungsi baru di bawah
+  
+  // Optional: Log atau tampilkan theme (buat debug, hapus kalau nggak perlu)
+  console.log('Theme loaded:', randomTheme.name);
+}
+
+// Modified initParticles untuk Support Theme
+function initParticlesWithTheme(theme) {
+  particlesJS('particles-js', {
+    particles: {
+      number: {
+        value: 30,
+        density: {
+          enable: true,
+          value_area: 800
+        }
+      },
+      color: {
+        value: ['#ffffff', theme.accent, '#b3b3b3']  // Dots: putih + accent + abu
+      },
+      shape: {
+        type: 'circle',
+        stroke: {
+          width: 0,
+          color: '#000000'
+        }
+      },
+      opacity: {
+        value: 0.3,
+        random: true,
+        anim: {
+          enable: true,
+          speed: 1,
+          opacity_min: 0.1,
+          sync: false
+        }
+      },
+      size: {
+        value: 3,
+        random: true,
+        anim: {
+          enable: false
+        }
+      },
+      line_linked: {
+        enable: true,
+        distance: 150,
+        color: theme.accent,  // Lines ikut accent color
+        opacity: 0.2,
+        width: 1
+      },
+      move: {
+        enable: true,
+        speed: 2,
+        direction: 'none',
+        random: true,
+        straight: false,
+        out_mode: 'out',
+        bounce: false,
+        attract: {
+          enable: false
+        }
+      }
+    },
+    interactivity: {
+      detect_on: 'canvas',
+      events: {
+        onhover: {
+          enable: true,
+          mode: 'grab'
+        },
+        onclick: {
+          enable: true,
+          mode: 'push'
+        },
+        resize: true
+      },
+      modes: {
+        grab: {
+          distance: 200,
+          line_linked: {
+            opacity: 0.5,
+            color: theme.accent  // Grab lines juga match
+          }
+        },
+        push: {
+          particles_nb: 4,
+          color: theme.accent  // Pushed particles warna accent
+        }
+      }
+    },
+    retina_detect: true
+  });
+}
+
+// Update window.load untuk Jalankan Random Theme
+window.addEventListener('load', () => {
+  setRandomTheme();  // Set theme dulu, baru particles & typewriter
+  
+  // ... (typewriter code yang udah ada tetap di sini)
+  const typewriterEl = document.getElementById('typewriter');
+  if (typewriterEl) {
+    const fullText = typewriterEl.textContent;
+    typewriterEl.classList.add('typewriter');
+    typeWriter(typewriterEl, fullText, 80);
+  }
+  
+  // ... (sisa load code lain, seperti nav, observers)
+});
+
+// Ganti fungsi initParticles lama jadi initParticlesWithTheme di mana-mana (kalau ada call manual)
+
+
   </script>
 </body>
 </html>
 
        
+
 
 
 
