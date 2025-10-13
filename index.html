@@ -824,9 +824,9 @@ nav {
 
  <script>
 document.addEventListener('DOMContentLoaded', function() {
-  console.log('DOM loaded - Modal script starting');  // Debug: Pastiin ini muncul di console
+  console.log('DOM loaded - Modal script starting');  // Debug
 
-  // Data Modal (sama seperti punya kamu)
+  // Data Modal (sama persis punya kamu, nggak berubah)
   const modalData = {
     jurnal: {
       icon: 'fas fa-file-alt',
@@ -886,60 +886,85 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  // Function Open Modal dengan Debug
-  window.openModal = function(service) {  // Global biar onclick di HTML work
-    console.log('Opening modal for:', service);  // Debug: Lihat service apa yang dipilih
+  // Fungsi Open Modal (dengan lebih banyak check)
+  window.openModal = function(service) {
+    console.log('Opening modal for:', service);
     const data = modalData[service];
-    if (data) {
-      const modal = document.getElementById('modal');
-      const modalIcon = document.getElementById('modal-icon');
-      const modalTitle = document.getElementById('modal-title');
-      const modalDesc = document.getElementById('modal-desc');
-      const modalPrice = document.getElementById('modal-price');
-      const modalWhatsapp = document.getElementById('modal-whatsapp');
-
-      // Check elemen exist
-      if (!modal || !modalIcon || !modalTitle || !modalDesc || !modalPrice || !modalWhatsapp) {
-        console.error('Modal elements not found! Check HTML IDs.');  // Debug error
-        return;
-      }
-
-      // Set content
-      modalIcon.className = data.icon;
-      modalTitle.textContent = data.title;
-      modalDesc.textContent = data.desc;
-      modalPrice.textContent = data.price;
-      modalWhatsapp.href = data.whatsapp;
-      console.log('WA href set to:', data.whatsapp);  // Debug: Pastiin href benar
-
-      // Show modal
-      modal.style.display = 'flex';
-      document.body.style.overflow = 'hidden';
-      console.log('Modal opened successfully');  // Debug sukses
-    } else {
-      console.error('Service data not found for:', service);  // Debug kalau service salah
+    if (!data) {
+      console.error('No data for service:', service);
+      return;
     }
+
+    // Ambil elemen modal
+    const modal = document.getElementById('modal');
+    const modalIcon = document.getElementById('modal-icon');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalPrice = document.getElementById('modal-price');
+    const modalWhatsapp = document.getElementById('modal-whatsapp');
+
+    if (!modal || !modalIcon || !modalTitle || !modalDesc || !modalPrice || !modalWhatsapp) {
+      console.error('Modal elements missing! Check HTML IDs.');
+      return;
+    }
+
+    // Set content
+    modalIcon.className = data.icon;
+    modalTitle.textContent = data.title;
+    modalDesc.textContent = data.desc;
+    modalPrice.textContent = data.price;
+    modalWhatsapp.href = data.whatsapp;  // Set href (backup)
+    modalWhatsapp.setAttribute('data-wa-url', data.whatsapp);  // Extra attribute buat JS
+    console.log('WA href set to:', data.whatsapp);
+
+    // Show modal
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    console.log('Modal opened OK');
   };
 
-  // Function Close Modal
+  // Fungsi Close Modal
   window.closeModal = function() {
     const modal = document.getElementById('modal');
     if (modal) {
       modal.style.display = 'none';
       document.body.style.overflow = 'auto';
-      console.log('Modal closed');  // Debug
+      console.log('Modal closed');
     }
   };
 
-  // Close modal on outside click (bonus, opsional)
-  document.getElementById('modal').addEventListener('click', function(e) {
-    if (e.target === this) {
-      closeModal();
+  // Fungsi Baru: Force Open WA (Tambah onclick di HTML nanti)
+  window.openWhatsappFromModal = function() {
+    const waUrl = document.getElementById('modal-whatsapp').getAttribute('data-wa-url') || 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20jasa.';
+    console.log('Force opening WA with URL:', waUrl);
+    
+    // Force open di tab baru (work di mobile/desktop)
+    if (waUrl) {
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+    } else {
+      console.error('No WA URL found');
     }
+    
+    // Optional: Close modal setelah klik (biar smooth)
+    closeModal();
+  };
+
+  // Close on outside click
+  const modal = document.getElementById('modal');
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+  }
+
+  // Close on ESC key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeModal();
   });
 
-  console.log('Modal script fully loaded');  // Debug akhir
+  console.log('Modal script loaded fully');
 });
+
 
     // Counter Animation untuk Stats
     function animateCounter(element, target, duration = 2000) {
@@ -1363,6 +1388,7 @@ window.addEventListener('load', () => {
 </html>
 
        
+
 
 
 
