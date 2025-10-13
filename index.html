@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Kunyuk Store</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="El Kunyuk Store: Jasa informatika lengkap seperti joki jurnal, pembuatan website, desain grafis, dan lebih. Hubungi via WhatsApp sekarang!" />
+  <meta name="keywords" content="joki jurnal, pembuatan website, desain grafis, pengerjaan proyek, joki game" />
   <link rel="icon" type="image/png" href="image.png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>El Kunyuk Store - Solusi Informatika Terpercaya</title>
   <style>
     * {
       margin: 0;
@@ -17,88 +20,176 @@
     body {
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       color: #f1f5f9;
+      line-height: 1.6;
       overflow-x: hidden;
     }
 
-    /* HEADER */
-    header {
-      position: sticky;
+    /* Loading Spinner */
+    .loader {
+      position: fixed;
       top: 0;
-      z-index: 100;
-      backdrop-filter: blur(12px);
-      background: rgba(30, 41, 59, 0.6);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .spinner {
+      border: 4px solid #1e293b;
+      border-top: 4px solid #38bdf8;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    header {
       text-align: center;
       padding: 2rem 1rem;
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #38bdf8, transparent);
     }
 
     header img {
-      width: 85px;
-      height: 85px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       margin-bottom: 1rem;
-      border: 2px solid #38bdf8;
-      transition: transform 0.4s ease;
+      border: 3px solid #38bdf8;
+      transition: transform 0.3s ease;
     }
 
     header img:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
 
     header h1 {
-      font-size: 2.2rem;
-      background: linear-gradient(to right, #38bdf8, #0ea5e9);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.3rem;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      color: #38bdf8;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(56, 189, 248, 0.3);
     }
 
     header p {
       color: #cbd5e1;
-      font-size: 1rem;
-      letter-spacing: 0.5px;
+      font-size: 1.1rem;
     }
 
-    /* INTRO */
-    section.intro {
+    section.hero {
       text-align: center;
-      padding: 3rem 1.5rem;
-      max-width: 800px;
+      padding: 4rem 1rem;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, transparent 100%);
+      max-width: 900px;
       margin: auto;
-      line-height: 1.8;
     }
 
-    section.intro h2 {
-      font-size: 1.8rem;
-      color: #38bdf8;
+    section.hero h2 {
+      font-size: 2.5rem;
       margin-bottom: 1rem;
+      color: #f1f5f9;
+      animation: fadeInUp 1s ease;
     }
 
-    section.intro p {
-      color: #cbd5e1;
-      font-size: 1rem;
+    section.hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #e2e8f0;
+      animation: fadeInUp 1s ease 0.2s both;
     }
 
-    /* CARD SECTION */
+    .cta-button {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+      color: #0f172a;
+      border-radius: 50px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
+      animation: fadeInUp 1s ease 0.4s both;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     section.cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
-      padding: 2rem;
+      padding: 3rem 1rem;
       max-width: 1200px;
       margin: auto;
     }
 
     .card {
-      background: rgba(30, 41, 59, 0.75);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 1.2rem;
-      padding: 2rem;
+      background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+      padding: 2.5rem 1.5rem;
+      border-radius: 1.5rem;
       text-align: center;
-      box-shadow: 0 6px 25px rgba(0,0,0,0.3);
-      transition: all 0.5s ease;
-      transform: translateY(40px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+      transform: translateY(50px);
       opacity: 0;
+      transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.1), transparent);
+      transition: left 0.5s;
+    }
+
+    .card:hover::before {
+      left: 100%;
     }
 
     .card.show {
@@ -106,136 +197,266 @@
       opacity: 1;
     }
 
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 30px rgba(56,189,248,0.3);
+    .card:nth-child(1).show { transition-delay: 0.1s; }
+    .card:nth-child(2).show { transition-delay: 0.2s; }
+    .card:nth-child(3).show { transition-delay: 0.3s; }
+    .card:nth-child(4).show { transition-delay: 0.4s; }
+    .card:nth-child(5).show { transition-delay: 0.5s; }
+    .card:nth-child(6).show { transition-delay: 0.6s; }
+    .card:nth-child(7).show { transition-delay: 0.7s; }
+    .card:nth-child(8).show { transition-delay: 0.8s; }
+
+    .card i {
+      font-size: 3rem;
+      color: #38bdf8;
+      margin-bottom: 1rem;
     }
 
     .card h3 {
       margin-bottom: 1rem;
       color: #38bdf8;
-      font-size: 1.3rem;
+      font-size: 1.5rem;
+      font-weight: 600;
     }
 
     .card p {
       margin-bottom: 1.5rem;
       color: #e2e8f0;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
 
     .card a {
       display: inline-block;
-      padding: 0.7rem 1.5rem;
-      background: linear-gradient(90deg, #38bdf8, #0ea5e9);
+      padding: 0.8rem 1.8rem;
+      background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
       color: #0f172a;
-      border-radius: 999px;
+      border-radius: 50px;
       font-weight: 600;
       text-decoration: none;
       transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(56, 189, 248, 0.3);
     }
 
     .card a:hover {
-      transform: scale(1.05);
-      background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(56, 189, 248, 0.5);
+      background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
     }
 
-    /* FOOTER */
+    .card a:focus {
+      outline: 2px solid #38bdf8;
+      outline-offset: 2px;
+    }
+
     footer {
       text-align: center;
-      padding: 2rem;
+      padding: 2.5rem 1rem;
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       color: #94a3b8;
-      background: rgba(30, 41, 59, 0.8);
-      backdrop-filter: blur(6px);
-      border-top: 1px solid rgba(255,255,255,0.05);
-      margin-top: 3rem;
+      margin-top: 4rem;
+      border-top: 1px solid rgba(56, 189, 248, 0.2);
     }
 
-    /* SCROLL ANIMATION */
-    @keyframes fadeUp {
-      from { transform: translateY(40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
+    footer p {
+      margin-bottom: 1rem;
     }
 
-    .card.show {
-      animation: fadeUp 0.8s ease forwards;
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      color: #94a3b8;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+
+    .social-links a:hover {
+      color: #38bdf8;
+    }
+
+    /* Responsivitas */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      section.hero h2 {
+        font-size: 2rem;
+      }
+
+      section.hero p {
+        font-size: 1rem;
+      }
+
+      section.cards {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        padding: 2rem 0.5rem;
+      }
+
+      .card {
+        padding: 2rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 1.5rem 0.5rem;
+      }
+
+      header img {
+        width: 80px;
+        height: 80px;
+      }
+
+      .cta-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 <body>
+  <!-- Loading Spinner -->
+  <div class="loader" id="loader">
+    <div class="spinner"></div>
+  </div>
+
   <header>
-    <img src="image.png" alt="Logo El Kunyuk">
+    <img src="image.png" alt="Logo El Kunyuk Store" loading="lazy">
     <h1>El Kunyuk Store</h1>
     <p>Solusi Informatika: Website, Desain, Proyek, & Laporan</p>
   </header>
 
-  <section class="intro">
+  <section class="hero">
     <h2>Selamat Datang!</h2>
     <p>Kami menyediakan layanan terbaik di bidang informatika mulai dari pembuatan website, desain grafis, pengerjaan proyek, hingga pembuatan laporan. Klik salah satu layanan di bawah ini untuk langsung menghubungi kami lewat WhatsApp!</p>
+    <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20saya%20tertarik%20dengan%20layanan%20Anda.%20Bisa%20jelaskan%20lebih%20lanjut?" class="cta-button" aria-label="Hubungi via WhatsApp">Mulai Pesan Sekarang</a>
   </section>
 
   <section class="cards">
     <div class="card">
+      <i class="fas fa-file-alt"></i>
       <h3>Joki Jurnal</h3>
-      <p>Pengerjaan jurnal dengan format akademik yang rapi dan profesional.</p>
-      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20joki%20jurnal%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank">Pesan via WhatsApp</a>
+      <p>Bantu pengerjaan jurnal dengan format akademik yang rapi.</p>
+      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20joki%20jurnal%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank" aria-label="Pesan Joki Jurnal via WhatsApp">Pesan via WhatsApp</a>
     </div>
 
     <div class="card">
+      <i class="fas fa-globe"></i>
       <h3>Pembuatan Website</h3>
-      <p>Pembuatan website modern, cepat, dan responsif sesuai kebutuhanmu.</p>
-      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20pembuatan%20website%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank">Pesan via WhatsApp</a>
+      <p>Kami membantu membuat website modern dan responsif.</p>
+      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20pembuatan%20website%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank" aria-label="Pesan Pembuatan Website via WhatsApp">Pesan via WhatsApp</a>
     </div>
 
     <div class="card">
+      <i class="fas fa-project-diagram"></i>
       <h3>Pengerjaan Proyek</h3>
-      <p>Bantu selesaikan proyek informatika dengan cepat, aman, dan terpercaya.</p>
-      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20pengerjaan%20proyek%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank">Pesan via WhatsApp</a>
+      <p>Bantu selesaikan proyek informatika dengan cepat dan tepat.</p>
+      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20pengerjaan%20proyek%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank" aria-label="Pesan Pengerjaan Proyek via WhatsApp">Pesan via WhatsApp</a>
     </div>
 
     <div class="card">
+      <i class="fas fa-file-word"></i>
       <h3>Pengerjaan Laporan</h3>
-      <p>Laporan rapi, sistematis, dan sesuai standar akademik terkini.</p>
-      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20pengerjaan%20laporan%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank">Pesan via WhatsApp</a>
+      <p>Laporan rapi, sistematis, dan sesuai standar akademik.</p>
+      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20pengerjaan%20laporan%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank" aria-label="Pesan Pengerjaan Laporan via WhatsApp">Pesan via WhatsApp</a>
     </div>
 
     <div class="card">
+      <i class="fas fa-book"></i>
       <h3>Pembuatan Makalah</h3>
-      <p>Pengerjaan makalah cepat, jelas, dan mengikuti pedoman penulisan.</p>
-      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20pembuatan%20makalah%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank">Pesan via WhatsApp</a>
+      <p>Pengerjaan makalah cepat, jelas, dan sesuai aturan penulisan.</p>
+      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20pembuatan%20makalah%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank" aria-label="Pesan Pembuatan Makalah via WhatsApp">Pesan via WhatsApp</a>
     </div>
 
     <div class="card">
+      <i class="fas fa-palette"></i>
       <h3>Desain Grafis</h3>
-      <p>Bikin desain yang keren dan profesional untuk proyek atau brand kamu.</p>
-      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20desain%20grafis%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank">Pesan via WhatsApp</a>
-    </div>
+      <p>Butuh desain kreatif untuk brand atau proyekmu?</p>
+      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20desain%20grafis%20dongg.%20kira%20kira%20berapa%20yaa?" target="_blank"
 
     <div class="card">
+      <i class="fas fa-fish"></i>
       <h3>Joki Fish It!</h3>
-      <p>Naik level lebih cepat dan nikmati game tanpa repot. Aman & rahasia!</p>
-      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20joki%20Fish%20It!%20dongg.%20berapa%20yaa?" target="_blank">Pesan via WhatsApp</a>
+      <p>Bantu joki game Fish It! biar cepat naik level dan lebih mudah untuk flexing.</p>
+      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20joki%20Fish%20It!%20dongg.%20berapa%20yaa?" target="_blank" aria-label="Pesan Joki Fish It! via WhatsApp">Pesan via WhatsApp</a>
     </div>
 
     <div class="card">
+      <i class="fas fa-gamepad"></i>
       <h3>Joki Mobile Legend</h3>
-      <p>Push rank lebih cepat dan stabil tanpa stres, 100% aman dan terpercaya.</p>
-      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20joki%20Mobile%20Legend%20dongg.%20berapa%20yaa?" target="_blank">Pesan via WhatsApp</a>
+      <p>Push rank Mobile Legend lebih cepat tanpa ribet, aman dan terpercaya.</p>
+      <a href="https://wa.me/6285251379292?text=assalamualaikum%20bang%20kunyuk,%20mau%20mesen%20jasa%20joki%20Mobile%20Legend%20dongg.%20berapa%20yaa?" target="_blank" aria-label="Pesan Joki Mobile Legend via WhatsApp">Pesan via WhatsApp</a>
     </div>
   </section>
 
   <footer>
-    <p>© 2025 El Kunyuk Store. All Rights Reserved.</p>
+    <p>© 2024 El Kunyuk Store. All Rights Reserved.</p>
+    <p>Kontak: +62 852-5137-9292 | Email: elkunyukstore@example.com</p>
+    <div class="social-links">
+      <a href="https://wa.me/6285251379292" target="_blank" aria-label="WhatsApp" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://instagram.com/elkunyukstore" target="_blank" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://t.me/elkunyukstore" target="_blank" aria-label="Telegram" title="Telegram"><i class="fab fa-telegram"></i></a>
+    </div>
   </footer>
 
   <script>
-    const cards = document.querySelectorAll('.card');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('show');
-      });
-    }, { threshold: 0.2 });
+    // Hide Loading Spinner
+    window.addEventListener('load', () => {
+      const loader = document.getElementById('loader');
+      loader.classList.add('hidden');
+      setTimeout(() => {
+        loader.style.display = 'none';
+      }, 500);
+    });
 
-    cards.forEach(card => observer.observe(card));
+    // Cards Animation Observer
+    const cards = document.querySelectorAll('.card');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        } else {
+          entry.target.classList.remove('show');
+        }
+      });
+    }, { 
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px' // Trigger sedikit sebelum cards terlihat
+    });
+
+    cards.forEach(card => {
+      observer.observe(card);
+    });
+
+    // Smooth Scroll untuk Anchor Links (jika diperlukan nanti)
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Tambahkan efek parallax sederhana untuk header image (opsional, untuk lebih dinamis)
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const headerImg = document.querySelector('header img');
+      if (headerImg) {
+        headerImg.style.transform = `translateY(${scrolled * 0.5}px)`;
+      }
+    });
   </script>
 </body>
 </html>
