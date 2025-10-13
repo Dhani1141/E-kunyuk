@@ -828,33 +828,41 @@
       }, 16);
     }
 
-    // Stats Observer - Trigger Animasi Saat Visible
-    const statsObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !entry.target.classList.contains('animated')) {
-          const statNumbers = entry.target.querySelectorAll('.stat-number');
-          const progressFills = entry.target.querySelectorAll('.progress-fill');
+// Stats Observer - Trigger Animasi Saat Visible (Berulang Setiap Scroll)
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {  // Hapus kondisi 'animated' biar berulang
+      const statNumbers = entry.target.querySelectorAll('.stat-number');
+      const progressFills = entry.target.querySelectorAll('.progress-fill');
 
-          statNumbers.forEach(num => {
-            const target = parseFloat(num.dataset.target);
-            animateCounter(num, target);
-          });
-
-          progressFills.forEach(fill => {
-            const target = parseFloat(fill.dataset.target);
-            animateProgress(fill, target);
-          });
-
-          entry.target.classList.add('animated'); // Prevent re-animation
-        }
+      // Reset ke 0 dulu sebelum animasi (biar keliatan ulang)
+      statNumbers.forEach(num => {
+        num.textContent = (parseFloat(num.dataset.target) === 4.9) ? '0.0' : '0';
       });
-    }, { threshold: 0.5, rootMargin: '0px 0px -50px 0px' });
+      progressFills.forEach(fill => {
+        fill.style.width = '0%';
+      });
 
-    // Observe Stats Section
-    const statsSection = document.querySelector('.stats');
-    if (statsSection) {
-      statsObserver.observe(statsSection);
+      // Jalankan animasi
+      statNumbers.forEach(num => {
+        const target = parseFloat(num.dataset.target);
+        animateCounter(num, target);
+      });
+
+      progressFills.forEach(fill => {
+        const target = parseFloat(fill.dataset.target);
+        animateProgress(fill, target);
+      });
     }
+  });
+}, { threshold: 0.5, rootMargin: '0px 0px -50px 0px' });
+
+// Observe Stats Section
+const statsSection = document.querySelector('.stats');
+if (statsSection) {
+  statsObserver.observe(statsSection);
+}
+
 
     // Typewriter Animation untuk Hero Title
     function typeWriter(element, text, speed = 100) {
@@ -960,3 +968,4 @@
 </html>
 
        
+
