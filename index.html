@@ -3,25 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="El Kunyuk Store: Layanan profesional informatika termasuk pembuatan website, desain grafis, pengerjaan proyek, dan konsultasi akademik. Hubungi kami untuk solusi terpercaya." />
-  <meta name="keywords" content="jasa informatika, pembuatan website, desain grafis, joki jurnal, pengerjaan proyek, joki game" />
-  <meta name="author" content="El Kunyuk Store" />
+  <meta name="description" content="El Kunyuk Store: Jasa joki informatika terpercaya – website, desain, proyek, laporan, dan game. Cepat, aman, via WhatsApp." />
+  <meta name="keywords" content="joki jurnal, joki website, joki proyek, joki game, desain grafis" />
   <link rel="icon" type="image/png" href="image.png">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <title>El Kunyuk Store - Solusi Informatika Profesional</title>
+  <title>El Kunyuk Store – Joki Informatika Modern</title>
   <style>
     :root {
-      --primary-color: #1e3a8a; /* Navy blue formal */
-      --secondary-color: #3b82f6; /* Blue accent */
-      --bg-primary: #111827; /* Dark gray */
-      --bg-secondary: #1f2937; /* Lighter dark */
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #1a1a1a;
       --text-primary: #ffffff;
-      --text-secondary: #d1d5db;
-      --border-radius: 12px;
-      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-      --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --text-secondary: #b3b3b3;
+      --accent: #10b981; /* Green untuk joki vibe */
+      --accent-hover: #059669;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --blur: blur(10px);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --border-radius: 16px;
     }
 
     * {
@@ -39,22 +39,22 @@
       scroll-behavior: smooth;
     }
 
-    /* Navbar */
+    /* Navbar - Glassmorphism */
     nav {
-      background: rgba(17, 24, 39, 0.95);
-      backdrop-filter: blur(10px);
       position: fixed;
       top: 0;
       width: 100%;
+      background: var(--glass-bg);
+      backdrop-filter: var(--blur);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       z-index: 1000;
-      padding: 1rem 0;
-      box-shadow: var(--shadow);
       transition: var(--transition);
+      padding: 1rem 0;
     }
 
-    nav.scrolled {
-      background: var(--bg-primary);
-      padding: 0.5rem 0;
+    nav.solid {
+      background: var(--bg-secondary);
+      backdrop-filter: none;
     }
 
     .nav-container {
@@ -69,15 +69,15 @@
     .nav-logo {
       display: flex;
       align-items: center;
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--secondary-color);
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text-primary);
       text-decoration: none;
     }
 
     .nav-logo img {
-      width: 40px;
-      height: 40px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       margin-right: 0.5rem;
     }
@@ -85,326 +85,297 @@
     .nav-menu {
       display: flex;
       list-style: none;
-      gap: 2rem;
+      gap: 1.5rem;
     }
 
     .nav-menu a {
       color: var(--text-secondary);
       text-decoration: none;
-      font-weight: 500;
+      font-weight: 400;
       transition: var(--transition);
-      padding: 0.5rem 1rem;
-      border-radius: var(--border-radius);
+      padding: 0.5rem;
+      border-radius: 8px;
     }
 
-    .nav-menu a:hover,
-    .nav-menu a:focus {
-      color: var(--secondary-color);
-      background: rgba(59, 130, 246, 0.1);
-      outline: none;
+    .nav-menu a:hover {
+      color: var(--accent);
+      background: rgba(16, 185, 129, 0.1);
     }
 
     .nav-toggle {
       display: none;
       flex-direction: column;
       cursor: pointer;
-      gap: 4px;
+      gap: 3px;
     }
 
     .nav-toggle span {
-      width: 25px;
-      height: 3px;
+      width: 20px;
+      height: 2px;
       background: var(--text-primary);
       transition: var(--transition);
     }
 
-    /* Header */
-    header {
-      padding: 120px 1rem 4rem; /* Offset untuk fixed nav */
-      text-align: center;
-      background: var(--bg-secondary);
-      border-bottom: 1px solid rgba(59, 130, 246, 0.2);
-    }
-
-    header img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 2px solid var(--secondary-color);
-      margin-bottom: 1.5rem;
-      transition: var(--transition);
-    }
-
-    header img:hover {
-      transform: scale(1.05);
-      box-shadow: var(--shadow-hover);
-    }
-
-    header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      color: var(--secondary-color);
-      font-weight: 700;
-    }
-
-    header p {
-      color: var(--text-secondary);
-      font-size: 1.1rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    /* Hero Section */
+    /* Hero - Minimal dengan Typewriter */
     section.hero {
       text-align: center;
-      padding: 4rem 1rem;
-      max-width: 900px;
+      padding: 140px 1rem 4rem; /* Offset nav */
+      max-width: 800px;
       margin: auto;
     }
 
-    section.hero h2 {
-      font-size: 2.5rem;
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 300;
       margin-bottom: 1rem;
-      color: var(--text-primary);
-      font-weight: 600;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.8s ease forwards;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
     }
 
-    section.hero p {
+    .typewriter {
+      border-right: 2px solid var(--accent);
+      animation: blink 1s infinite;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    @keyframes blink {
+      0%, 50% { border-color: transparent; }
+      51%, 100% { border-color: var(--accent); }
+    }
+
+    .hero p {
       font-size: 1.1rem;
-      margin-bottom: 2rem;
       color: var(--text-secondary);
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.8s ease 0.2s forwards;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .cta-button {
       display: inline-block;
       padding: 1rem 2rem;
-      background: var(--secondary-color);
+      background: var(--accent);
       color: var(--text-primary);
       border-radius: var(--border-radius);
       font-weight: 500;
       text-decoration: none;
       transition: var(--transition);
       box-shadow: var(--shadow);
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.8s ease 0.4s forwards;
+      animation: pulse 2s infinite;
     }
 
-    .cta-button:hover,
-    .cta-button:focus {
-      background: var(--primary-color);
+    .cta-button:hover {
+      background: var(--accent-hover);
       transform: translateY(-2px);
-      box-shadow: var(--shadow-hover);
-      outline: none;
+      box-shadow: 0 12px 40px rgba(16, 185, 129, 0.3);
+      animation: none;
     }
 
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
 
-    /* Cards Section */
+    /* Cards - Neumorphism + Interactive */
     section.cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 2rem;
-      padding: 4rem 1rem;
-      max-width: 1200px;
+      padding: 2rem 1rem;
+      max-width: 1000px;
       margin: auto;
     }
 
     .card {
       background: var(--bg-secondary);
-      padding: 2rem;
+      backdrop-filter: var(--blur);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: var(--border-radius);
+      padding: 2rem;
       text-align: center;
-      border: 1px solid rgba(59, 130, 246, 0.1);
       transition: var(--transition);
+      cursor: pointer;
+      position: relative;
       opacity: 0;
-      transform: translateY(30px);
+      transform: translateY(20px) scale(0.98);
     }
 
     .card.show {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateY(0) scale(1);
     }
 
     .card:hover {
-      border-color: var(--secondary-color);
-      box-shadow: var(--shadow-hover);
-      transform: translateY(-5px);
+      transform: translateY(-8px) scale(1.02);
+      border-color: var(--accent);
+      box-shadow: var(--shadow);
+      background: rgba(255, 255, 255, 0.08);
     }
 
     .card i {
-      font-size: 2.5rem;
-      color: var(--secondary-color);
+      font-size: 2rem;
+      color: var(--accent);
       margin-bottom: 1rem;
       display: block;
     }
 
     .card h3 {
-      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
       color: var(--text-primary);
-      font-size: 1.4rem;
-      font-weight: 600;
     }
 
     .card p {
-      margin-bottom: 1.5rem;
       color: var(--text-secondary);
-      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
     }
 
-    .card a {
-      display: inline-block;
-      padding: 0.75rem 1.5rem;
+    .card button {
       background: transparent;
-      color: var(--secondary-color);
-      border: 1px solid var(--secondary-color);
-      border-radius: var(--border-radius);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
       font-weight: 500;
-      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      width: 100%;
+    }
+
+    .card button:hover {
+      background: var(--accent);
+      color: var(--text-primary);
+    }
+
+    /* Modal - Interactive Detail */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 2000;
+      backdrop-filter: var(--blur);
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: var(--shadow);
+    }
+
+    .close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      cursor: pointer;
       transition: var(--transition);
     }
 
-    .card a:hover,
-    .card a:focus {
-      background: var(--secondary-color);
-      color: var(--text-primary);
-      transform: translateY(-2px);
-      outline: none;
+    .close:hover {
+      color: var(--accent);
     }
 
-    /* Footer */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Floating WhatsApp - Interaktif */
+    .floating-cta {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+      z-index: 1001;
+      animation: bounce 2s infinite;
+    }
+
+    .floating-cta:hover {
+      transform: scale(1.1);
+      background: var(--accent-hover);
+      animation: none;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      60% { transform: translateY(-5px); }
+    }
+
+    /* Footer - Minimal */
     footer {
       background: var(--bg-primary);
       text-align: center;
       padding: 3rem 1rem 1rem;
-      border-top: 1px solid rgba(59, 130, 246, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
       color: var(--text-secondary);
     }
 
-    footer .footer-content {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-
-    footer h4 {
-      color: var(--secondary-color);
+    footer p {
       margin-bottom: 1rem;
-      font-size: 1.2rem;
     }
 
-    footer ul {
-      list-style: none;
-    }
-
-    footer ul li {
-      margin-bottom: 0.5rem;
-    }
-
-    footer ul li a {
-      color: var(--text-secondary);
+    footer a {
+      color: var(--accent);
       text-decoration: none;
       transition: var(--transition);
     }
 
-    footer ul li a:hover {
-      color: var(--secondary-color);
-    }
-
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .social-links a {
-      color: var(--text-secondary);
-      font-size: 1.5rem;
-      transition: var(--transition);
-      padding: 0.5rem;
-      border-radius: 50%;
-    }
-
-    .social-links a:hover {
-      color: var(--secondary-color);
-      background: rgba(59, 130, 246, 0.1);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(59, 130, 246, 0.1);
-      padding-top: 1rem;
-      font-size: 0.9rem;
+    footer a:hover {
+      text-decoration: underline;
     }
 
     /* Responsivitas */
     @media (max-width: 768px) {
-      .nav-toggle {
-        display: flex;
-      }
-
+      .nav-toggle { display: flex; }
       .nav-menu {
         position: fixed;
         top: 100%;
         left: -100%;
         width: 100%;
-        height: calc(100vh - 100%);
-        background: var(--bg-primary);
+        background: var(--glass-bg);
         flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        padding-top: 2rem;
+        padding: 1rem;
         transition: left 0.3s ease;
       }
+      .nav-menu.active { left: 0; }
 
-      .nav-menu.active {
-        left: 0;
-      }
-
-      header h1,
-      section.hero h2 {
-        font-size: 2rem;
-      }
-
-      section.cards {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-        padding: 2rem 1rem;
-      }
-
-      .card {
-        padding: 1.5rem;
-      }
+      .hero h1 { font-size: 2rem; }
+      section.cards { grid-template-columns: 1fr; gap: 1.5rem; padding: 1rem; }
+      .floating-cta { bottom: 1rem; right: 1rem; width: 50px; height: 50px; }
     }
 
     @media (max-width: 480px) {
-      header {
-        padding: 100px 0.5rem 3rem;
-      }
-
-      header img {
-        width: 80px;
-        height: 80px;
-      }
-
-      .cta-button {
-        padding: 0.8rem 1.5rem;
-        font-size: 1rem;
-      }
+      section.hero { padding: 120px 0.5rem 2rem; }
+      .card { padding: 1.5rem; }
     }
   </style>
 </head>
@@ -413,8 +384,8 @@
   <nav>
     <div class="nav-container">
       <a href="#home" class="nav-logo">
-        <img src="image.png" alt="Logo El Kunyuk Store" loading="lazy">
-        El Kunyuk Store
+        <img src="image.png" alt="Logo El Kunyuk Store">
+        El Kunyuk
       </a>
       <ul class="nav-menu" id="navMenu">
         <li><a href="#home">Home</a></li>
@@ -429,121 +400,202 @@
     </div>
   </nav>
 
-  <!-- Header -->
-  <header id="home">
-    <img src="image.png" alt="Logo El Kunyuk Store" loading="lazy">
-    <h1>El Kunyuk Store</h1>
-    <p>Solusi Informatika Profesional: Website, Desain, Proyek, & Laporan Akademik</p>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero" id="services">
-    <h2>Selamat Datang di El Kunyuk Store</h2>
-    <p>Kami menyediakan layanan berkualitas tinggi di bidang informatika, mulai dari pengembangan website responsif, desain grafis kreatif, hingga dukungan proyek dan laporan akademik. Hubungi kami untuk konsultasi gratis.</p>
-    <a href="https://wa.me/6285251379292?text=Halo%20El%20Kunyuk%20Store,%20saya%20tertarik%20dengan%20layanan%20Anda.%20Bisa%20berikan%20informasi%20lebih%20lanjut?" class="cta-button" aria-label="Hubungi via WhatsApp">Hubungi Kami</a>
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <h1 class="typewriter" id="typewriter">El Kunyuk Store – Joki Informatika</h1>
+    <p>Layanan cepat dan aman untuk website, desain, proyek, laporan, makalah, dan joki game. Hubungi via WhatsApp untuk harga terbaik.</p>
+    <a href="https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20saya%20mau%20pesan%20jasa.%20Bisa%20info%20harga?" class="cta-button">Pesan Sekarang</a>
   </section>
 
-  <!-- Cards Section -->
-  <section class="cards">
-    <div class="card">
+  <!-- Cards -->
+  <section class="cards" id="services">
+    <div class="card" data-modal="jurnal">
       <i class="fas fa-file-alt"></i>
       <h3>Joki Jurnal</h3>
-      <p>Pengerjaan jurnal akademik dengan format standar dan penelitian mendalam.</p>
-      <a href="https://wa.me/6285251379292?text=Halo%20El%20Kunyuk,%20saya%20ingin%20pesan%20jasa%20joki%20jurnal.%20Berapa%20biayanya?" target="_blank" aria-label="Pesan Joki Jurnal">Pesan Layanan</a>
+      <p>Bantu kerjain jurnal akademik dengan format rapi dan konten berkualitas.</p>
+      <button onclick="openModal('jurnal')">Detail & Harga</button>
     </div>
 
-    <div class="card">
+    <div class="card" data-modal="website">
       <i class="fas fa-globe"></i>
-      <h3>Pembuatan Website</h3>
-      <p>Pengembangan website modern, responsif, dan SEO-friendly untuk bisnis Anda.</p>
-      <a href="https://wa.me/6285251379292?text=Halo%20El%20Kunyuk,%20saya%20ingin%20pesan%20jasa%20pembuatan%20website.%20Berapa%20biayanya?" target="_blank" aria-label="Pesan Pembuatan Website">Pesan Layanan</a>
+      <h3>Joki Website</h3>
+      <p>Bikin website modern dan responsif sesuai kebutuhanmu, cepat selesai.</p>
+      <button onclick="openModal('website')">Detail & Harga</button>
     </div>
 
-    <div class="card">
+    <div class="card" data-modal="proyek">
       <i class="fas fa-project-diagram"></i>
-      <h3>Pengerjaan Proyek</h3>
-      <p>Dukungan lengkap untuk proyek informatika, dari konsep hingga implementasi.</p>
-      <a href="https://wa.me/6285251379292?text=Halo%20El%20Kunyuk,%20saya%20ingin%20pesan%20jasa%20pengerjaan%20proyek.%20Berapa%20biayanya?" target="_blank" aria-label="Pesan Pengerjaan Proyek">Pesan Layanan</a>
+      <h3>Joki Proyek</h3>
+      <p>Selesaikan proyek informatika dengan tepat waktu dan hasil optimal.</p>
+      <button onclick="openModal('proyek')">Detail & Harga</button>
     </div>
 
-    <div class="card">
-      <i class="fas fa-file-word"></i>   
-      <h3>Pengerjaan Laporan</h3>
-      <p>Penyusunan laporan akademik atau proyek yang rapi, sistematis, dan sesuai standar institusi.</p>
-      <a href="https://wa.me/6285251379292?text=Halo%20El%20Kunyuk,%20saya%20ingin%20pesan%20jasa%20pengerjaan%20laporan.%20Berapa%20biayanya?" target="_blank" aria-label="Pesan Pengerjaan Laporan">Pesan Layanan</a>
+    <div class="card" data-modal="laporan">
+      <i class="fas fa-file-word"></i>
+      <h3>Joki Laporan</h3>
+      <p>Laporan sistematis dan sesuai standar, biar tugasmu aman.</p>
+      <button onclick="openModal('laporan')">Detail & Harga</button>
     </div>
 
-    <div class="card">
+    <div class="card" data-modal="makalah">
       <i class="fas fa-book"></i>
-      <h3>Pembuatan Makalah</h3>
-      <p>Penyusunan makalah ilmiah yang komprehensif, jelas, dan mematuhi pedoman penulisan akademik.</p>
-      <a href="https://wa.me/6285251379292?text=Halo%20El%20Kunyuk,%20saya%20ingin%20pesan%20jasa%20pembuatan%20makalah.%20Berapa%20biayanya?" target="_blank" aria-label="Pesan Pembuatan Makalah">Pesan Layanan</a>
+      <h3>Joki Makalah</h3>
+      <p>Makalah jelas dan lengkap, sesuai aturan penulisan akademik.</p>
+      <button onclick="openModal('makalah')">Detail & Harga</button>
     </div>
 
-    <div class="card">
+    <div class="card" data-modal="desain">
       <i class="fas fa-palette"></i>
-      <h3>Desain Grafis</h3>
-      <p>Layanan desain grafis profesional untuk branding, materi promosi, atau kebutuhan visual proyek.</p>
-      <a href="https://wa.me/6285251379292?text=Halo%20El%20Kunyuk,%20saya%20ingin%20pesan%20jasa%20desain%20grafis.%20Berapa%20biayanya?" target="_blank" aria-label="Pesan Desain Grafis">Pesan Layanan</a>
+      <h3>Joki Desain Grafis</h3>
+      <p>Desain kreatif untuk brand atau proyek, hasil profesional.</p>
+      <button onclick="openModal('desain')">Detail & Harga</button>
     </div>
 
-    <div class="card">
+    <div class="card" data-modal="fish">
       <i class="fas fa-fish"></i>
-      <h3>Konsultasi Game Fish It!</h3>
-      <p>Pendampingan dan strategi optimalisasi untuk game Fish It!, termasuk peningkatan level dan performa.</p>
-      <a href="https://wa.me/6285251379292?text=Halo%20El%20Kunyuk,%20saya%20ingin%20pesan%20jasa%20konsultasi%20Fish%20It!.%20Berapa%20biayanya?" target="_blank" aria-label="Pesan Konsultasi Fish It!">Pesan Layanan</a>
+      <h3>Joki Fish It!</h3>
+      <p>Push level Fish It! cepat, aman, biar bisa flexing mudah.</p>
+      <button onclick="openModal('fish')">Detail & Harga</button>
     </div>
 
-    <div class="card">
+    <div class="card" data-modal="mobile">
       <i class="fas fa-gamepad"></i>
-      <h3>Konsultasi Mobile Legends</h3>
-      <p>Pendampingan rank improvement dan strategi kompetitif untuk Mobile Legends, aman dan terpercaya.</p>
-      <a href="https://wa.me/6285251379292?text=Halo%20El%20Kunyuk,%20saya%20ingin%20pesan%20jasa%20konsultasi%20Mobile%20Legends.%20Berapa%20biayanya?" target="_blank" aria-label="Pesan Konsultasi Mobile Legends">Pesan Layanan</a>
+      <h3>Joki Mobile Legend</h3>
+      <p>Push rank ML cepat tanpa ribet, aman dan terpercaya, naik heroik mudah.</p>
+      <button onclick="openModal('mobile')">Detail & Harga</button>
     </div>
   </section>
+
+  <!-- Modal Popup - Dinamis -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <i id="modal-icon" class="fas"></i>
+      <h3 id="modal-title"></h3>
+      <p id="modal-desc"></p>
+      <p id="modal-price" style="font-weight: 600; color: var(--accent); font-size: 1.2rem;"></p>
+      <a id="modal-whatsapp" href="#" class="cta-button" target="_blank">Pesan via WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20saya%20mau%20pesan%20jasa%20dari%20El%20Kunyuk%20Store.%20Bisa%20chat?" class="floating-cta" aria-label="Chat WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
 
   <!-- Footer -->
   <footer id="contact">
-    <div class="footer-content">
-      <div>
-        <h4>Tentang Kami</h4>
-        <p>El Kunyuk Store adalah penyedia layanan informatika terpercaya yang fokus pada inovasi dan kualitas. Kami berkomitmen untuk mendukung kesuksesan klien kami di era digital.</p>
-      </div>
-      <div>
-        <h4>Layanan Utama</h4>
-        <ul>
-          <li><a href="#services">Pembuatan Website</a></li>
-          <li><a href="#services">Desain Grafis</a></li>
-          <li><a href="#services">Pengerjaan Proyek</a></li>
-          <li><a href="#services">Laporan & Makalah</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>Kontak Kami</h4>
-        <ul>
-          <li><strong>Telepon:</strong> +62 852-5137-9292</li>
-          <li><strong>Email:</strong> info@elkunyukstore.com</li>
-          <li><strong>WhatsApp:</strong> <a href="https://wa.me/6285251379292" target="_blank">Chat Sekarang</a></li>
-          <li><strong>Alamat:</strong> Jakarta, Indonesia</li>
-        </ul>
-      </div>
-    </div>
-    <div class="social-links">
-      <a href="https://wa.me/6285251379292" target="_blank" aria-label="WhatsApp" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://instagram.com/elkunyukstore" target="_blank" aria-label="Instagram" title="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://t.me/elkunyukstore" target="_blank" aria-label="Telegram" title="Telegram"><i class="fab fa-telegram"></i></a>
-      <a href="https://linkedin.com/company/elkunyukstore" target="_blank" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2024 El Kunyuk Store. Semua hak cipta dilindungi. <a href="#privacy" style="color: var(--secondary-color);">Kebijakan Privasi</a> | <a href="#terms" style="color: var(--secondary-color);">Syarat & Ketentuan</a></p>
-    </div>
+    <p>&copy; 2024 El Kunyuk Store. Layanan joki informatika cepat & aman.</p>
+    <p>Kontak: <a href="https://wa.me/6285251379292">+62 852-5137-9292</a> | <a href="mailto:info@elkunyukstore.com">info@elkunyukstore.com</a></p>
   </footer>
 
   <script>
-    // Mobile Nav Toggle
+    // Data Modal untuk Setiap Layanan (ganti harga/deskripsi sesuai kebutuhan)
+    const modalData = {
+      jurnal: {
+        icon: 'fas fa-file-alt',
+        title: 'Joki Jurnal',
+        desc: 'Bantu kerjain jurnal akademik dengan format rapi, riset mendalam, dan deadline tepat waktu. Cocok untuk tugas kuliah atau publikasi.',
+        price: 'Rp 150.000 - 500.000 (tergantung panjang & kompleksitas)',
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20jurnal.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      website: {
+        icon: 'fas fa-globe',
+        title: 'Joki Website',
+        desc: 'Bikin website custom, responsif, dan SEO-ready. Dari landing page sederhana hingga e-commerce full.',
+        price: 'Rp 500.000 - 2.000.000 (tergantung fitur & desain)',
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20website.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      proyek: {
+        icon: 'fas fa-project-diagram',
+        title: 'Joki Proyek',
+        desc: 'Selesaikan proyek informatika seperti app development, database, atau AI. Hasil berkualitas & bebas plagiat.',
+        price: 'Rp 300.000 - 1.500.000 (tergantung scope proyek)',
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20proyek.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      laporan: {
+        icon: 'fas fa-file-word',
+        title: 'Joki Laporan',
+        desc: 'Laporan tugas atau proyek yang rapi, lengkap dengan analisis & kesimpulan. Siap submit!',
+        price: 'Rp 100.000 - 400.000 (tergantung halaman & topik)',
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20laporan.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      makalah: {
+        icon: 'fas fa-book',
+        title: 'Joki Makalah',
+        desc: 'Makalah akademik yang jelas, terstruktur, dan sesuai pedoman APA/MLA. Gratis revisi.',
+        price: 'Rp 120.000 - 350.000 (tergantung panjang & referensi)',
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20makalah.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      desain: {
+        icon: 'fas fa-palette',
+        title: 'Joki Desain Grafis',
+        desc: 'Desain logo, poster, UI/UX, atau banner kreatif. Tools: Photoshop, Figma, Illustrator.',
+        price: 'Rp 50.000 - 300.000 (tergantung jenis desain)',
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20desain%20grafis.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      fish: {
+        icon: 'fas fa-fish',
+        title: 'Joki Fish It!',
+        desc: 'Naik level cepat di Fish It!, farming koin & item. Aman, no ban, cocok buat flexing.',
+        price: 'Rp 20.000 - 100.000 (tergantung level target)',
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20Fish%20It!.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      mobile: {
+        icon: 'fas fa-gamepad',
+        title: 'Joki Mobile Legend',
+        desc: 'Push rank dari mythic ke grandmaster atau heroik. Akun aman, strategi pro player.',
+        price: 'Rp 50.000 - 200.000 (tergantung rank target & hero)',
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20Mobile%20Legend.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      }
+    };
+
+    // Modal Functions
+    function openModal(service) {
+      const data = modalData[service];
+      if (data) {
+        document.getElementById('modal-icon').className = data.icon;
+        document.getElementById('modal-title').textContent = data.title;
+        document.getElementById('modal-desc').textContent = data.desc;
+        document.getElementById('modal-price').textContent = data.price;
+        document.getElementById('modal-whatsapp').href = data.whatsapp;
+        document.getElementById('modal').style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // Prevent scroll
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    // Close modal on outside click
+    window.onclick = function(event) {
+      const modal = document.getElementById('modal');
+      if (event.target === modal) {
+        closeModal();
+      }
+    }
+
+    // Typewriter Animation untuk Hero Title
+    function typeWriter(element, text, speed = 100) {
+      let i = 0;
+      element.innerHTML = '';
+      function type() {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        } else {
+          element.classList.remove('typewriter'); // Stop blink
+        }
+      }
+      type();
+    }
+
+    // Nav Toggle Mobile
     const navToggle = document.getElementById('navToggle');
     const navMenu = document.getElementById('navMenu');
-
     navToggle.addEventListener('click', () => {
       navMenu.classList.toggle('active');
     });
@@ -559,54 +611,55 @@
     window.addEventListener('scroll', () => {
       const nav = document.querySelector('nav');
       if (window.scrollY > 50) {
-        nav.classList.add('scrolled');
+        nav.classList.add('solid');
       } else {
-        nav.classList.remove('scrolled');
+        nav.classList.remove('solid');
       }
     });
 
     // Cards Animation Observer
     const cards = document.querySelectorAll('.card');
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
-
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry, index) => {
         if (entry.isIntersecting) {
           setTimeout(() => {
             entry.target.classList.add('show');
-          }, index * 100); // Stagger effect: delay 100ms per card
+          }, index * 150); // Stagger 150ms per card
         }
       });
-    }, observerOptions);
+    }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
 
-    cards.forEach(card => {
-      observer.observe(card);
-    });
+    cards.forEach(card => observer.observe(card));
 
-    // Smooth Scroll for Nav Links
+    // Smooth Scroll untuk Nav Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const targetId = this.getAttribute('href').substring(1);
-        const targetElement = document.getElementById(targetId);
-        if (targetElement) {
-          const offsetTop = targetElement.offsetTop - 80; // Offset untuk fixed nav
+        const target = document.getElementById(targetId);
+        if (target) {
+          const offset = 100; // Offset untuk fixed nav
           window.scrollTo({
-            top: offsetTop,
+            top: target.offsetTop - offset,
             behavior: 'smooth'
           });
         }
-        // Close mobile menu if open
-        navMenu.classList.remove('active');
+        navMenu.classList.remove('active'); // Close mobile menu
       });
     });
 
-    // Accessibility: Trap focus in mobile menu (optional enhancement)
+    // Inisialisasi Typewriter on Load
+    window.addEventListener('load', () => {
+      const typewriterEl = document.getElementById('typewriter');
+      const fullText = typewriterEl.textContent;
+      typewriterEl.classList.add('typewriter');
+      typeWriter(typewriterEl, fullText, 80); // Speed 80ms per char
+    });
+
+    // Keyboard Support untuk Modal (Accessibility)
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
+        closeModal();
         navMenu.classList.remove('active');
       }
     });
