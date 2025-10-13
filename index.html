@@ -346,24 +346,26 @@
       margin: auto;
     }
 
-    .card {
-      background: var(--bg-secondary);
-      backdrop-filter: var(--blur);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: var(--border-radius);
-      padding: 2rem;
-      text-align: center;
-      transition: var(--transition);
-      cursor: pointer;
-      position: relative;
-      opacity: 0;
-      transform: translateY(20px) scale(0.98);
-    }
+.card {
+  background: var(--bg-secondary);
+  backdrop-filter: var(--blur);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  text-align: center;
+  transition: var(--transition);  /* Sudah ada, tapi pastikan ini untuk opacity & transform */
+  cursor: pointer;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px) scale(0.98);
+}
 
-    .card.show {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+.card.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: var(--transition);  /* Smooth in/out */
+}
+
 
     .card:hover {
       transform: translateY(-8px) scale(1.02);
@@ -904,19 +906,27 @@ if (statsSection) {
       }
     });
 
-    // Cards Animation Observer
-    const cards = document.querySelectorAll('.card');
-    const cardsObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry, index) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => {
-            entry.target.classList.add('show');
-          }, index * 150); // Stagger 150ms per card
-        }
-      });
-    }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+// Cards Animation Observer - Berulang Setiap Scroll (Fade In/Out)
+const cards = document.querySelectorAll('.card');
+const cardsObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, index) => {
+    if (entry.isIntersecting) {
+      // Fade In: Add 'show' dengan stagger delay
+      setTimeout(() => {
+        entry.target.classList.add('show');
+      }, index * 150); // Stagger 150ms per card
+    } else {
+      // Fade Out/Reset: Remove 'show' saat keluar viewport (biar ulang)
+      entry.target.classList.remove('show');
+    }
+  });
+}, { 
+  threshold: 0.1, 
+  rootMargin: '0px 0px -100px 0px'  // Trigger lebih awal saat scroll
+});
 
-    cards.forEach(card => cardsObserver.observe(card));
+cards.forEach(card => cardsObserver.observe(card));
+
 
     // Smooth Scroll untuk Nav Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -968,4 +978,5 @@ if (statsSection) {
 </html>
 
        
+
 
