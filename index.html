@@ -822,100 +822,124 @@ nav {
     <p>Kontak: <a href="https://wa.me/6285251379292">+62 852-5137-9292</a> | <a href="mailto:info@elkunyukstore.com">info@elkunyukstore.com</a></p>
   </footer>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-  // Semua kode modalData, openModal, closeModal di sini
-  const modalData = { /* ... data kamu ... */ };
+ <script>
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM loaded - Modal script starting');  // Debug: Pastiin ini muncul di console
 
-  function openModal(service) { /* ... sama seperti sekarang ... */ }
-
-  function closeModal() { /* ... sama seperti sekarang ... */ }
-});
-    // Data Modal (sama seperti sebelumnya, tidak berubah)
-    const modalData = {
-      jurnal: {
-        icon: 'fas fa-file-alt',
-        title: 'Joki Jurnal',
-        desc: 'Bantu kerjain jurnal akademik dengan format rapi, riset mendalam, dan deadline tepat waktu. Cocok untuk tugas kuliah atau publikasi.',
-        price: 'Rp 150.000 - 500.000 (tergantung panjang & kompleksitas)',
-        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20jurnal.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
-      },
-      website: {
-        icon: 'fas fa-globe',
-        title: 'Joki Website',
-        desc: 'Bikin website custom, responsif, dan SEO-ready. Dari landing page sederhana hingga e-commerce full.',
-        price: 'Rp 500.000 - 2.000.000 (tergantung fitur & desain)',
-        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20website.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
-      },
-      proyek: {
-        icon: 'fas fa-project-diagram',
-        title: 'Joki Proyek',
-        desc: 'Selesaikan proyek informatika seperti app development, database, atau AI. Hasil berkualitas & bebas plagiat.',
-        price: 'Rp 300.000 - 1.500.000 (tergantung scope proyek)',
-        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20proyek.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
-      },
-      laporan: {
-        icon: 'fas fa-file-word',
-        title: 'Joki Laporan',
-        desc: 'Laporan tugas atau proyek yang rapi, lengkap dengan analisis & kesimpulan. Siap submit!',
-        price: 'Rp 100.000 - 400.000 (tergantung halaman & topik)',
-        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20laporan.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
-      },
-      makalah: {
-        icon: 'fas fa-book',
-        title: 'Joki Makalah',
-        desc: 'Makalah akademik yang jelas, terstruktur, dan sesuai pedoman APA/MLA. Gratis revisi.',
-        price: 'Rp 120.000 - 350.000 (tergantung panjang & referensi)',
-        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20makalah.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
-      },
-      desain: {
-        icon: 'fas fa-palette',
-        title: 'Joki Desain Grafis',
-        desc: 'Desain logo, poster, UI/UX, atau banner kreatif. Tools: Photoshop, Figma, Illustrator.',
-        price: 'Rp 50.000 - 300.000 (tergantung jenis desain)',
-        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20desain%20grafis.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
-      },
-      fish: {
-        icon: 'fas fa-fish',
-        title: 'Joki Fish It!',
-        desc: 'Naik level cepat di Fish It!, farming koin & item. Aman, no ban, cocok buat flexing.',
-        price: 'Rp 20.000 - 100.000 (tergantung level target)',
-        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20Fish%20It!.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
-      },
-      mobile: {
-        icon: 'fas fa-gamepad',
-        title: 'Joki Mobile Legend',
-        desc: 'Push rank dari mythic ke grandmaster atau heroik. Akun aman, strategi pro player.',
-        price: 'Rp 50.000 - 200.000 (tergantung rank target & hero)',
-        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20Mobile%20Legend.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
-      }
-    };
-
-    // Modal Functions (sama seperti sebelumnya)
-    function openModal(service) {
-      const data = modalData[service];
-      if (data) {
-        document.getElementById('modal-icon').className = data.icon;
-        document.getElementById('modal-title').textContent = data.title;
-        document.getElementById('modal-desc').textContent = data.desc;
-        document.getElementById('modal-price').textContent = data.price;
-        document.getElementById('modal-whatsapp').href = data.whatsapp;
-        document.getElementById('modal').style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-      }
+  // Data Modal (sama seperti punya kamu)
+  const modalData = {
+    jurnal: {
+      icon: 'fas fa-file-alt',
+      title: 'Joki Jurnal',
+      desc: 'Bantu kerjain jurnal akademik dengan format rapi, riset mendalam, dan deadline tepat waktu. Cocok untuk tugas kuliah atau publikasi.',
+      price: 'Rp 150.000 - 500.000 (tergantung panjang & kompleksitas)',
+      whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20jurnal.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+    },
+    website: {
+      icon: 'fas fa-globe',
+      title: 'Joki Website',
+      desc: 'Bikin website custom, responsif, dan SEO-ready. Dari landing page sederhana hingga e-commerce full.',
+      price: 'Rp 500.000 - 2.000.000 (tergantung fitur & desain)',
+      whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20website.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+    },
+    proyek: {
+      icon: 'fas fa-project-diagram',
+      title: 'Joki Proyek',
+      desc: 'Selesaikan proyek informatika seperti app development, database, atau AI. Hasil berkualitas & bebas plagiat.',
+      price: 'Rp 300.000 - 1.500.000 (tergantung scope proyek)',
+      whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20proyek.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+    },
+    laporan: {
+      icon: 'fas fa-file-word',
+      title: 'Joki Laporan',
+      desc: 'Laporan tugas atau proyek yang rapi, lengkap dengan analisis & kesimpulan. Siap submit!',
+      price: 'Rp 100.000 - 400.000 (tergantung halaman & topik)',
+      whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20laporan.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+    },
+    makalah: {
+      icon: 'fas fa-book',
+      title: 'Joki Makalah',
+      desc: 'Makalah akademik yang jelas, terstruktur, dan sesuai pedoman APA/MLA. Gratis revisi.',
+      price: 'Rp 120.000 - 350.000 (tergantung panjang & referensi)',
+      whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20makalah.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+    },
+    desain: {
+      icon: 'fas fa-palette',
+      title: 'Joki Desain Grafis',
+      desc: 'Desain logo, poster, UI/UX, atau banner kreatif. Tools: Photoshop, Figma, Illustrator.',
+      price: 'Rp 50.000 - 300.000 (tergantung jenis desain)',
+      whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20desain%20grafis.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+    },
+    fish: {
+      icon: 'fas fa-fish',
+      title: 'Joki Fish It!',
+      desc: 'Naik level cepat di Fish It!, farming koin & item. Aman, no ban, cocok buat flexing.',
+      price: 'Rp 20.000 - 100.000 (tergantung level target)',
+      whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20Fish%20It!.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+    },
+    mobile: {
+      icon: 'fas fa-gamepad',
+      title: 'Joki Mobile Legend',
+      desc: 'Push rank dari mythic ke grandmaster atau heroik. Akun aman, strategi pro player.',
+      price: 'Rp 50.000 - 200.000 (tergantung rank target & hero)',
+      whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20Mobile%20Legend.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
     }
+  };
 
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-      document.body.style.overflow = 'auto';
-    }
-
-    window.onclick = function(event) {
+  // Function Open Modal dengan Debug
+  window.openModal = function(service) {  // Global biar onclick di HTML work
+    console.log('Opening modal for:', service);  // Debug: Lihat service apa yang dipilih
+    const data = modalData[service];
+    if (data) {
       const modal = document.getElementById('modal');
-      if (event.target === modal) {
-        closeModal();
+      const modalIcon = document.getElementById('modal-icon');
+      const modalTitle = document.getElementById('modal-title');
+      const modalDesc = document.getElementById('modal-desc');
+      const modalPrice = document.getElementById('modal-price');
+      const modalWhatsapp = document.getElementById('modal-whatsapp');
+
+      // Check elemen exist
+      if (!modal || !modalIcon || !modalTitle || !modalDesc || !modalPrice || !modalWhatsapp) {
+        console.error('Modal elements not found! Check HTML IDs.');  // Debug error
+        return;
       }
+
+      // Set content
+      modalIcon.className = data.icon;
+      modalTitle.textContent = data.title;
+      modalDesc.textContent = data.desc;
+      modalPrice.textContent = data.price;
+      modalWhatsapp.href = data.whatsapp;
+      console.log('WA href set to:', data.whatsapp);  // Debug: Pastiin href benar
+
+      // Show modal
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      console.log('Modal opened successfully');  // Debug sukses
+    } else {
+      console.error('Service data not found for:', service);  // Debug kalau service salah
     }
+  };
+
+  // Function Close Modal
+  window.closeModal = function() {
+    const modal = document.getElementById('modal');
+    if (modal) {
+      modal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+      console.log('Modal closed');  // Debug
+    }
+  };
+
+  // Close modal on outside click (bonus, opsional)
+  document.getElementById('modal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeModal();
+    }
+  });
+
+  console.log('Modal script fully loaded');  // Debug akhir
+});
 
     // Counter Animation untuk Stats
     function animateCounter(element, target, duration = 2000) {
@@ -1339,6 +1363,7 @@ window.addEventListener('load', () => {
 </html>
 
        
+
 
 
 
