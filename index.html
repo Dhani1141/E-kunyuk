@@ -807,7 +807,7 @@ nav {
       <h3 id="modal-title"></h3>
       <p id="modal-desc"></p>
       <p id="modal-price" style="font-weight: 600; color: var(--accent); font-size: 1.2rem;"></p>
-      <a id="modal-whatsapp" href="#" class="cta-button" target="_blank">Pesan via WhatsApp</a>
+      <a id="modal-whatsapp" href="#" class="cta-button" onclick="openWhatsappFromModal(); return false;">Pesan via WhatsApp</a>
     </div>
   </div>
 
@@ -933,21 +933,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   };
 
-  // Fungsi Baru: Force Open WA (Tambah onclick di HTML nanti)
-  window.openWhatsappFromModal = function() {
-    const waUrl = document.getElementById('modal-whatsapp').getAttribute('data-wa-url') || 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20jasa.';
-    console.log('Force opening WA with URL:', waUrl);
-    
-    // Force open di tab baru (work di mobile/desktop)
-    if (waUrl) {
-      window.open(waUrl, '_blank', 'noopener,noreferrer');
-    } else {
-      console.error('No WA URL found');
-    }
-    
-    // Optional: Close modal setelah klik (biar smooth)
-    closeModal();
-  };
+ window.openWhatsappFromModal = function() {
+  const waUrl = document.getElementById('modal-whatsapp').getAttribute('data-wa-url') || 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20jasa.';
+  console.log('Trying to open WA with URL:', waUrl);
+  
+  try {
+    window.open(waUrl, '_blank', 'noopener,noreferrer');
+    console.log('WA opened successfully');
+    closeModal();  // Tutup modal setelah klik
+  } catch (error) {
+    console.error('Error opening WA:', error);
+    alert('Gagal membuka WhatsApp. Silakan klik link ini: ' + waUrl);  // Fallback alert dengan link
+  }
+};
 
   // Close on outside click
   const modal = document.getElementById('modal');
@@ -1388,6 +1386,7 @@ window.addEventListener('load', () => {
 </html>
 
        
+
 
 
 
