@@ -647,23 +647,9 @@ nav {
   </style>
   <!-- Particles.js CDN - Ringan & Subtle -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
-<script>
-  const speakBtn = document.getElementById("speakBtn");
-  const text = "Selamat datang di E'KUNYUKs, jasa joki terpercaya untuk website, desain, proyek, dan game dengan rating 4.9 dari 5!";
-
-  speakBtn.addEventListener("click", () => {
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.lang = "id-ID";
-    speech.pitch = 1;
-    speech.rate = 1;
-    window.speechSynthesis.speak(speech);
-  });
-</script>
 
 </head>
 <body>
-  <!-- Tombol Text-to-Speech -->
-<button id="speakBtn" class="cta-button">🔊 Dengarkan Deskripsi</button>
   <!-- Particles Container -->
 <div id="particles-js"></div>
 
@@ -1398,16 +1384,3 @@ window.addEventListener('load', () => {
   </script>
 </body>
 </html>
-
-       
-
-
-
-
-
-
-
-
-
-
-
