@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
   <meta name="description" content="E'KUNYUKs: Jasa joki informatika terpercaya – website, desain, proyek, laporan, dan game. Rating 4.9/5, 99% keberhasilan, garansi aman." />
   <meta name="keywords" content="joki jurnal, joki website, joki proyek, joki game, desain grafis, rating 4.9" />
   <meta name="author" content="E'KUNYUKs - Jasa Joki Terpercaya" />
@@ -85,19 +85,44 @@
       font-family: 'Poppins', sans-serif;
     }
 
+    html {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+    }
+
     body {
+      width: 100%;
+      max-width: 100vw;
+      min-width: 320px;
       background: var(--bg-primary);
       color: var(--text-primary);
       line-height: 1.6;
       overflow-x: hidden;
       scroll-behavior: smooth;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Prevent media elements from exceeding viewport */
+    img, video, iframe, embed, object, svg {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Prevent text overflow */
+    p, h1, h2, h3, h4, h5, h6, span, a, li {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
     }
 
     /* Navbar - Glassmorphism */
     nav {
       position: fixed;
       top: 0;
+      left: 0;
       width: 100%;
+      max-width: 100vw;
       background: var(--glass-bg);
       backdrop-filter: var(--blur);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -113,6 +138,7 @@
 
     .nav-container {
       max-width: 1200px;
+      width: 100%;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
@@ -175,7 +201,9 @@
       text-align: center;
       padding: 140px 1rem 4rem; /* Offset nav */
       max-width: 800px;
-      margin: auto;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
     }
 
     .hero h1 {
@@ -206,8 +234,11 @@
       color: var(--text-secondary);
       margin-bottom: 1rem;
       max-width: 600px;
+      width: 100%;
       margin-left: auto;
       margin-right: auto;
+      padding: 0 1rem;
+      box-sizing: border-box;
     }
 
     /* Rating Stars */
@@ -272,14 +303,18 @@
       backdrop-filter: var(--blur);
       padding: 4rem 1rem;
       text-align: center;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .stats-container {
       max-width: 1000px;
-      margin: auto;
+      width: 100%;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 2rem;
+      box-sizing: border-box;
     }
 
     .stat-item {
@@ -290,6 +325,8 @@
       border: 1px solid rgba(255, 255, 255, 0.1);
       transition: var(--transition);
       cursor: pointer;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .stat-item:hover {
@@ -377,6 +414,8 @@
       background: var(--bg-secondary);
       border-radius: var(--border-radius);
       border-left: 4px solid var(--accent);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .testimonial p {
@@ -394,7 +433,9 @@
     section.testimonials {
       padding: 4rem 1rem;
       max-width: 1200px;
-      margin: auto;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
     }
 
     .testimonials-container {
@@ -410,6 +451,7 @@
 
     .testimonial-card {
       min-width: 100%;
+      width: 100%;
       padding: 2rem;
       background: var(--bg-secondary);
       border-radius: var(--border-radius);
@@ -419,6 +461,7 @@
       align-items: center;
       text-align: center;
       gap: 1.5rem;
+      box-sizing: border-box;
     }
 
     .testimonial-image {
@@ -428,6 +471,9 @@
       border: 2px solid var(--accent);
       box-shadow: var(--shadow);
       transition: var(--transition);
+      display: block;
+      margin: 0 auto;
+      box-sizing: border-box;
     }
 
     .testimonial-image:hover {
@@ -440,6 +486,10 @@
       font-style: italic;
       line-height: 1.8;
       max-width: 600px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 1rem;
+      box-sizing: border-box;
     }
 
     .testimonial-rating {
@@ -509,7 +559,9 @@
     section.faq {
       padding: 4rem 1rem;
       max-width: 900px;
-      margin: auto;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
     }
 
     .faq-container {
@@ -524,6 +576,8 @@
       border-radius: var(--border-radius);
       overflow: hidden;
       transition: var(--transition);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .faq-item:hover {
@@ -639,22 +693,26 @@
       gap: 2rem;
       padding: 2rem 1rem;
       max-width: 1000px;
-      margin: auto;
+      width: 100%;
+      margin: 0 auto;
+      box-sizing: border-box;
     }
 
-.card {
-  background: var(--bg-secondary);
-  backdrop-filter: var(--blur);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--border-radius);
-  padding: 2rem;
-  text-align: center;
-  transition: var(--transition);  /* Sudah ada, tapi pastikan ini untuk opacity & transform */
-  cursor: pointer;
-  position: relative;
-  opacity: 0;
-  transform: translateY(20px) scale(0.98);
-}
+    .card {
+      background: var(--bg-secondary);
+      backdrop-filter: var(--blur);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      text-align: center;
+      transition: var(--transition);  /* Sudah ada, tapi pastikan ini untuk opacity & transform */
+      cursor: pointer;
+      position: relative;
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+      width: 100%;
+      box-sizing: border-box;
+    }
 
 .card.show {
   opacity: 1;
@@ -790,6 +848,8 @@
       padding: 3rem 1rem 1rem;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
       color: var(--text-secondary);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     footer p {
@@ -808,23 +868,57 @@
 
     /* Responsivitas */
     @media (max-width: 768px) {
+      html, body {
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+
       .nav-toggle { display: flex; }
       .nav-menu {
         position: fixed;
         top: 100%;
         left: -100%;
         width: 100%;
+        max-width: 100vw;
         background: var(--glass-bg);
         flex-direction: column;
         padding: 1rem;
         transition: left 0.3s ease;
+        box-sizing: border-box;
       }
       .nav-menu.active { left: 0; }
 
+      .nav-container {
+        padding: 0 1rem;
+        width: 100%;
+        max-width: 100%;
+      }
+
       .hero h1 { font-size: 2rem; }
-      section.stats { padding: 2rem 1rem; }
-      .stats-container { grid-template-columns: 1fr; gap:1.5rem; }
-      section.cards { grid-template-columns: 1fr; gap: 1.5rem; padding: 1rem; }
+      section.hero { 
+        padding: 140px 1rem 4rem;
+        width: 100%;
+        max-width: 100%;
+      }
+      section.stats { 
+        padding: 2rem 1rem;
+        width: 100%;
+        max-width: 100%;
+      }
+      .stats-container { 
+        grid-template-columns: 1fr; 
+        gap: 1.5rem;
+        width: 100%;
+        padding: 0;
+      }
+      section.cards { 
+        grid-template-columns: 1fr; 
+        gap: 1.5rem; 
+        padding: 1rem;
+        width: 100%;
+        max-width: 100%;
+      }
       .floating-cta { bottom: 1rem; right: 1rem; width: 50px; height: 50px; }
       .stat-number { font-size: 1.5rem; }
       .testimonial { padding: 1rem; }
@@ -833,20 +927,63 @@
       .testimonial-arrow.next { right: 0.5rem; }
       .testimonial-image { max-width: 100%; }
       .back-to-top { bottom: 4rem; right: 1rem; width: 45px; height: 45px; }
-      section.testimonials { padding: 2rem 1rem; }
-      section.faq { padding: 2rem 1rem; }
+      section.testimonials { 
+        padding: 2rem 1rem;
+        width: 100%;
+        max-width: 100%;
+      }
+      section.faq { 
+        padding: 2rem 1rem;
+        width: 100%;
+        max-width: 100%;
+      }
+      .testimonials-container {
+        width: 100%;
+        max-width: 100%;
+      }
+      .faq-container {
+        width: 100%;
+      }
     }
 
     @media (max-width: 480px) {
-      section.hero { padding: 120px 0.5rem 2rem; }
+      html, body {
+        width: 100%;
+        max-width: 100vw;
+      }
+
+      section.hero { 
+        padding: 120px 0.5rem 2rem;
+        width: 100%;
+        max-width: 100%;
+      }
       .hero h1 { font-size: 1.8rem; }
-      .card { padding: 1.5rem; }
+      .card { 
+        padding: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+      }
       .modal-content { padding: 1.5rem; width: 95%; }
-      .stats-container { gap: 1rem; }
-      .testimonial-card { padding: 1.5rem; }
+      .stats-container { 
+        gap: 1rem;
+        width: 100%;
+        padding: 0 0.5rem;
+      }
+      .testimonial-card { 
+        padding: 1.5rem;
+        width: 100%;
+        max-width: 100%;
+      }
       .faq-question { padding: 1rem; font-size: 0.9rem; }
       .faq-answer { padding: 0 1rem 1rem !important; font-size: 0.85rem; }
       section.testimonials h2, section.faq h2 { font-size: 1.5rem; }
+      
+      /* Pastikan semua section full width */
+      section {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
     }
     /* Particles Background - Full Screen, Subtle */
 #particles-js {
