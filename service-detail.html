@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Detail layanan joki E'KUNYUKs - Informasi lengkap, harga, dan proses pengerjaan." />
+  <link rel="icon" type="image/png" href="image.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Detail Layanan - E'KUNYUKs</title>
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #b3b3b3;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --blur: blur(10px);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --border-radius: 16px;
+      /* Fallback Themes (JS akan override) */
+      --accent-red: #ef4444;
+      --accent-red-hover: #dc2626;
+      --accent-blue: #3b82f6;
+      --accent-blue-hover: #2563eb;
+      --accent-purple: #8b5cf6;
+      --accent-purple-hover: #7c3aed;
+      --accent-orange: #f97316;
+      --accent-orange-hover: #ea580c;
+      --accent-cyan: #06b6d4;
+      --accent-cyan-hover: #0891b2;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--bg-secondary);
+      backdrop-filter: var(--blur);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+    }
+
+    .back-btn:hover {
+      color: var(--accent);
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    /* Hero Section */
+    .service-hero {
+      margin-top: 80px;
+      padding: 4rem 1rem;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+      animation: pulse 8s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 0.5; }
+      50% { transform: scale(1.1); opacity: 0.8; }
+    }
+
+    .service-icon {
+      font-size: 4rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-hero h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      z-index: 1;
+    }
+
+    .service-hero p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 1rem;
+    }
+
+    /* Service Details Grid */
+    .service-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+
+    .service-content {
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius);
+      padding: 2.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .service-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* Pricing Card */
+    .pricing-card {
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: center;
+      position: sticky;
+      top: 100px;
+    }
+
+    .pricing-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+    }
+
+    .price-range {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .price-note {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+
+    .cta-button {
+      display: block;
+      width: 100%;
+      padding: 1rem 2rem;
+      background: var(--accent);
+      color: var(--text-primary);
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      text-decoration: none;
+      transition: var(--transition);
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .cta-button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Features List */
+    .features-list {
+      list-style: none;
+      margin: 2rem 0;
+    }
+
+    .features-list li {
+      padding: 1rem;
+      margin-bottom: 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 8px;
+      border-left: 3px solid var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .features-list li i {
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    /* Process Timeline */
+    .process-section {
+      margin: 4rem 0;
+    }
+
+    .process-section h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      color: var(--text-primary);
+    }
+
+    .timeline {
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent);
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      display: flex;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+
+    .timeline-item:nth-child(odd) {
+      flex-direction: row;
+    }
+
+    .timeline-item:nth-child(even) {
+      flex-direction: row-reverse;
+    }
+
+    .timeline-content {
+      flex: 1;
+      background: var(--bg-secondary);
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      margin: 0 2rem;
+      position: relative;
+    }
+
+    .timeline-number {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 50px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+      z-index: 10;
+      border: 4px solid var(--bg-primary);
+    }
+
+    .timeline-content h3 {
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    /* Guarantee Card */
+    .guarantee-card {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(5, 150, 105, 0.05));
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      border: 1px solid var(--accent);
+      text-align: center;
+    }
+
+    .guarantee-card h3 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .guarantee-list {
+      list-style: none;
+      text-align: left;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .guarantee-list li {
+      padding: 0.5rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .guarantee-list li i {
+      color: var(--accent);
+    }
+
+    /* Related Services */
+    .related-services {
+      margin-top: 4rem;
+      padding-top: 4rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .related-services h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .related-card {
+      background: var(--bg-secondary);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: var(--transition);
+      text-decoration: none;
+      color: var(--text-primary);
+      display: block;
+    }
+
+    .related-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+      box-shadow: var(--shadow);
+    }
+
+    .related-card i {
+      font-size: 2rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      .service-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pricing-card {
+        position: static;
+      }
+
+      .timeline::before {
+        left: 30px;
+      }
+
+      .timeline-item {
+        flex-direction: row !important;
+        padding-left: 4rem;
+      }
+
+      .timeline-number {
+        left: 30px;
+      }
+
+      .timeline-content {
+        margin: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .service-hero h1 {
+        font-size: 2rem;
+      }
+
+      .service-icon {
+        font-size: 3rem;
+      }
+
+      .container {
+        padding: 2rem 1rem;
+      }
+
+      .service-content {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-container">
+      <a href="joki.html" class="nav-logo">
+        <img src="image.png" alt="Logo">
+        E'KUNYUKs
+      </a>
+      <a href="joki.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        <span>Kembali ke Beranda</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Service Hero -->
+  <section class="service-hero" id="serviceHero">
+    <i class="fas service-icon" id="serviceIcon"></i>
+    <h1 id="serviceTitle">Loading...</h1>
+    <p id="serviceSubtitle">Memuat informasi layanan...</p>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="service-grid">
+      <!-- Service Content -->
+      <div class="service-content">
+        <h2 style="color: var(--accent); margin-bottom: 1.5rem; font-size: 2rem;">Tentang Layanan</h2>
+        <div id="serviceDescription"></div>
+
+        <h3 style="margin-top: 3rem; margin-bottom: 1.5rem; color: var(--text-primary);">Fitur & Keunggulan</h3>
+        <ul class="features-list" id="serviceFeatures"></ul>
+
+        <!-- Process Timeline -->
+        <div class="process-section">
+          <h2>Proses Pengerjaan</h2>
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-number">1</div>
+              <div class="timeline-content">
+                <h3>Konsultasi & Briefing</h3>
+                <p>Diskusikan kebutuhan dan detail proyek melalui WhatsApp. Kami akan memberikan estimasi waktu dan harga.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-number">2</div>
+              <div class="timeline-content">
+                <h3>Konfirmasi & Pembayaran</h3>
+                <p>Setelah deal, kirim DP atau full payment sesuai kesepakatan. Kami mulai pengerjaan setelah konfirmasi pembayaran.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-number">3</div>
+              <div class="timeline-content">
+                <h3>Pengerjaan Proyek</h3>
+                <p>Tim kami mengerjakan sesuai deadline dan standar kualitas. Update progress bisa ditanyakan kapan saja.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-number">4</div>
+              <div class="timeline-content">
+                <h3>Review & Revisi</h3>
+                <p>Hasil dikirim untuk review. Revisi gratis hingga 3x atau sampai Anda puas dengan hasilnya.</p>
+              </div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-number">5</div>
+              <div class="timeline-content">
+                <h3>Finalisasi & Delivery</h3>
+                <p>Setelah finalisasi, file lengkap dikirim. Pelunasan (jika DP) setelah hasil disetujui.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="service-sidebar">
+        <!-- Pricing Card -->
+        <div class="pricing-card">
+          <h3>Harga Layanan</h3>
+          <div class="price-range" id="servicePrice">Rp 0 - 0</div>
+          <p class="price-note" id="priceNote">Harga dapat berubah sesuai kompleksitas</p>
+          <a href="#" class="cta-button" id="whatsappButton" onclick="openWhatsApp(); return false;">
+            <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+          </a>
+        </div>
+
+        <!-- Guarantee Card -->
+        <div class="guarantee-card">
+          <h3><i class="fas fa-shield-alt"></i> Garansi Kami</h3>
+          <ul class="guarantee-list">
+            <li><i class="fas fa-check-circle"></i> 100% Original & Bebas Plagiat</li>
+            <li><i class="fas fa-check-circle"></i> Revisi Gratis Hingga 3x</li>
+            <li><i class="fas fa-check-circle"></i> Tepat Waktu atau Uang Kembali</li>
+            <li><i class="fas fa-check-circle"></i> Kerahasiaan Data Terjamin</li>
+            <li><i class="fas fa-check-circle"></i> Support 24/7 via WhatsApp</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Services -->
+    <div class="related-services">
+      <h2>Layanan Lainnya</h2>
+      <div class="related-grid" id="relatedServices"></div>
+    </div>
+  </div>
+
+  <script>
+    // Service Data
+    const servicesData = {
+      jurnal: {
+        icon: 'fa-file-alt',
+        title: 'Joki Jurnal',
+        subtitle: 'Bantu kerjain jurnal akademik dengan format rapi, riset mendalam, dan deadline tepat waktu.',
+        description: `
+          <p>Layanan joki jurnal akademik profesional untuk membantu tugas kuliah atau publikasi Anda. Kami menyediakan jurnal dengan format yang rapi, konten berkualitas tinggi, dan riset yang mendalam sesuai dengan topik yang Anda butuhkan.</p>
+          <p>Tim kami terdiri dari penulis berpengalaman yang memahami berbagai format jurnal akademik. Kami menjamin hasil yang original, bebas plagiat, dan sesuai dengan standar penulisan ilmiah.</p>
+          <p><strong>Mengapa pilih joki jurnal kami?</strong></p>
+          <ul style="margin-left: 2rem; margin-top: 1rem;">
+            <li>Format sesuai standar akademik (APA, MLA, atau sesuai permintaan)</li>
+            <li>Riset mendalam dengan referensi terpercaya</li>
+            <li>Plagiarism check sebelum delivery</li>
+            <li>Revisi gratis hingga 3x</li>
+            <li>Deadline tepat waktu atau uang kembali</li>
+          </ul>
+        `,
+        price: 'Rp 150.000 - 500.000',
+        priceNote: 'Tergantung panjang & kompleksitas jurnal',
+        features: [
+          'Format jurnal sesuai standar akademik',
+          'Riset mendalam dengan referensi terpercaya',
+          'Plagiarism check sebelum delivery',
+          'Revisi gratis hingga 3x',
+          'Deadline tepat waktu',
+          'Support konsultasi selama pengerjaan'
+        ],
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20jurnal.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      website: {
+        icon: 'fa-globe',
+        title: 'Joki Website',
+        subtitle: 'Bikin website custom, responsif, dan SEO-ready. Dari landing page sederhana hingga e-commerce full.',
+        description: `
+          <p>Layanan pembuatan website profesional sesuai kebutuhan Anda. Dari landing page sederhana hingga website e-commerce lengkap dengan fitur payment gateway.</p>
+          <p>Kami menggunakan teknologi modern dan best practices untuk memastikan website Anda cepat, responsif, dan SEO-friendly. Setiap website yang kami buat dioptimasi untuk performa terbaik.</p>
+          <p><strong>Teknologi yang kami gunakan:</strong></p>
+          <ul style="margin-left: 2rem; margin-top: 1rem;">
+            <li>HTML5, CSS3, JavaScript (Vanilla/React/Vue)</li>
+            <li>Responsive Design (Mobile-first approach)</li>
+            <li>SEO Optimization</li>
+            <li>Fast Loading & Performance Optimization</li>
+            <li>Modern UI/UX Design</li>
+          </ul>
+        `,
+        price: 'Rp 500.000 - 2.000.000',
+        priceNote: 'Tergantung fitur & kompleksitas website',
+        features: [
+          'Design modern & responsif',
+          'SEO-friendly & fast loading',
+          'Mobile-first approach',
+          'Source code lengkap',
+          'Support maintenance 1 bulan',
+          'Training penggunaan (jika diperlukan)'
+        ],
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20website.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      proyek: {
+        icon: 'fa-project-diagram',
+        title: 'Joki Proyek',
+        subtitle: 'Selesaikan proyek informatika seperti app development, database, atau AI. Hasil berkualitas & bebas plagiat.',
+        description: `
+          <p>Layanan joki proyek informatika untuk berbagai jenis proyek programming, mulai dari aplikasi desktop, web application, database design, hingga proyek AI/ML.</p>
+          <p>Tim developer kami berpengalaman dalam berbagai bahasa pemrograman dan framework. Kami menjamin kode yang clean, terstruktur, dan mudah di-maintain.</p>
+          <p><strong>Jenis proyek yang kami handle:</strong></p>
+          <ul style="margin-left: 2rem; margin-top: 1rem;">
+            <li>Web Application (Frontend & Backend)</li>
+            <li>Mobile App Development</li>
+            <li>Database Design & Implementation</li>
+            <li>AI/ML Projects</li>
+            <li>System Analysis & Design</li>
+            <li>API Development</li>
+          </ul>
+        `,
+        price: 'Rp 300.000 - 1.500.000',
+        priceNote: 'Tergantung scope & kompleksitas proyek',
+        features: [
+          'Kode clean & terstruktur',
+          'Documentation lengkap',
+          'Testing & debugging',
+          'Source code lengkap',
+          'Support konsultasi teknis',
+          'Revisi gratis hingga 3x'
+        ],
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20proyek.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      laporan: {
+        icon: 'fa-file-word',
+        title: 'Joki Laporan',
+        subtitle: 'Laporan tugas atau proyek yang rapi, lengkap dengan analisis & kesimpulan. Siap submit!',
+        description: `
+          <p>Layanan joki laporan untuk berbagai jenis tugas dan proyek. Kami membuat laporan yang sistematis, lengkap dengan analisis mendalam dan kesimpulan yang jelas.</p>
+          <p>Format laporan kami sesuai dengan standar akademik dan mudah dipahami. Setiap laporan dilengkapi dengan tabel, grafik, dan visualisasi data yang diperlukan.</p>
+        `,
+        price: 'Rp 100.000 - 400.000',
+        priceNote: 'Tergantung halaman & kompleksitas topik',
+        features: [
+          'Format sistematis & rapi',
+          'Analisis mendalam',
+          'Kesimpulan yang jelas',
+          'Tabel & grafik (jika diperlukan)',
+          'Revisi gratis hingga 3x',
+          'Siap submit langsung'
+        ],
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20laporan.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      makalah: {
+        icon: 'fa-book',
+        title: 'Joki Makalah',
+        subtitle: 'Makalah akademik yang jelas, terstruktur, dan sesuai pedoman APA/MLA. Gratis revisi.',
+        description: `
+          <p>Layanan joki makalah akademik dengan struktur yang jelas dan sesuai dengan pedoman penulisan akademik (APA, MLA, atau sesuai permintaan).</p>
+          <p>Kami memastikan setiap makalah memiliki pendahuluan yang kuat, pembahasan yang mendalam, dan kesimpulan yang relevan. Semua referensi dicantumkan dengan benar.</p>
+        `,
+        price: 'Rp 120.000 - 350.000',
+        priceNote: 'Tergantung panjang & jumlah referensi',
+        features: [
+          'Struktur jelas & terstruktur',
+          'Sesuai pedoman APA/MLA',
+          'Referensi lengkap & valid',
+          'Bebas plagiat 100%',
+          'Revisi gratis hingga 3x',
+          'Deadline tepat waktu'
+        ],
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20makalah.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      desain: {
+        icon: 'fa-palette',
+        title: 'Joki Desain Grafis',
+        subtitle: 'Desain logo, poster, UI/UX, atau banner kreatif. Tools: Photoshop, Figma, Illustrator.',
+        description: `
+          <p>Layanan joki desain grafis profesional untuk berbagai kebutuhan, mulai dari logo, poster, banner, hingga UI/UX design untuk aplikasi atau website.</p>
+          <p>Tim designer kami kreatif dan berpengalaman dalam berbagai tools desain. Kami memberikan hasil yang modern, eye-catching, dan sesuai dengan brand identity Anda.</p>
+        `,
+        price: 'Rp 50.000 - 300.000',
+        priceNote: 'Tergantung jenis & kompleksitas desain',
+        features: [
+          'Design modern & kreatif',
+          'High resolution files',
+          'Multiple format (PNG, JPG, PDF, AI)',
+          'Revisi gratis hingga 3x',
+          'Fast turnaround time',
+          'Source file lengkap'
+        ],
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20desain%20grafis.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      fish: {
+        icon: 'fa-fish',
+        title: 'Joki Fish It!',
+        subtitle: 'Naik level cepat di Fish It!, farming koin & item. Aman, no ban, cocok buat flexing.',
+        description: `
+          <p>Layanan joki Fish It! untuk push level, farming koin, dan item dengan metode aman. Kami menggunakan metode manual untuk memastikan akun Anda aman dari ban.</p>
+          <p>Tim joki kami berpengalaman dan sudah membantu ratusan player mencapai level target mereka dengan aman. Garansi aman atau uang kembali.</p>
+        `,
+        price: 'Rp 20.000 - 100.000',
+        priceNote: 'Tergantung level target & durasi',
+        features: [
+          'Metode aman & manual',
+          'No ban guarantee',
+          'Fast progress',
+          'Update progress real-time',
+          'Garansi aman atau refund',
+          'Support 24/7'
+        ],
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20Fish%20It!.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      mobile: {
+        icon: 'fa-gamepad',
+        title: 'Joki Mobile Legend',
+        subtitle: 'Push rank dari mythic ke grandmaster atau heroik. Akun aman, strategi pro player.',
+        description: `
+          <p>Layanan joki Mobile Legend untuk push rank dengan strategi pro player. Kami menggunakan metode aman dan sudah terbukti membantu ratusan player mencapai rank target mereka.</p>
+          <p>Tim joki kami terdiri dari player berpengalaman yang memahami meta game dan strategi terbaik untuk setiap rank. Garansi aman atau uang kembali.</p>
+        `,
+        price: 'Rp 50.000 - 200.000',
+        priceNote: 'Tergantung rank target & hero yang digunakan',
+        features: [
+          'Strategi pro player',
+          'Metode aman & manual',
+          'No ban guarantee',
+          'Progress tracking real-time',
+          'Garansi aman atau refund',
+          'Support 24/7 via WhatsApp'
+        ],
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20Mobile%20Legend.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      }
+    };
+
+    // Get service from URL
+    function getServiceFromURL() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('service') || 'jurnal';
+    }
+
+    // Load service data
+    function loadService() {
+      const serviceId = getServiceFromURL();
+      const service = servicesData[serviceId];
+
+      if (!service) {
+        window.location.href = 'joki.html';
+        return;
+      }
+
+      // Update hero
+      document.getElementById('serviceIcon').className = `fas ${service.icon} service-icon`;
+      document.getElementById('serviceTitle').textContent = service.title;
+      document.getElementById('serviceSubtitle').textContent = service.subtitle;
+
+      // Update content
+      document.getElementById('serviceDescription').innerHTML = service.description;
+      document.getElementById('servicePrice').textContent = service.price;
+      document.getElementById('priceNote').textContent = service.priceNote;
+      document.getElementById('whatsappButton').href = service.whatsapp;
+
+      // Update features
+      const featuresList = document.getElementById('serviceFeatures');
+      featuresList.innerHTML = service.features.map(feature => 
+        `<li><i class="fas fa-check-circle"></i> ${feature}</li>`
+      ).join('');
+
+      // Update page title
+      document.title = `${service.title} - E'KUNYUKs`;
+
+      // Load related services
+      loadRelatedServices(serviceId);
+    }
+
+    // Load related services
+    function loadRelatedServices(currentServiceId) {
+      const relatedGrid = document.getElementById('relatedServices');
+      const services = Object.keys(servicesData).filter(id => id !== currentServiceId);
+      const shuffled = services.sort(() => 0.5 - Math.random()).slice(0, 3);
+
+      relatedGrid.innerHTML = shuffled.map(id => {
+        const service = servicesData[id];
+        return `
+          <a href="service-detail.html?service=${id}" class="related-card">
+            <i class="fas ${service.icon}"></i>
+            <h3>${service.title}</h3>
+            <p>${service.subtitle.substring(0, 60)}...</p>
+          </a>
+        `;
+      }).join('');
+    }
+
+    // WhatsApp function
+    function openWhatsApp() {
+      const serviceId = getServiceFromURL();
+      const service = servicesData[serviceId];
+      if (service) {
+        window.open(service.whatsapp, '_blank', 'noopener,noreferrer');
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', loadService);
+
+    // Random Theme Changer - Update Accent Color on Refresh
+    const themes = [
+      { name: 'Green', accent: '#10b981', hover: '#059669' },      // Default hijau
+      { name: 'Red', accent: '#ef4444', hover: '#dc2626' },        // Merah
+      { name: 'Blue', accent: '#3b82f6', hover: '#2563eb' },       // Biru
+      { name: 'Purple', accent: '#8b5cf6', hover: '#7c3aed' },     // Ungu
+      { name: 'Orange', accent: '#f97316', hover: '#ea580c' },     // Orange
+      { name: 'Cyan', accent: '#06b6d4', hover: '#0891b2' }        // Cyan/biru muda
+    ];
+
+    function setRandomTheme() {
+      // Pilih random theme
+      const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+      
+      // Update CSS Variables (global)
+      document.documentElement.style.setProperty('--accent', randomTheme.accent);
+      document.documentElement.style.setProperty('--accent-hover', randomTheme.hover);
+      
+      // Optional: Log theme (untuk debug, bisa dihapus)
+      console.log('Theme loaded:', randomTheme.name);
+    }
+
+    // Set random theme on page load
+    window.addEventListener('load', () => {
+      setRandomTheme();
+    });
+  </script>
+</body>
+</html>
+
