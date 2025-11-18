@@ -295,31 +295,25 @@
     .timeline {
       position: relative;
       padding: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
     }
 
     .timeline::before {
-      content: '';
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: var(--accent);
-      transform: translateX(-50%);
+      display: none;
     }
 
     .timeline-item {
       display: flex;
-      margin-bottom: 3rem;
+      margin-bottom: 0;
       position: relative;
+      width: 100%;
     }
 
-    .timeline-item:nth-child(odd) {
-      flex-direction: row;
-    }
-
+    .timeline-item:nth-child(odd),
     .timeline-item:nth-child(even) {
-      flex-direction: row-reverse;
+      flex-direction: row;
     }
 
     .timeline-content {
@@ -328,34 +322,60 @@
       padding: 1.5rem;
       border-radius: var(--border-radius);
       border: 1px solid rgba(255, 255, 255, 0.1);
-      margin: 0 2rem;
+      margin: 0;
       position: relative;
       box-sizing: border-box;
       word-wrap: break-word;
       overflow-wrap: break-word;
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      transition: var(--transition);
+    }
+
+    .timeline-content:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      border-color: var(--accent);
     }
 
     .timeline-number {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
+      position: relative;
+      left: auto;
+      transform: none;
       width: 50px;
       height: 50px;
+      min-width: 50px;
       background: var(--accent);
-      border-radius: 50%;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       color: var(--text-primary);
-      z-index: 10;
-      border: 4px solid var(--bg-primary);
+      z-index: 1;
+      border: none;
+      flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+    }
+
+    .timeline-content-wrapper {
+      flex: 1;
+      min-width: 0;
     }
 
     .timeline-content h3 {
       color: var(--accent);
       margin-bottom: 0.5rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .timeline-content p {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin: 0;
     }
 
     /* Guarantee Card */
@@ -532,10 +552,11 @@
       }
 
       .timeline {
-        padding: 1.5rem 0;
+        padding: 1rem 0;
         width: 100%;
         position: relative;
         margin: 0;
+        gap: 1.25rem;
       }
 
       .timeline::before {
@@ -543,66 +564,43 @@
       }
 
       .timeline-item {
-        flex-direction: column !important;
-        padding-left: 0;
-        margin-left: 0;
-        margin-bottom: 2rem;
         width: 100%;
-        position: relative;
-        display: flex;
-        align-items: stretch;
-      }
-
-      .timeline-number {
-        position: relative;
-        left: auto;
-        transform: none;
-        width: 50px;
-        height: 50px;
-        font-size: 1.3rem;
-        border: none;
-        margin: 0 auto 1rem;
-        flex-shrink: 0;
-        z-index: 10;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        margin-bottom: 0;
       }
 
       .timeline-content {
         margin: 0;
-        margin-left: 0;
-        margin-right: 0;
         width: 100%;
         max-width: 100%;
-        padding: 1.5rem;
+        padding: 1.25rem;
         box-sizing: border-box;
-        flex: 1;
-        border-left: 4px solid var(--accent);
+        flex-direction: row;
+        gap: 1rem;
+        align-items: flex-start;
       }
 
-      .timeline-content h3 {
+      .timeline-number {
+        width: 45px;
+        height: 45px;
+        min-width: 45px;
         font-size: 1.2rem;
-        margin-bottom: 0.75rem;
-        line-height: 1.4;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .timeline-content h3::before {
-        content: '';
-        width: 8px;
-        height: 8px;
-        background: var(--accent);
-        border-radius: 50%;
+        border-radius: 10px;
         flex-shrink: 0;
       }
 
+      .timeline-content-wrapper {
+        flex: 1;
+        min-width: 0;
+      }
+
+      .timeline-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+      }
+
       .timeline-content p {
-        font-size: 0.95rem;
-        line-height: 1.7;
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-        margin: 0;
+        font-size: 0.9rem;
+        line-height: 1.6;
       }
     }
 
@@ -630,8 +628,9 @@
       }
 
       .timeline {
-        padding: 1rem 0;
+        padding: 0.75rem 0;
         margin: 0;
+        gap: 1rem;
       }
 
       .timeline::before {
@@ -639,57 +638,30 @@
       }
 
       .timeline-item {
-        margin-bottom: 1.5rem;
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .timeline-number {
-        position: relative;
-        left: auto;
-        transform: none;
-        width: 45px;
-        height: 45px;
-        font-size: 1.2rem;
-        border: none;
-        margin: 0 auto 0.75rem;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        margin-bottom: 0;
       }
 
       .timeline-content {
-        margin: 0;
-        margin-left: 0;
-        margin-right: 0;
-        width: 100%;
-        max-width: 100%;
-        padding: 1.25rem;
-        box-sizing: border-box;
-        border-left: 4px solid var(--accent);
+        padding: 1rem;
+        gap: 0.75rem;
+      }
+
+      .timeline-number {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 1.1rem;
+        border-radius: 8px;
       }
 
       .timeline-content h3 {
-        font-size: 1.1rem;
-        margin-bottom: 0.6rem;
-        line-height: 1.3;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-      }
-
-      .timeline-content h3::before {
-        content: '';
-        width: 8px;
-        height: 8px;
-        background: var(--accent);
-        border-radius: 50%;
-        flex-shrink: 0;
+        font-size: 1rem;
+        margin-bottom: 0.4rem;
       }
 
       .timeline-content p {
-        font-size: 0.9rem;
-        line-height: 1.6;
-        margin: 0;
+        font-size: 0.85rem;
+        line-height: 1.5;
       }
 
       .pricing-card {
@@ -740,38 +712,48 @@
           <h2>Proses Pengerjaan</h2>
           <div class="timeline">
             <div class="timeline-item">
-              <div class="timeline-number">1</div>
               <div class="timeline-content">
-                <h3>Konsultasi & Briefing</h3>
-                <p>Diskusikan kebutuhan dan detail proyek melalui WhatsApp. Kami akan memberikan estimasi waktu dan harga.</p>
+                <div class="timeline-number">1</div>
+                <div class="timeline-content-wrapper">
+                  <h3>Konsultasi & Briefing</h3>
+                  <p>Diskusikan kebutuhan dan detail proyek melalui WhatsApp. Kami akan memberikan estimasi waktu dan harga.</p>
+                </div>
               </div>
             </div>
             <div class="timeline-item">
-              <div class="timeline-number">2</div>
               <div class="timeline-content">
-                <h3>Konfirmasi & Pembayaran</h3>
-                <p>Setelah deal, kirim DP atau full payment sesuai kesepakatan. Kami mulai pengerjaan setelah konfirmasi pembayaran.</p>
+                <div class="timeline-number">2</div>
+                <div class="timeline-content-wrapper">
+                  <h3>Konfirmasi & Pembayaran</h3>
+                  <p>Setelah deal, kirim DP atau full payment sesuai kesepakatan. Kami mulai pengerjaan setelah konfirmasi pembayaran.</p>
+                </div>
               </div>
             </div>
             <div class="timeline-item">
-              <div class="timeline-number">3</div>
               <div class="timeline-content">
-                <h3>Pengerjaan Proyek</h3>
-                <p>Tim kami mengerjakan sesuai deadline dan standar kualitas. Update progress bisa ditanyakan kapan saja.</p>
+                <div class="timeline-number">3</div>
+                <div class="timeline-content-wrapper">
+                  <h3>Pengerjaan Proyek</h3>
+                  <p>Tim kami mengerjakan sesuai deadline dan standar kualitas. Update progress bisa ditanyakan kapan saja.</p>
+                </div>
               </div>
             </div>
             <div class="timeline-item">
-              <div class="timeline-number">4</div>
               <div class="timeline-content">
-                <h3>Review & Revisi</h3>
-                <p>Hasil dikirim untuk review. Revisi gratis hingga 3x atau sampai Anda puas dengan hasilnya.</p>
+                <div class="timeline-number">4</div>
+                <div class="timeline-content-wrapper">
+                  <h3>Review & Revisi</h3>
+                  <p>Hasil dikirim untuk review. Revisi gratis hingga 3x atau sampai Anda puas dengan hasilnya.</p>
+                </div>
               </div>
             </div>
             <div class="timeline-item">
-              <div class="timeline-number">5</div>
               <div class="timeline-content">
-                <h3>Finalisasi & Delivery</h3>
-                <p>Setelah finalisasi, file lengkap dikirim. Pelunasan (jika DP) setelah hasil disetujui.</p>
+                <div class="timeline-number">5</div>
+                <div class="timeline-content-wrapper">
+                  <h3>Finalisasi & Delivery</h3>
+                  <p>Setelah finalisasi, file lengkap dikirim. Pelunasan (jika DP) setelah hasil disetujui.</p>
+                </div>
               </div>
             </div>
           </div>
