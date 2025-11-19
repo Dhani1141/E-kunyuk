@@ -8,6 +8,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>Detail Layanan - E'KUNYUKs</title>
+  <!-- Particles.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js" 
+        onerror="console.warn('Particles.js failed to load, continuing without particles'); document.getElementById('particles-js').style.display='none';"></script>
   <style>
     :root {
       --bg-primary: #0a0a0a;
@@ -672,9 +675,29 @@
         padding: 1.5rem;
       }
     }
+
+    /* Particles Background - Full Screen, Subtle */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; /* Di belakang semuanya */
+      pointer-events: none; /* Nggak ganggu click */
+    }
+
+    /* Responsivitas untuk Particles */
+    @media (max-width: 768px) {
+      #particles-js {
+        display: none; /* Disable particles di mobile untuk performa */
+      }
+    }
   </style>
 </head>
 <body>
+  <!-- Particles Container -->
+  <div id="particles-js"></div>
   <!-- Navbar -->
   <nav>
     <div class="nav-container">
@@ -980,6 +1003,65 @@
           'Support 24/7 via WhatsApp'
         ],
         whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20Mobile%20Legend.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      video2d: {
+        icon: 'fa-video',
+        title: 'Pembuatan Video 2D',
+        subtitle: 'Buat video animasi 2D profesional untuk promosi, edukasi, atau konten kreatif. Dari storyboard hingga final render.',
+        description: `
+          <p>Layanan pembuatan video animasi 2D profesional untuk berbagai kebutuhan, mulai dari video promosi, edukasi, explainer video, hingga konten kreatif untuk media sosial.</p>
+          <p>Tim animator kami berpengalaman dalam membuat animasi 2D yang menarik dan profesional. Kami menggunakan software terbaik seperti After Effects, Animate CC, dan tools lainnya untuk menghasilkan video berkualitas tinggi.</p>
+          <p><strong>Jenis video 2D yang kami buat:</strong></p>
+          <ul style="margin-left: 2rem; margin-top: 1rem;">
+            <li>Explainer Video (Video penjelasan produk/layanan)</li>
+            <li>Motion Graphics & Infographic Animation</li>
+            <li>Character Animation 2D</li>
+            <li>Video Promosi & Iklan</li>
+            <li>Video Edukasi & Tutorial</li>
+            <li>Video Konten Kreatif untuk Media Sosial</li>
+          </ul>
+        `,
+        price: 'Rp 300.000 - 1.500.000',
+        priceNote: 'Tergantung durasi & kompleksitas animasi',
+        features: [
+          'Storyboard & konsep kreatif',
+          'Animasi smooth & profesional',
+          'Sound design & music (opsional)',
+          'Multiple format output (MP4, MOV, etc)',
+          'Revisi gratis hingga 3x',
+          'Source file lengkap (jika diperlukan)'
+        ],
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20jasa%20pembuatan%20video%202D.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+      },
+      editing: {
+        icon: 'fa-film',
+        title: 'Pengeditan Video',
+        subtitle: 'Edit video dengan efek profesional, color grading, transisi smooth, dan audio mixing. Hasil siap publish.',
+        description: `
+          <p>Layanan pengeditan video profesional untuk berbagai kebutuhan, mulai dari video YouTube, konten media sosial, video pernikahan, hingga video corporate.</p>
+          <p>Tim editor kami berpengalaman dalam menggunakan software editing terbaik seperti Adobe Premiere Pro, After Effects, DaVinci Resolve, dan Final Cut Pro. Kami memberikan hasil yang polished dan siap untuk dipublish.</p>
+          <p><strong>Layanan editing yang kami sediakan:</strong></p>
+          <ul style="margin-left: 2rem; margin-top: 1rem;">
+            <li>Basic Editing (Cut, trim, arrange clips)</li>
+            <li>Color Grading & Color Correction</li>
+            <li>Motion Graphics & Visual Effects</li>
+            <li>Audio Mixing & Sound Design</li>
+            <li>Subtitles & Captions</li>
+            <li>Thumbnail Design (opsional)</li>
+          </ul>
+        `,
+        price: 'Rp 100.000 - 800.000',
+        priceNote: 'Tergantung durasi & kompleksitas editing',
+        features: [
+          'Color grading profesional',
+          'Smooth transitions & effects',
+          'Audio mixing & sound design',
+          'Subtitles & captions (jika diperlukan)',
+          'Multiple format output',
+          'Revisi gratis hingga 3x',
+          'Fast turnaround time'
+        ],
+        whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20jasa%20editing%20video.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
       }
     };
 
@@ -1078,7 +1160,119 @@
     // Set random theme on page load
     window.addEventListener('load', () => {
       setRandomTheme();
+      initParticles();
     });
+
+    // Particles.js Init - Subtle Background (Dots + Lines, Mouse Interactive)
+    function initParticles() {
+      // Detect mobile device
+      const isMobile = window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      
+      // Check if particles.js loaded successfully
+      if (typeof particlesJS === 'undefined') {
+        console.warn('Particles.js not loaded, hiding container');
+        const particlesContainer = document.getElementById('particles-js');
+        if (particlesContainer) {
+          particlesContainer.style.display = 'none';
+        }
+        return;
+      }
+
+      // Get current theme accent color
+      const currentAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#10b981';
+      
+      try {
+        particlesJS('particles-js', {
+          particles: {
+            number: {
+              value: isMobile ? 10 : 30,  // Kurangi particles di mobile untuk performa
+              density: {
+                enable: true,
+                value_area: isMobile ? 1200 : 800
+              }
+            },
+            color: {
+              value: ['#ffffff', currentAccent, '#b3b3b3']  // Warna putih, accent, abu
+            },
+            shape: {
+              type: 'circle',  // Dots bulat
+              stroke: {
+                width: 0,
+                color: '#000000'
+              }
+            },
+            opacity: {
+              value: 0.15,  // Lebih redup, tidak terlalu terang
+              random: true,
+              anim: {
+                enable: true,
+                speed: 1,
+                opacity_min: 0.05,
+                sync: false
+              }
+            },
+            size: {
+              value: 3,
+              random: true,
+              anim: {
+                enable: false
+              }
+            },
+            line_linked: {
+              enable: !isMobile,  // Disable lines di mobile untuk performa
+              distance: 150,
+              color: currentAccent,  // Accent color
+              opacity: 0.1,  // Lebih redup
+              width: 1
+            },
+            move: {
+              enable: !isMobile,  // Disable movement di mobile untuk performa
+              speed: isMobile ? 0 : 2,  // Lambat biar smooth
+              direction: 'none',
+              random: true,
+              straight: false,
+              out_mode: 'out',
+              bounce: false,
+              attract: {
+                enable: false
+              }
+            }
+          },
+          interactivity: {
+            detect_on: 'canvas',
+            events: {
+              onhover: {
+                enable: !isMobile,  // Disable hover di mobile
+                mode: 'grab'  // Partikel ikut mouse hover
+              },
+              onclick: {
+                enable: !isMobile,  // Disable click di mobile
+                mode: 'push'  // Klik tambah partikel sementara
+              },
+              resize: true
+            },
+            modes: {
+              grab: {
+                distance: 200,
+                line_linked: {
+                  opacity: 0.5
+                }
+              },
+              push: {
+                particles_nb: 4
+              }
+            }
+          },
+          retina_detect: true
+        });
+      } catch (error) {
+        console.warn('Particles initialization failed:', error);
+        const particlesContainer = document.getElementById('particles-js');
+        if (particlesContainer) {
+          particlesContainer.style.display = 'none';
+        }
+      }
+    }
   </script>
 </body>
 </html>
