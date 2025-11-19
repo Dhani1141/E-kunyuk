@@ -1483,6 +1483,26 @@ nav {
       </a>
       <button onclick="openModal('mobile')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
     </div>
+
+    <div class="card" data-modal="video2d">
+      <i class="fas fa-video"></i>
+      <h3>Pembuatan Video 2D</h3>
+      <p>Buat video animasi 2D profesional untuk promosi, edukasi, atau konten kreatif.</p>
+      <a href="service-detail.html?service=video2d" style="text-decoration: none;">
+        <button style="width: 100%;">Lihat Detail Layanan</button>
+      </a>
+      <button onclick="openModal('video2d')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
+    </div>
+
+    <div class="card" data-modal="editing">
+      <i class="fas fa-film"></i>
+      <h3>Pengeditan Video</h3>
+      <p>Edit video dengan efek profesional, color grading, dan transisi smooth untuk hasil maksimal.</p>
+      <a href="service-detail.html?service=editing" style="text-decoration: none;">
+        <button style="width: 100%;">Lihat Detail Layanan</button>
+      </a>
+      <button onclick="openModal('editing')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
+    </div>
   </section>
 
   <!-- Modal Popup - Dinamis -->
@@ -1574,6 +1594,20 @@ document.addEventListener('DOMContentLoaded', function() {
       desc: 'Push rank dari mythic ke grandmaster atau heroik. Akun aman, strategi pro player.',
       price: 'Rp 50.000 - 200.000 (tergantung rank target & hero)',
       whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20Mobile%20Legend.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+    },
+    video2d: {
+      icon: 'fas fa-video',
+      title: 'Pembuatan Video 2D',
+      desc: 'Buat video animasi 2D profesional untuk promosi, edukasi, atau konten kreatif. Dari storyboard hingga final render.',
+      price: 'Rp 300.000 - 1.500.000 (tergantung durasi & kompleksitas)',
+      whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20jasa%20pembuatan%20video%202D.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
+    },
+    editing: {
+      icon: 'fas fa-film',
+      title: 'Pengeditan Video',
+      desc: 'Edit video dengan efek profesional, color grading, transisi smooth, dan audio mixing. Hasil siap publish.',
+      price: 'Rp 100.000 - 800.000 (tergantung durasi & kompleksitas editing)',
+      whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20jasa%20editing%20video.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
     }
   };
 
@@ -1892,12 +1926,12 @@ function initParticles() {
         }
       },
       opacity: {
-        value: 0.3,  // Subtle, nggak terlalu terang
+        value: 0.15,  // Lebih redup, tidak terlalu terang
         random: true,
         anim: {
           enable: true,
           speed: 1,
-          opacity_min: 0.1,
+          opacity_min: 0.05,
           sync: false
         }
       },
@@ -1912,7 +1946,7 @@ function initParticles() {
         enable: true,  // Connect lines tipis
         distance: 150,
         color: '#10b981',  // Hijau accent
-        opacity: 0.2,
+        opacity: 0.1,  // Lebih redup
         width: 1
       },
       move: {
@@ -2041,12 +2075,12 @@ function initParticlesWithTheme(theme) {
         }
       },
       opacity: {
-        value: 0.3,
+        value: 0.15,  // Lebih redup, tidak terlalu terang
         random: true,
         anim: {
           enable: true,
           speed: 1,
-          opacity_min: 0.1,
+          opacity_min: 0.05,
           sync: false
         }
       },
@@ -2061,7 +2095,7 @@ function initParticlesWithTheme(theme) {
         enable: !isMobile,  // Disable lines di mobile untuk performa
         distance: 150,
         color: theme.accent,  // Lines ikut accent color
-        opacity: 0.2,
+        opacity: 0.1,  // Lebih redup
         width: 1
       },
       move: {
