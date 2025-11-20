@@ -698,16 +698,57 @@
     }
 
     .loader-spinner {
-      width: 60px;
-      height: 60px;
-      border: 4px solid rgba(255, 255, 255, 0.1);
-      border-top-color: var(--accent);
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    .loader-spinner img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 50%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .loader-spinner::before {
+      content: '';
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: var(--accent);
+      border-right-color: var(--accent);
+      animation: spinRing 1s linear infinite;
+      z-index: 1;
+    }
+
+    .loader-spinner::after {
+      content: '';
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      border: 3px solid transparent;
+      border-bottom-color: var(--accent);
+      border-left-color: var(--accent);
+      animation: spinRing 1.5s linear infinite reverse;
+      z-index: 1;
+    }
+
+    @keyframes spinRing {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
 
     /* Cards - Neumorphism + Interactive */
@@ -888,6 +929,25 @@
 
     footer a:hover {
       text-decoration: underline;
+    }
+
+    footer a i {
+      margin-right: 0.3rem;
+      font-size: 1.1em;
+      vertical-align: middle;
+    }
+
+    footer a[href*="instagram"] {
+      background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 500;
+    }
+
+    footer a[href*="instagram"]:hover {
+      text-decoration: underline;
+      filter: brightness(1.2);
     }
 
     /* Responsivitas */
@@ -1198,7 +1258,9 @@ nav {
 <body>
   <!-- Loading Indicator -->
   <div class="loader" id="loader">
-    <div class="loader-spinner"></div>
+    <div class="loader-spinner">
+      <img src="image.png" alt="Loading...">
+    </div>
   </div>
 
   <!-- Particles Container -->
@@ -1530,7 +1592,7 @@ nav {
   <!-- Footer -->
   <footer id="contact">
     <p>&copy; 2024 El Kunyuk Store. Layanan Jasa Joki cepat & aman. Rating 4.9⭐ | 99% Keberhasilan.</p>
-    <p>Kontak: <a href="https://wa.me/6285251379292">+62 852-5137-9292</a> | <a href="mailto:info@elkunyukstore.com">info@elkunyukstore.com</a></p>
+    <p>Kontak: <a href="https://wa.me/6285251379292">+62 852-5137-9292</a> | <a href="mailto:info@elkunyukstore.com">info@elkunyukstore.com</a> | <a href="https://www.instagram.com/tung3joki/" target="_blank" rel="noopener noreferrer"><i class="fab fa-instagram"></i> Instagram</a></p>
   </footer>
 
  <script>
