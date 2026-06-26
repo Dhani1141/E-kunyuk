@@ -1909,7 +1909,7 @@ document.addEventListener('DOMContentLoaded', function() {
       icon: 'fas fa-project-diagram',
       title: 'Joki Proyek',
       desc: 'Selesaikan proyek informatika seperti app development, database, atau AI. Hasil berkualitas & bebas plagiat.',
-      price: 'Rp 300.000 - 1.500.000 (tergantung scope proyek)',
+      price: 'Rp 300.000 - 10.000.000 (tergantung scope proyek)',
       whatsapp: 'https://wa.me/6285251379292?text=Halo%20Bang%20Kunyuk,%20mau%20pesan%20joki%20proyek.%20Detail:%20[isi%20di%20sini]%20Berapa%20biayanya?'
     },
     laporan: {
@@ -2880,8 +2880,8 @@ window.calculatePrice = function() {
   } else if (service === 'proyek') {
     const scale = document.getElementById('projectScale')?.value || 'kecil';
     if (scale === 'kecil') price = 300000;
-    else if (scale === 'menengah') price = 800000;
-    else if (scale === 'besar') price = 1500000;
+    else if (scale === 'menengah') price = 1500000;
+    else if (scale === 'besar') price = 6250000;
   } else if (service === 'desain') {
     const type = document.getElementById('designType')?.value || 'logo';
     if (type === 'logo') price = 50000;
