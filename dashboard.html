@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dashboard Customer - E'KUNYUKs. Pantau riwayat joki dan kumpulkan poin loyalitas.">
+  <link rel="icon" type="image/png" href="image.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Customer Dashboard - E'KUNYUKs</title>
+  
+  <!-- Particles.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js" 
+        onerror="console.warn('Particles.js failed to load'); document.getElementById('particles-js').style.display='none';"></script>
+  
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #b3b3b3;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --blur: blur(10px);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --border-radius: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Particles Background */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--bg-secondary);
+      backdrop-filter: var(--blur);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .back-btn:hover {
+      color: var(--accent);
+      background: rgba(16, 185, 129, 0.1);
+      border-color: var(--accent);
+    }
+
+    /* Main Container */
+    .dashboard-container {
+      max-width: 1200px;
+      margin: 100px auto 4rem;
+      padding: 2rem 1rem;
+      display: grid;
+      grid-template-columns: 350px 1fr;
+      gap: 2rem;
+    }
+
+    @media (max-width: 968px) {
+      .dashboard-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Profile Card */
+    .profile-card {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      height: fit-content;
+      position: sticky;
+      top: 100px;
+    }
+
+    .profile-avatar-container {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+
+    .profile-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 3px solid var(--accent);
+      object-fit: cover;
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .rank-badge {
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: var(--bg-primary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      white-space: nowrap;
+    }
+
+    .profile-info h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+
+    .profile-info p {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* Points Progress */
+    .loyalty-section {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: left;
+    }
+
+    .loyalty-title {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .loyalty-points {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .progress-bar-container {
+      width: 100%;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0%;
+      transition: width 1s ease-in-out;
+    }
+
+    .loyalty-footer {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .discount-info {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background: rgba(16, 185, 129, 0.05);
+      border: 1px dashed var(--accent);
+      border-radius: 12px;
+      font-size: 0.9rem;
+    }
+
+    .discount-value {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.1rem;
+    }
+
+    /* History / Content Panel */
+    .history-panel {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      min-height: 500px;
+    }
+
+    .panel-header {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-header h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .panel-header h2 i {
+      color: var(--accent);
+    }
+
+    /* Table Design */
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th {
+      padding: 1rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Badges */
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .status-diterima {
+      background: rgba(59, 130, 246, 0.1);
+      color: #3b82f6;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .status-progress {
+      background: rgba(249, 115, 22, 0.1);
+      color: #f97316;
+      border: 1px solid rgba(249, 115, 22, 0.2);
+    }
+
+    .status-selesai {
+      background: rgba(16, 185, 129, 0.1);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .urgency-badge {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+
+    .urgency-biasa {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+    }
+
+    .urgency-cepat {
+      background: rgba(249, 115, 22, 0.1);
+      color: #f97316;
+    }
+
+    .urgency-sangat-cepat {
+      background: rgba(239, 68, 68, 0.1);
+      color: #ef4444;
+      font-weight: 600;
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .empty-state i {
+      font-size: 3.5rem;
+      color: rgba(255, 255, 255, 0.1);
+    }
+
+    .empty-state a {
+      margin-top: 1rem;
+    }
+
+    /* Loader page */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-spinner {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: var(--accent);
+      border-right-color: var(--accent);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loader" id="loader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- Particles Background -->
+  <div id="particles-js"></div>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="image.png" alt="Logo El Kunyuk Store">
+        E'KUNYUKs
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="back-btn">
+          <i class="fas fa-home"></i> Beranda
+        </a>
+        <button class="back-btn" id="logoutBtn" style="cursor: pointer;">
+          <i class="fas fa-sign-out-alt"></i> Keluar
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content Layout -->
+  <div class="dashboard-container">
+    <!-- Left Column: User Profile -->
+    <div class="profile-card">
+      <div class="profile-avatar-container">
+        <img id="userAvatar" src="image.png" alt="Profile Picture" class="profile-avatar">
+        <span class="rank-badge" id="rankBadge">Epic Member</span>
+      </div>
+      <div class="profile-info">
+        <h2 id="profileName">Loading User...</h2>
+        <p id="profileEmail">email@user.com</p>
+      </div>
+      
+      <!-- Loyalty Rank -->
+      <div class="loyalty-section">
+        <div class="loyalty-title">
+          <span>Poin Loyalitas</span>
+          <span id="progressText">0 / 100 Poin</span>
+        </div>
+        <div class="loyalty-points" id="loyaltyPoints">0 pts</div>
+        <div class="progress-bar-container">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="loyalty-footer">
+          <span id="rankMin">Epic</span>
+          <span id="rankNext">Legend (101 pts)</span>
+        </div>
+      </div>
+
+      <!-- Member Discount -->
+      <div class="discount-info">
+        <span>Diskon Anda saat ini:</span>
+        <span class="discount-value" id="discountValue">1%</span>
+      </div>
+    </div>
+
+    <!-- Right Column: Order History -->
+    <div class="history-panel">
+      <div class="panel-header">
+        <h2><i class="fas fa-history"></i> Riwayat Joki Anda</h2>
+        <span id="orderCount" style="font-size: 0.85rem; color: var(--text-secondary);">Total: 0 Pesanan</span>
+      </div>
+      
+      <div class="table-responsive">
+        <table id="ordersTable" style="display: none;">
+          <thead>
+            <tr>
+              <th>Layanan</th>
+              <th>Detail Catatan</th>
+              <th>Urgensi</th>
+              <th>Tarif Asli</th>
+              <th>Bayar Final</th>
+              <th>Status</th>
+              <th>Tanggal</th>
+            </tr>
+          </thead>
+          <tbody id="ordersList">
+            <!-- Dynamic Order Items -->
+          </tbody>
+        </table>
+        
+        <!-- Empty state placeholder -->
+        <div class="empty-state" id="emptyState">
+          <i class="fas fa-box-open"></i>
+          <p>Belum ada riwayat pesanan.</p>
+          <a href="index.html#calculator-section" class="cta-button" style="text-decoration: none; padding: 0.75rem 1.5rem; font-size: 0.9rem;">Pesan Joki Sekarang</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrFVJt58wjLPWdjtqM9BSh6snG9t7KMq0",
+      authDomain: "e-kunyuk.firebaseapp.com",
+      projectId: "e-kunyuk",
+      storageBucket: "e-kunyuk.firebasestorage.app",
+      messagingSenderId: "794062873678",
+      appId: "1:794062873678:web:623534fcef1f3ea2a94f1f",
+      measurementId: "G-ET3B1MWDRJ"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // UI elements
+    const loader = document.getElementById('loader');
+    const profileName = document.getElementById('profileName');
+    const profileEmail = document.getElementById('profileEmail');
+    const userAvatar = document.getElementById('userAvatar');
+    const rankBadge = document.getElementById('rankBadge');
+    const loyaltyPoints = document.getElementById('loyaltyPoints');
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    const rankMin = document.getElementById('rankMin');
+    const rankNext = document.getElementById('rankNext');
+    const discountValue = document.getElementById('discountValue');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    const ordersTable = document.getElementById('ordersTable');
+    const ordersList = document.getElementById('ordersList');
+    const emptyState = document.getElementById('emptyState');
+    const orderCount = document.getElementById('orderCount');
+
+    // Load Theme from localStorage
+    function applyTheme() {
+      const storedTheme = localStorage.getItem('selectedTheme') || 'Green';
+      const themes = [
+        { name: 'Green', accent: '#10b981', hover: '#059669' },
+        { name: 'Red', accent: '#ef4444', hover: '#dc2626' },
+        { name: 'Blue', accent: '#3b82f6', hover: '#2563eb' },
+        { name: 'Purple', accent: '#8b5cf6', hover: '#7c3aed' },
+        { name: 'Orange', accent: '#f97316', hover: '#ea580c' },
+        { name: 'Cyan', accent: '#06b6d4', hover: '#0891b2' }
+      ];
+      const theme = themes.find(t => t.name === storedTheme) || themes[0];
+      document.documentElement.style.setProperty('--accent', theme.accent);
+      document.documentElement.style.setProperty('--accent-hover', theme.hover);
+
+      // Initialize particles
+      if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+          particles: {
+            number: { value: 20 },
+            color: { value: ['#ffffff', theme.accent, '#b3b3b3'] },
+            shape: { type: 'circle' },
+            opacity: { value: 0.6, random: true },
+            size: { value: 3, random: true },
+            line_linked: { enable: true, distance: 150, color: theme.accent, opacity: 0.4, width: 1 },
+            move: { enable: true, speed: 1.5 }
+          },
+          retina_detect: true
+        });
+      }
+    }
+
+    // Monitor Auth State
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        // Fetch user document from Firestore
+        db.collection('users').doc(user.uid).onSnapshot((doc) => {
+          if (doc.exists) {
+            const profile = doc.data();
+            updateProfileUI(profile);
+          } else {
+            // Profile doesn't exist, create fallback
+            const fallbackProfile = {
+              uid: user.uid,
+              name: user.displayName || 'User',
+              email: user.email,
+              photoURL: user.photoURL || 'image.png',
+              points: 0
+            };
+            db.collection('users').doc(user.uid).set(fallbackProfile);
+            updateProfileUI(fallbackProfile);
+          }
+          
+          // Fetch orders history
+          loadOrderHistory(user.uid);
+        }, (error) => {
+          console.error("Firestore listener error:", error);
+          alert("Gagal memuat profil: " + error.message);
+        });
+      } else {
+        // User not logged in, redirect to index.html with login prompt trigger
+        alert("Silakan login terlebih dahulu!");
+        window.location.href = "index.html";
+      }
+    });
+
+    // Update Profile UI & loyalty calculation
+    function updateProfileUI(profile) {
+      profileName.textContent = profile.name;
+      profileEmail.textContent = profile.email;
+      userAvatar.src = profile.photoURL || 'image.png';
+
+      const points = profile.points || 0;
+      loyaltyPoints.textContent = points + ' pts';
+
+      let rank = 'Epic';
+      let discount = '1%';
+      let minVal = 0;
+      let targetVal = 100;
+      let nextRank = 'Legend (101 pts)';
+
+      if (points >= 201) {
+        rank = 'Mythic';
+        discount = '5%';
+        minVal = 201;
+        targetVal = points; // Maxed out progress
+        nextRank = 'Rank Max';
+      } else if (points >= 101) {
+        rank = 'Legend';
+        discount = '3%';
+        minVal = 101;
+        targetVal = 200;
+        nextRank = 'Mythic (201 pts)';
+      }
+
+      rankBadge.textContent = rank + ' Member';
+      discountValue.textContent = discount;
+
+      // Progress bar fill calculation
+      rankMin.textContent = rank;
+      rankNext.textContent = nextRank;
+      
+      let percentage = 0;
+      if (rank === 'Epic') {
+        percentage = (points / 100) * 100;
+        progressText.textContent = `${points} / 100 Poin`;
+      } else if (rank === 'Legend') {
+        const relativePoints = points - 100;
+        percentage = (relativePoints / 100) * 100;
+        progressText.textContent = `${points} / 200 Poin`;
+      } else {
+        percentage = 100;
+        progressText.textContent = `${points} Poin (Max)`;
+      }
+
+      progressFill.style.width = Math.min(percentage, 100) + '%';
+      
+      // Hide loader
+      setTimeout(() => {
+        loader.classList.add('hidden');
+      }, 300);
+    }
+
+    // Load Order History
+    function loadOrderHistory(uid) {
+      db.collection('orders')
+        .where('userId', '==', uid)
+        .onSnapshot((querySnapshot) => {
+          const orders = [];
+          querySnapshot.forEach(doc => {
+            const data = doc.data();
+            data.id = doc.id;
+            orders.push(data);
+          });
+
+          // Sort descending by createdAt
+          orders.sort((a, b) => {
+            const tA = a.createdAt ? a.createdAt.toDate() : new Date(0);
+            const tB = b.createdAt ? b.createdAt.toDate() : new Date(0);
+            return tB - tA;
+          });
+
+          orderCount.textContent = `Total: ${orders.length} Pesanan`;
+          
+          if (orders.length === 0) {
+            ordersTable.style.display = 'none';
+            emptyState.style.display = 'flex';
+            return;
+          }
+
+          ordersTable.style.display = 'table';
+          emptyState.style.display = 'none';
+          ordersList.innerHTML = '';
+
+          orders.forEach((order) => {
+            const date = order.createdAt ? order.createdAt.toDate().toLocaleDateString('id-ID') : '-';
+            
+            // Format prices
+            const originalPriceStr = order.originalPrice ? 'Rp ' + order.originalPrice.toLocaleString('id-ID') : '-';
+            const finalPriceStr = order.finalPrice ? 'Rp ' + order.finalPrice.toLocaleString('id-ID') : '-';
+
+            // Status style class mapping
+            let statusClass = 'status-diterima';
+            let statusText = 'Diterima';
+            if (order.status === 'on progress') {
+              statusClass = 'status-progress';
+              statusText = 'On Progress';
+            } else if (order.status === 'selesai') {
+              statusClass = 'status-selesai';
+              statusText = 'Selesai';
+            }
+
+            // Urgency class mapping
+            let urgencyClass = 'urgency-biasa';
+            if (order.urgency === 'cepat') urgencyClass = 'urgency-cepat';
+            else if (order.urgency === 'sangat-cepat') urgencyClass = 'urgency-sangat-cepat';
+
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td style="font-weight:600; color:var(--accent);">${order.serviceName}</td>
+              <td style="max-width:200px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${order.details}">${order.details}</td>
+              <td><span class="urgency-badge ${urgencyClass}">${order.urgencyText || 'Biasa'}</span></td>
+              <td style="text-decoration:line-through; opacity:0.6;">${originalPriceStr}</td>
+              <td style="font-weight:600; color:#ffffff;">${finalPriceStr}</td>
+              <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+              <td>${date}</td>
+            `;
+            ordersList.appendChild(tr);
+          });
+        }, (error) => {
+          console.error("Orders fetching error:", error);
+        });
+    }
+
+    // Logout
+    logoutBtn.onclick = () => {
+      auth.signOut().then(() => {
+        window.location.href = "index.html";
+      });
+    };
+
+    // Apply styles on page load
+    window.addEventListener('load', applyTheme);
+  </script>
+</body>
+</html>

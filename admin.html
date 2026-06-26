@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Admin Dashboard - E'KUNYUKs. Kelola proyek, status, kustomisasi, dan cetak laporan.">
+  <link rel="icon" type="image/png" href="image.png">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <title>Admin Panel - E'KUNYUKs</title>
+  
+  <!-- html2pdf.js CDN for PDF export -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <!-- Particles.js CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js" 
+        onerror="console.warn('Particles.js failed to load'); document.getElementById('particles-js').style.display='none';"></script>
+  
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #b3b3b3;
+      --accent: #10b981;
+      --accent-hover: #059669;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --blur: blur(10px);
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --border-radius: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: var(--bg-secondary);
+      backdrop-filter: var(--blur);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1rem;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: var(--transition);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+    }
+
+    .back-btn:hover {
+      color: var(--accent);
+      background: rgba(16, 185, 129, 0.1);
+      border-color: var(--accent);
+    }
+
+    /* Main Container */
+    .admin-container {
+      max-width: 1200px;
+      margin: 100px auto 4rem;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* Clock & Stats Header */
+    .dashboard-header {
+      display: grid;
+      grid-template-columns: 1fr 250px;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard-header {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .welcome-text h1 {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .welcome-text p {
+      color: var(--text-secondary);
+    }
+
+    .clock-widget {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 0.75rem 1.25rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .clock-time {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+
+    .clock-date {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: var(--transition);
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+
+    .stat-details h3 {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      text-transform: uppercase;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-value {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .stat-icon {
+      font-size: 2.25rem;
+      color: var(--accent);
+      opacity: 0.8;
+    }
+
+    /* Main Board Tabs */
+    .tabs-container {
+      display: flex;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      gap: 1rem;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      border-bottom: 3px solid transparent;
+      white-space: nowrap;
+    }
+
+    .tab-btn:hover {
+      color: var(--accent);
+    }
+
+    .tab-btn.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* Panel Content Cards */
+    .panel-card {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      display: none;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .panel-card.active {
+      display: flex;
+    }
+
+    /* Tables, Forms & Inputs */
+    .search-bar-container {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .input-field {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      color: var(--text-primary);
+      padding: 0.6rem 1rem;
+      font-size: 0.9rem;
+      outline: none;
+      transition: var(--transition);
+      min-width: 250px;
+    }
+
+    .input-field:focus {
+      border-color: var(--accent);
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+
+    th {
+      padding: 1rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      vertical-align: middle;
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Badges & Selects */
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-diterima { background: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+    .status-progress { background: rgba(249, 115, 22, 0.1); color: #f97316; }
+    .status-selesai { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+
+    .status-selector {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 6px;
+      color: var(--text-primary);
+      padding: 0.35rem 0.5rem;
+      font-size: 0.8rem;
+      outline: none;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .status-selector:focus {
+      border-color: var(--accent);
+    }
+
+    .rank-tag {
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .rank-epic { background: rgba(255, 255, 255, 0.05); color: #ffffff; }
+    .rank-legend { background: rgba(249, 115, 22, 0.1); color: #f97316; border: 1px solid rgba(249, 115, 22, 0.2); }
+    .rank-mythic { background: rgba(16, 185, 129, 0.1); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.2); }
+
+    /* Monthly Report Card CSS */
+    .report-options {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .cta-button {
+      padding: 0.6rem 1.25rem;
+      background: var(--accent);
+      color: #ffffff !important;
+      border-radius: 8px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .cta-button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Print Template Container styling */
+    .print-report-container {
+      background: #111111;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 2rem;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .report-header-print {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 1rem;
+    }
+
+    .report-logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .report-logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+    }
+
+    .report-summary-box {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+
+    .summary-box-item {
+      text-align: center;
+    }
+
+    .summary-box-item span {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .summary-box-item div {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Loader page */
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-spinner {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      border-top-color: var(--accent);
+      border-right-color: var(--accent);
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div class="loader" id="loader">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <!-- Particles Background -->
+  <div id="particles-js"></div>
+
+  <!-- Navbar -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <img src="image.png" alt="Logo El Kunyuk Store">
+        E'KUNYUKs <span style="font-size: 0.75rem; background: var(--accent); color: #000; padding: 0.1rem 0.4rem; border-radius: 4px; margin-left: 0.5rem; font-weight:700;">ADMIN</span>
+      </a>
+      <div class="nav-actions">
+        <a href="index.html" class="back-btn">
+          <i class="fas fa-home"></i> Beranda
+        </a>
+        <button class="back-btn" id="logoutBtn" style="cursor: pointer;">
+          <i class="fas fa-sign-out-alt"></i> Keluar
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="admin-container">
+    
+    <!-- Top Row: Welcome & Real-Time Clock -->
+    <div class="dashboard-header">
+      <div class="welcome-text">
+        <h1>Halo Administrator,</h1>
+        <p>Kelola pesanan joki, kumpulkan data customer, dan ekspor laporan proyek bulanan.</p>
+      </div>
+      <div class="clock-widget">
+        <div class="clock-time" id="clockTime">00:00:00</div>
+        <div class="clock-date" id="clockDate">SENIN, 01 JANUARI 2026</div>
+      </div>
+    </div>
+
+    <!-- Stats Widgets Grid -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-details">
+          <h3>Total Omzet</h3>
+          <div class="stat-value" id="statRevenue">Rp 0</div>
+        </div>
+        <i class="fas fa-wallet stat-icon"></i>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-details">
+          <h3>Joki Selesai</h3>
+          <div class="stat-value" id="statCompleted">0</div>
+        </div>
+        <i class="fas fa-check-double stat-icon"></i>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-details">
+          <h3>Joki Aktif</h3>
+          <div class="stat-value" id="statActive">0</div>
+        </div>
+        <i class="fas fa-spinner stat-icon"></i>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-details">
+          <h3>Total Customer</h3>
+          <div class="stat-value" id="statCustomers">0</div>
+        </div>
+        <i class="fas fa-users stat-icon"></i>
+      </div>
+    </div>
+
+    <!-- Dashboard Tabs -->
+    <div class="tabs-container">
+      <button class="tab-btn active" data-target="ordersPanel">Kelola Pesanan Joki</button>
+      <button class="tab-btn" data-target="customersPanel">Daftar Customer</button>
+      <button class="tab-btn" data-target="reportPanel">Laporan Bulanan & Ekspor</button>
+    </div>
+
+    <!-- Panel 1: Orders Management -->
+    <div class="panel-card active" id="ordersPanel">
+      <div class="search-bar-container">
+        <input type="text" id="orderSearch" class="input-field" placeholder="Cari berdasarkan email customer...">
+        <select id="orderFilterService" class="input-field" style="min-width: 180px;">
+          <option value="all">Semua Layanan</option>
+          <option value="jurnal">Joki Jurnal</option>
+          <option value="website">Joki Website</option>
+          <option value="proyek">Joki Proyek</option>
+          <option value="laporan">Joki Laporan</option>
+          <option value="makalah">Joki Makalah</option>
+          <option value="desain">Joki Desain Grafis</option>
+          <option value="fish">Joki Fish It!</option>
+          <option value="mobile">Joki Mobile Legend</option>
+          <option value="video2d">Pembuatan Video 2D</option>
+          <option value="editing">Pengeditan Video</option>
+        </select>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Layanan</th>
+              <th>Detail Proyek</th>
+              <th>Urgensi</th>
+              <th>Tarif Asli</th>
+              <th>Bayar Final</th>
+              <th>Tanggal</th>
+              <th>Status</th>
+              <th>Aksi Status</th>
+            </tr>
+          </thead>
+          <tbody id="adminOrdersList">
+            <!-- Dynamic Orders loaded from Firestore -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Panel 2: Customer List -->
+    <div class="panel-card" id="customersPanel">
+      <div class="search-bar-container">
+        <input type="text" id="customerSearch" class="input-field" placeholder="Cari nama atau email customer...">
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Nama Lengkap</th>
+              <th>Email</th>
+              <th>Poin Loyalitas</th>
+              <th>Loyalty Rank</th>
+              <th>Diskon Rate</th>
+            </tr>
+          </thead>
+          <tbody id="adminCustomersList">
+            <!-- Dynamic Customers loaded from Firestore -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Panel 3: Monthly Report -->
+    <div class="panel-card" id="reportPanel">
+      <div class="report-options">
+        <label for="reportMonth" style="font-size:0.9rem; color:var(--text-secondary);">Pilih Laporan:</label>
+        <select id="reportMonth" class="input-field" style="min-width: 150px;">
+          <option value="0">Januari</option>
+          <option value="1">Februari</option>
+          <option value="2">Maret</option>
+          <option value="3">April</option>
+          <option value="4">Mei</option>
+          <option value="5">Juni</option>
+          <option value="6">Juli</option>
+          <option value="7">Agustus</option>
+          <option value="8">September</option>
+          <option value="9">Oktober</option>
+          <option value="10">November</option>
+          <option value="11">Desember</option>
+        </select>
+        
+        <select id="reportYear" class="input-field" style="min-width: 100px;">
+          <option value="2026">2026</option>
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+        </select>
+        
+        <button class="cta-button" id="btnExportPDF">
+          <i class="fas fa-file-pdf"></i> Ekspor PDF Laporan
+        </button>
+      </div>
+
+      <!-- Preview Report Container -->
+      <div class="print-report-container" id="reportPrintArea">
+        <div class="report-header-print">
+          <div class="report-logo">
+            <img src="image.png" alt="Logo">
+            E'KUNYUKs
+          </div>
+          <div>
+            <h3 style="color:var(--accent); font-size:1.2rem; text-align:right;">LAPORAN PROYEK JOKI BULANAN</h3>
+            <span id="reportMonthHeader" style="font-size:0.8rem; color:var(--text-secondary); display:block; text-align:right;">BULAN: JUNI 2026</span>
+          </div>
+        </div>
+
+        <div class="report-summary-box">
+          <div class="summary-box-item">
+            <span>Total Transaksi Selesai</span>
+            <div id="reportTotalCount">0 Transaksi</div>
+          </div>
+          <div class="summary-box-item">
+            <span>Total Pendapatan (Omzet)</span>
+            <div id="reportTotalRevenue">Rp 0</div>
+          </div>
+          <div class="summary-box-item">
+            <span>Rata-rata Pendapatan Proyek</span>
+            <div id="reportAverageRevenue">Rp 0</div>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <h4 style="margin-bottom:0.75rem; border-bottom:1px solid rgba(255,255,255,0.05); padding-bottom:0.25rem;">Daftar Proyek Selesai (Completed Projects)</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Layanan</th>
+                <th>Detail Proyek</th>
+                <th>Bayar Final</th>
+                <th>Tanggal Selesai</th>
+              </tr>
+            </thead>
+            <tbody id="reportCompletedList">
+              <!-- Completed orders listing -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrFVJt58wjLPWdjtqM9BSh6snG9t7KMq0",
+      authDomain: "e-kunyuk.firebaseapp.com",
+      projectId: "e-kunyuk",
+      storageBucket: "e-kunyuk.firebasestorage.app",
+      messagingSenderId: "794062873678",
+      appId: "1:794062873678:web:623534fcef1f3ea2a94f1f",
+      measurementId: "G-ET3B1MWDRJ"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Elements
+    const loader = document.getElementById('loader');
+    const clockTime = document.getElementById('clockTime');
+    const clockDate = document.getElementById('clockDate');
+    const statRevenue = document.getElementById('statRevenue');
+    const statCompleted = document.getElementById('statCompleted');
+    const statActive = document.getElementById('statActive');
+    const statCustomers = document.getElementById('statCustomers');
+    
+    const adminOrdersList = document.getElementById('adminOrdersList');
+    const adminCustomersList = document.getElementById('adminCustomersList');
+    const orderSearch = document.getElementById('orderSearch');
+    const orderFilterService = document.getElementById('orderFilterService');
+    const customerSearch = document.getElementById('customerSearch');
+
+    const reportMonth = document.getElementById('reportMonth');
+    const reportYear = document.getElementById('reportYear');
+    const reportMonthHeader = document.getElementById('reportMonthHeader');
+    const reportTotalCount = document.getElementById('reportTotalCount');
+    const reportTotalRevenue = document.getElementById('reportTotalRevenue');
+    const reportAverageRevenue = document.getElementById('reportAverageRevenue');
+    const reportCompletedList = document.getElementById('reportCompletedList');
+    const btnExportPDF = document.getElementById('btnExportPDF');
+    
+    // Globals
+    let allOrders = [];
+    let allCustomers = [];
+
+    // Real-Time Clock
+    function updateClock() {
+      const now = new Date();
+      let hours = now.getHours().toString().padStart(2, '0');
+      let minutes = now.getMinutes().toString().padStart(2, '0');
+      let seconds = now.getSeconds().toString().padStart(2, '0');
+      clockTime.textContent = `${hours}:${minutes}:${seconds}`;
+
+      const days = ['MINGGU', 'SENIN', 'SELASA', 'RABU', 'KAMIS', 'JUMAT', 'SABTU'];
+      const months = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
+      
+      const dayName = days[now.getDay()];
+      const day = now.getDate();
+      const monthName = months[now.getMonth()];
+      const year = now.getFullYear();
+
+      clockDate.textContent = `${dayName}, ${day} ${monthName} ${year}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Theme logic
+    function applyTheme() {
+      const storedTheme = localStorage.getItem('selectedTheme') || 'Green';
+      const themes = [
+        { name: 'Green', accent: '#10b981', hover: '#059669' },
+        { name: 'Red', accent: '#ef4444', hover: '#dc2626' },
+        { name: 'Blue', accent: '#3b82f6', hover: '#2563eb' },
+        { name: 'Purple', accent: '#8b5cf6', hover: '#7c3aed' },
+        { name: 'Orange', accent: '#f97316', hover: '#ea580c' },
+        { name: 'Cyan', accent: '#06b6d4', hover: '#0891b2' }
+      ];
+      const theme = themes.find(t => t.name === storedTheme) || themes[0];
+      document.documentElement.style.setProperty('--accent', theme.accent);
+      document.documentElement.style.setProperty('--accent-hover', theme.hover);
+
+      // Initialize particles
+      if (typeof particlesJS !== 'undefined') {
+        particlesJS('particles-js', {
+          particles: {
+            number: { value: 20 },
+            color: { value: ['#ffffff', theme.accent, '#b3b3b3'] },
+            shape: { type: 'circle' },
+            opacity: { value: 0.6, random: true },
+            size: { value: 3, random: true },
+            line_linked: { enable: true, distance: 150, color: theme.accent, opacity: 0.4, width: 1 },
+            move: { enable: true, speed: 1.5 }
+          },
+          retina_detect: true
+        });
+      }
+    }
+
+    // Auth Guard
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        alert("Akses ditolak. Silakan login terlebih dahulu.");
+        window.location.href = "index.html";
+      } else if (user.email !== 'tes81010@gmail.com') {
+        alert("Akses ditolak. Halaman ini hanya untuk Administrator.");
+        window.location.href = "index.html";
+      } else {
+        // Logged in as Admin
+        initAdminPanel();
+      }
+    });
+
+    // Initialize Admin Panel Data listeners
+    function initAdminPanel() {
+      applyTheme();
+      
+      // Load Stats & Listeners
+      listenToOrders();
+      listenToCustomers();
+
+      // Setup tab toggling
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          document.querySelectorAll('.panel-card').forEach(p => p.classList.remove('active'));
+          
+          btn.classList.add('active');
+          document.getElementById(btn.dataset.target).classList.add('active');
+        };
+      });
+
+      // Search Inputs
+      orderSearch.oninput = filterOrders;
+      orderFilterService.onchange = filterOrders;
+      customerSearch.oninput = filterCustomers;
+
+      // Report options change
+      reportMonth.onchange = generateMonthlyReport;
+      reportYear.onchange = generateMonthlyReport;
+
+      // Set current month/year in selector
+      const d = new Date();
+      reportMonth.value = d.getMonth();
+      reportYear.value = d.getFullYear();
+
+      // Export PDF Action
+      btnExportPDF.onclick = exportReportPDF;
+
+      // Hide loading spinner
+      setTimeout(() => {
+        loader.classList.add('hidden');
+      }, 500);
+    }
+
+    // Listeners: Orders
+    function listenToOrders() {
+      db.collection('orders').orderBy('createdAt', 'desc').onSnapshot((snapshot) => {
+        allOrders = [];
+        let completedCount = 0;
+        let activeCount = 0;
+        let totalRevenue = 0;
+
+        snapshot.forEach(doc => {
+          const order = doc.data();
+          order.id = doc.id;
+          allOrders.push(order);
+
+          if (order.status === 'selesai') {
+            completedCount++;
+            totalRevenue += order.finalPrice || 0;
+          } else {
+            activeCount++;
+          }
+        });
+
+        // Update stats
+        statRevenue.textContent = 'Rp ' + totalRevenue.toLocaleString('id-ID');
+        statCompleted.textContent = completedCount;
+        statActive.textContent = activeCount;
+
+        renderOrdersTable(allOrders);
+        generateMonthlyReport(); // Update current month preview
+      });
+    }
+
+    // Listeners: Customers
+    function listenToCustomers() {
+      db.collection('users').orderBy('createdAt', 'desc').onSnapshot((snapshot) => {
+        allCustomers = [];
+        snapshot.forEach(doc => {
+          const cust = doc.data();
+          cust.id = doc.id;
+          allCustomers.push(cust);
+        });
+
+        statCustomers.textContent = allCustomers.length;
+        renderCustomersTable(allCustomers);
+      });
+    }
+
+    // Render Orders Board
+    function renderOrdersTable(orders) {
+      adminOrdersList.innerHTML = '';
+      
+      if (orders.length === 0) {
+        adminOrdersList.innerHTML = `<tr><td colspan="9" style="text-align:center; padding:3rem; color:var(--text-secondary);">Tidak ada pesanan ditemukan.</td></tr>`;
+        return;
+      }
+
+      orders.forEach(order => {
+        const date = order.createdAt ? order.createdAt.toDate().toLocaleDateString('id-ID') : '-';
+        const originalPriceStr = order.originalPrice ? 'Rp ' + order.originalPrice.toLocaleString('id-ID') : '-';
+        const finalPriceStr = order.finalPrice ? 'Rp ' + order.finalPrice.toLocaleString('id-ID') : '-';
+        
+        let statusClass = 'status-diterima';
+        if (order.status === 'on progress') statusClass = 'status-progress';
+        else if (order.status === 'selesai') statusClass = 'status-selesai';
+
+        let urgencyClass = 'urgency-biasa';
+        if (order.urgency === 'cepat') urgencyClass = 'urgency-cepat';
+        else if (order.urgency === 'sangat-cepat') urgencyClass = 'urgency-sangat-cepat';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <div style="font-weight:600;">${order.clientName || 'Guest'}</div>
+            <div style="font-size:0.75rem; color:var(--text-secondary);">${order.userEmail}</div>
+          </td>
+          <td style="font-weight:600; color:var(--accent);">${order.serviceName}</td>
+          <td style="max-width:200px;" title="${order.details}">${order.details}</td>
+          <td><span class="urgency-badge ${urgencyClass}">${order.urgencyText || 'Biasa'}</span></td>
+          <td style="text-decoration:line-through; opacity:0.6;">${originalPriceStr}</td>
+          <td style="font-weight:700;">${finalPriceStr}</td>
+          <td>${date}</td>
+          <td><span class="status-badge ${statusClass}">${order.status}</span></td>
+          <td>
+            <select class="status-selector" onchange="updateOrderStatus('${order.id}', this.value, ${order.finalPrice || 0}, '${order.userId}', ${!!order.pointsCredited})">
+              <option value="diterima" ${order.status === 'diterima' ? 'selected' : ''}>Diterima</option>
+              <option value="on progress" ${order.status === 'on progress' ? 'selected' : ''}>On Progress</option>
+              <option value="selesai" ${order.status === 'selesai' ? 'selected' : ''}>Selesai</option>
+            </select>
+          </td>
+        `;
+        adminOrdersList.appendChild(tr);
+      });
+    }
+
+    // Render Customers List
+    function renderCustomersTable(customers) {
+      adminCustomersList.innerHTML = '';
+      
+      if (customers.length === 0) {
+        adminCustomersList.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:3rem; color:var(--text-secondary);">Tidak ada customer terdaftar.</td></tr>`;
+        return;
+      }
+
+      customers.forEach(cust => {
+        const points = cust.points || 0;
+        let rank = 'Epic';
+        let discount = '1%';
+        let rankClass = 'rank-epic';
+
+        if (points >= 201) {
+          rank = 'Mythic';
+          discount = '5%';
+          rankClass = 'rank-mythic';
+        } else if (points >= 101) {
+          rank = 'Legend';
+          discount = '3%';
+          rankClass = 'rank-legend';
+        }
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><img src="${cust.photoURL || 'image.png'}" alt="Photo" style="width:36px; height:36px; border-radius:50%; border:1px solid rgba(255,255,255,0.1); object-fit:cover;"></td>
+          <td style="font-weight:600;">${cust.name}</td>
+          <td>${cust.email}</td>
+          <td style="font-weight:700; color:var(--accent);">${points} pts</td>
+          <td><span class="rank-tag ${rankClass}">${rank}</span></td>
+          <td style="font-weight:600;">${discount}</td>
+        `;
+        adminCustomersList.appendChild(tr);
+      });
+    }
+
+    // Filter Orders Board client-side
+    function filterOrders() {
+      const search = orderSearch.value.trim().toLowerCase();
+      const service = orderFilterService.value;
+
+      let filtered = allOrders;
+
+      if (search) {
+        filtered = filtered.filter(o => o.userEmail && o.userEmail.toLowerCase().includes(search));
+      }
+
+      if (service !== 'all') {
+        filtered = filtered.filter(o => o.service === service);
+      }
+
+      renderOrdersTable(filtered);
+    }
+
+    // Filter Customers List client-side
+    function filterCustomers() {
+      const search = customerSearch.value.trim().toLowerCase();
+      
+      let filtered = allCustomers;
+      if (search) {
+        filtered = filtered.filter(c => 
+          (c.name && c.name.toLowerCase().includes(search)) || 
+          (c.email && c.email.toLowerCase().includes(search))
+        );
+      }
+      renderCustomersTable(filtered);
+    }
+
+    // Update Status with Loyalty Points Calculation
+    window.updateOrderStatus = async function(orderId, newStatus, finalPrice, userId, pointsCredited) {
+      try {
+        const updateData = { status: newStatus };
+
+        // If updated to "selesai" and points have NOT been credited yet, credit them now
+        if (newStatus === 'selesai' && !pointsCredited) {
+          const pointsEarned = Math.floor(finalPrice / 100000); // 1 pt per Rp 100.000 spent
+          
+          if (pointsEarned > 0) {
+            // Update customer's points in /users collection
+            const userRef = db.collection('users').doc(userId);
+            await db.runTransaction(async (transaction) => {
+              const userDoc = await transaction.get(userRef);
+              if (userDoc.exists) {
+                const currentPoints = userDoc.data().points || 0;
+                transaction.update(userRef, { points: currentPoints + pointsEarned });
+              }
+            });
+            
+            // Mark pointsCredited as true on the order document
+            updateData.pointsCredited = true;
+            alert(`Status diubah menjadi SELESAI. Kredit loyalitas customer ditambah: +${pointsEarned} poin!`);
+          }
+        }
+
+        await db.collection('orders').doc(orderId).update(updateData);
+      } catch (err) {
+        console.error(err);
+        alert('Gagal mengupdate status: ' + err.message);
+      }
+    };
+
+    // Generate Monthly Report Preview
+    function generateMonthlyReport() {
+      const month = parseInt(reportMonth.value);
+      const year = parseInt(reportYear.value);
+
+      const monthsName = ['JANUARI', 'FEBRUARI', 'MARET', 'APRIL', 'MEI', 'JUNI', 'JULI', 'AGUSTUS', 'SEPTEMBER', 'OKTOBER', 'NOVEMBER', 'DESEMBER'];
+      reportMonthHeader.textContent = `BULAN: ${monthsName[month]} ${year}`;
+
+      // Filter orders by completed + in specific month/year
+      const monthlyCompleted = allOrders.filter(order => {
+        if (order.status !== 'selesai' || !order.createdAt) return false;
+        
+        const dateObj = order.createdAt.toDate();
+        return dateObj.getMonth() === month && dateObj.getFullYear() === year;
+      });
+
+      let revenueSum = 0;
+      monthlyCompleted.forEach(o => {
+        revenueSum += o.finalPrice || 0;
+      });
+
+      reportTotalCount.textContent = `${monthlyCompleted.length} Proyek`;
+      reportTotalRevenue.textContent = 'Rp ' + revenueSum.toLocaleString('id-ID');
+      
+      const avg = monthlyCompleted.length > 0 ? Math.round(revenueSum / monthlyCompleted.length) : 0;
+      reportAverageRevenue.textContent = 'Rp ' + avg.toLocaleString('id-ID');
+
+      // Populate table preview
+      reportCompletedList.innerHTML = '';
+      if (monthlyCompleted.length === 0) {
+        reportCompletedList.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:2rem; color:var(--text-secondary);">Tidak ada proyek selesai pada periode ini.</td></tr>`;
+        return;
+      }
+
+      monthlyCompleted.forEach(order => {
+        const dateStr = order.createdAt ? order.createdAt.toDate().toLocaleDateString('id-ID') : '-';
+        const finalPriceStr = order.finalPrice ? 'Rp ' + order.finalPrice.toLocaleString('id-ID') : '-';
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>
+            <div style="font-weight:600;">${order.clientName}</div>
+            <div style="font-size:0.75rem; color:var(--text-secondary);">${order.userEmail}</div>
+          </td>
+          <td style="font-weight:600; color:var(--accent);">${order.serviceName}</td>
+          <td style="max-width:250px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;" title="${order.details}">${order.details}</td>
+          <td style="font-weight:700;">${finalPriceStr}</td>
+          <td>${dateStr}</td>
+        `;
+        reportCompletedList.appendChild(tr);
+      });
+    }
+
+    // Export PDF Report function
+    function exportReportPDF() {
+      const area = document.getElementById('reportPrintArea');
+      const monthName = reportMonth.options[reportMonth.selectedIndex].text;
+      const year = reportYear.value;
+
+      const opt = {
+        margin:       0.5,
+        filename:     `laporan-proyek-${monthName}-${year}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, background: '#111111' },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+
+      // Export using html2pdf
+      html2pdf().set(opt).from(area).save();
+    }
+
+    // Logout Action
+    logoutBtn.onclick = () => {
+      auth.signOut().then(() => {
+        window.location.href = "index.html";
+      });
+    };
+  </script>
+</body>
+</html>
