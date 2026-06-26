@@ -1247,8 +1247,190 @@ nav {
   transform: translateY(0);  /* Press effect */
 }
 
+/* Theme Selector Styling */
+.theme-selector-container {
+  position: relative;
+  margin-left: 1rem;
+  z-index: 1002;
+}
 
+.theme-btn {
+  background: var(--glass-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
 
+.theme-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: scale(1.05);
+}
+
+.theme-dropdown {
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background: var(--bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0.75rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: var(--transition);
+}
+
+.theme-dropdown.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.theme-option {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 2px solid transparent;
+}
+
+.theme-option:hover {
+  transform: scale(1.15);
+  border-color: #ffffff;
+}
+
+.theme-option.active {
+  border-color: #ffffff;
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* Filter Tabs Styling */
+.filter-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.filter-tab {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  padding: 0.6rem 1.4rem;
+  border-radius: 30px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 0.9rem;
+}
+
+.filter-tab:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(16, 185, 129, 0.05);
+}
+
+.filter-tab.active {
+  background: var(--accent);
+  color: #ffffff !important;
+  border-color: var(--accent);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+}
+
+/* Calculator Section Styling */
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  width: 100%;
+}
+
+.calc-box {
+  background: var(--bg-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  text-align: left;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.form-group input:focus, 
+.form-group select:focus, 
+.form-group textarea:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.2);
+}
+
+.price-display-container {
+  margin-top: auto;
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px dashed var(--accent);
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.estimated-price {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0.25rem 0;
+}
+
+@media (max-width: 768px) {
+  .calc-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .estimated-price {
+    font-size: 1.8rem;
+  }
+}
   </style>
   <!-- Particles.js CDN - Ringan & Subtle -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js" 
@@ -1281,6 +1463,19 @@ nav {
         <li><a href="#faq">FAQ</a></li>
         <li><a href="#contact">Kontak</a></li>
       </ul>
+      <div class="theme-selector-container">
+        <button class="theme-btn" id="themeBtn" aria-label="Ganti Tema">
+          <i class="fas fa-palette"></i>
+        </button>
+        <div class="theme-dropdown" id="themeDropdown">
+          <div class="theme-option" data-theme="Green" style="background: #10b981;" title="Hijau"></div>
+          <div class="theme-option" data-theme="Red" style="background: #ef4444;" title="Merah"></div>
+          <div class="theme-option" data-theme="Blue" style="background: #3b82f6;" title="Biru"></div>
+          <div class="theme-option" data-theme="Purple" style="background: #8b5cf6;" title="Ungu"></div>
+          <div class="theme-option" data-theme="Orange" style="background: #f97316;" title="Oranye"></div>
+          <div class="theme-option" data-theme="Cyan" style="background: #06b6d4;" title="Cyan"></div>
+        </div>
+      </div>
       <div class="nav-toggle" id="navToggle">
         <span></span>
         <span></span>
@@ -1465,8 +1660,25 @@ nav {
   </section>
 
   <!-- Cards -->
-  <section class="cards" id="services">
-    <div class="card" data-modal="jurnal">
+  <!-- Services Header & Filters -->
+  <section id="services-header" style="text-align: center; padding: 5rem 1rem 1rem; max-width: 1000px; margin: 0 auto; width: 100%;">
+    <h2 style="font-size: 2rem; color: var(--text-primary); margin-bottom: 1rem;"><i class="fas fa-cubes" style="color: var(--accent); margin-right: 0.5rem;"></i>Layanan Jasa Joki Kami</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">
+      Pilih berbagai layanan joki profesional yang kami tawarkan. Gunakan filter di bawah untuk mempermudah pencarian sesuai kebutuhan Anda.
+    </p>
+    
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">Semua</button>
+      <button class="filter-tab" data-filter="akademik">Tugas & Akademik</button>
+      <button class="filter-tab" data-filter="it-proyek">Website & Proyek IT</button>
+      <button class="filter-tab" data-filter="desain-video">Desain & Video</button>
+      <button class="filter-tab" data-filter="game">Joki Game</button>
+    </div>
+  </section>
+
+  <!-- Cards -->
+  <section class="cards" id="services" style="padding-top: 1rem;">
+    <div class="card" data-modal="jurnal" data-category="akademik">
       <i class="fas fa-file-alt"></i>
       <h3>Joki Jurnal</h3>
       <p>Bantu kerjain jurnal akademik dengan format rapi dan konten berkualitas.</p>
@@ -1476,7 +1688,7 @@ nav {
       <button onclick="openModal('jurnal')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
     </div>
 
-    <div class="card" data-modal="website">
+    <div class="card" data-modal="website" data-category="it-proyek">
       <i class="fas fa-globe"></i>
       <h3>Joki Website</h3>
       <p>Bikin website modern dan responsif sesuai kebutuhanmu, cepat selesai.</p>
@@ -1486,7 +1698,7 @@ nav {
       <button onclick="openModal('website')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
     </div>
 
-    <div class="card" data-modal="proyek">
+    <div class="card" data-modal="proyek" data-category="it-proyek">
       <i class="fas fa-project-diagram"></i>
       <h3>Joki Proyek</h3>
       <p>Selesaikan proyek informatika dengan tepat waktu dan hasil optimal.</p>
@@ -1496,7 +1708,7 @@ nav {
       <button onclick="openModal('proyek')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
     </div>
 
-    <div class="card" data-modal="laporan">
+    <div class="card" data-modal="laporan" data-category="akademik">
       <i class="fas fa-file-word"></i>
       <h3>Joki Laporan</h3>
       <p>Laporan sistematis dan sesuai standar, biar tugasmu aman.</p>
@@ -1506,7 +1718,7 @@ nav {
       <button onclick="openModal('laporan')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
     </div>
 
-    <div class="card" data-modal="makalah">
+    <div class="card" data-modal="makalah" data-category="akademik">
       <i class="fas fa-book"></i>
       <h3>Joki Makalah</h3>
       <p>Makalah jelas dan lengkap, sesuai aturan penulisan akademik.</p>
@@ -1516,7 +1728,7 @@ nav {
       <button onclick="openModal('makalah')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
     </div>
 
-    <div class="card" data-modal="desain">
+    <div class="card" data-modal="desain" data-category="desain-video">
       <i class="fas fa-palette"></i>
       <h3>Joki Desain Grafis</h3>
       <p>Desain kreatif untuk brand atau proyek, hasil profesional.</p>
@@ -1526,7 +1738,7 @@ nav {
       <button onclick="openModal('desain')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
     </div>
 
-    <div class="card" data-modal="fish">
+    <div class="card" data-modal="fish" data-category="game">
       <i class="fas fa-fish"></i>
       <h3>Joki Fish It!</h3>
       <p>Push level Fish It! cepat, aman, biar bisa flexing mudah.</p>
@@ -1536,7 +1748,7 @@ nav {
       <button onclick="openModal('fish')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
     </div>
 
-    <div class="card" data-modal="mobile">
+    <div class="card" data-modal="mobile" data-category="game">
       <i class="fas fa-gamepad"></i>
       <h3>Joki Mobile Legend</h3>
       <p>Push rank ML cepat tanpa ribet, aman dan terpercaya, naik heroik mudah.</p>
@@ -1546,7 +1758,7 @@ nav {
       <button onclick="openModal('mobile')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
     </div>
 
-    <div class="card" data-modal="video2d">
+    <div class="card" data-modal="video2d" data-category="desain-video">
       <i class="fas fa-video"></i>
       <h3>Pembuatan Video 2D</h3>
       <p>Buat video animasi 2D profesional untuk promosi, edukasi, atau konten kreatif.</p>
@@ -1556,7 +1768,7 @@ nav {
       <button onclick="openModal('video2d')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
     </div>
 
-    <div class="card" data-modal="editing">
+    <div class="card" data-modal="editing" data-category="desain-video">
       <i class="fas fa-film"></i>
       <h3>Pengeditan Video</h3>
       <p>Edit video dengan efek profesional, color grading, dan transisi smooth untuk hasil maksimal.</p>
@@ -1564,6 +1776,84 @@ nav {
         <button style="width: 100%;">Lihat Detail Layanan</button>
       </a>
       <button onclick="openModal('editing')" style="margin-top: 0.5rem; width: 100%; background: transparent; border: 1px solid var(--accent);">Quick Info</button>
+    </div>
+  </section>
+
+  <!-- Calculator & Order Section -->
+  <section id="calculator-section" style="padding: 5rem 1rem; max-width: 1100px; margin: 0 auto; width: 100%;">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h2 style="font-size: 2rem; color: var(--text-primary);"><i class="fas fa-calculator" style="color: var(--accent); margin-right: 0.5rem;"></i>Kalkulator Estimasi & Order</h2>
+      <p style="color: var(--text-secondary); max-width: 600px; margin: 0.5rem auto 0;">
+        Hitung perkiraan biaya jasamu dan buat pesanan instan langsung ke WhatsApp kami.
+      </p>
+    </div>
+
+    <div class="calc-grid">
+      <!-- Left Column: Estimator -->
+      <div class="calc-box">
+        <h3 style="margin-bottom: 1.5rem; color: var(--text-primary); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+          <i class="fas fa-sliders-h" style="color: var(--accent); margin-right: 0.5rem;"></i>1. Hitung Tarif
+        </h3>
+        
+        <div class="form-group">
+          <label for="calcService">Pilih Layanan</label>
+          <select id="calcService">
+            <option value="jurnal">Joki Jurnal</option>
+            <option value="website">Joki Website</option>
+            <option value="proyek">Joki Proyek</option>
+            <option value="laporan">Joki Laporan</option>
+            <option value="makalah">Joki Makalah</option>
+            <option value="desain">Joki Desain Grafis</option>
+            <option value="fish">Joki Fish It!</option>
+            <option value="mobile">Joki Mobile Legend</option>
+            <option value="video2d">Pembuatan Video 2D</option>
+            <option value="editing">Pengeditan Video</option>
+          </select>
+        </div>
+
+        <!-- Dynamic Inputs Container -->
+        <div id="dynamicInputs">
+          <!-- Inputs will be loaded dynamically by JavaScript -->
+        </div>
+
+        <div class="form-group">
+          <label for="calcUrgency">Tingkat Urgensi</label>
+          <select id="calcUrgency">
+            <option value="biasa">Biasa (Santai / Standar)</option>
+            <option value="cepat">Cepat (Urgensi Sedang)</option>
+            <option value="sangat-cepat">Sangat Cepat (Urgensi Tinggi / Kilat)</option>
+          </select>
+        </div>
+
+        <div class="price-display-container">
+          <span style="font-size: 0.9rem; color: var(--text-secondary);">Estimasi Biaya:</span>
+          <div class="estimated-price" id="estimatedPrice">Rp 150.000</div>
+          <span style="font-size: 0.8rem; color: var(--text-secondary); display: block; margin-top: 0.25rem;">
+            *Harga final disepakati setelah diskusi lebih detail.
+          </span>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Form -->
+      <div class="calc-box">
+        <h3 style="margin-bottom: 1.5rem; color: var(--text-primary); border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.5rem;">
+          <i class="fas fa-paper-plane" style="color: var(--accent); margin-right: 0.5rem;"></i>2. Isi Data & Kirim
+        </h3>
+
+        <div class="form-group">
+          <label for="clientName">Nama Anda</label>
+          <input type="text" id="clientName" placeholder="Masukkan nama panggilan Anda" required>
+        </div>
+
+        <div class="form-group">
+          <label for="projectDetails">Detail Tugas / Catatan Tambahan</label>
+          <textarea id="projectDetails" rows="4" placeholder="Jelaskan detail tugas Anda (misal: judul jurnal, fitur website, target rank saat ini, dll.)" required></textarea>
+        </div>
+
+        <button class="cta-button" id="btnSendOrder" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1.5rem;">
+          <i class="fab fa-whatsapp"></i> Kirim Order ke WhatsApp
+        </button>
+      </div>
     </div>
   </section>
 
@@ -1916,6 +2206,37 @@ const cardsObserver = new IntersectionObserver((entries) => {
 
 cards.forEach(card => cardsObserver.observe(card));
 
+    // Service Category Filter Logic
+    document.addEventListener('DOMContentLoaded', () => {
+      const filterTabs = document.querySelectorAll('.filter-tab');
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          // Remove active class
+          filterTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          
+          const category = tab.getAttribute('data-filter');
+          const cards = document.querySelectorAll('.card');
+          let visibleIndex = 0;
+          
+          cards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            if (category === 'all' || cardCategory === category) {
+              card.style.display = 'block';
+              card.classList.remove('show'); // Reset class
+              setTimeout(() => {
+                card.classList.add('show');
+              }, visibleIndex * 80); // Staggered animation
+              visibleIndex++;
+            } else {
+              card.classList.remove('show');
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+
 
     // Smooth Scroll untuk Nav Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2086,7 +2407,7 @@ function toggleParticles() {
   }
 }
 
-// Random Theme Changer - Update Accent Color on Refresh
+// Theme Changer with LocalStorage Support
 const themes = [
   { name: 'Green', accent: '#10b981', hover: '#059669' },      // Default hijau
   { name: 'Red', accent: '#ef4444', hover: '#dc2626' },        // Merah
@@ -2096,21 +2417,73 @@ const themes = [
   { name: 'Cyan', accent: '#06b6d4', hover: '#0891b2' }        // Cyan/biru muda
 ];
 
-function setRandomTheme() {
-  // Pilih random theme
-  const randomTheme = themes[Math.floor(Math.random() * themes.length)];
+function applyTheme(themeName) {
+  let theme = themes.find(t => t.name === themeName);
+  if (!theme) {
+    theme = themes[0]; // fallback to Green
+  }
   
   // Update CSS Variables (global)
-  document.documentElement.style.setProperty('--accent', randomTheme.accent);
-  document.documentElement.style.setProperty('--accent-hover', randomTheme.hover);
+  document.documentElement.style.setProperty('--accent', theme.accent);
+  document.documentElement.style.setProperty('--accent-hover', theme.hover);
   
-  // Update Particles Colors to Match Theme (re-init dengan warna baru)
-  pJSDom = [];  // Clear existing particles kalau ada
-  initParticlesWithTheme(randomTheme);  // Fungsi baru di bawah
+  // Update active state in selector
+  document.querySelectorAll('.theme-option').forEach(opt => {
+    opt.classList.toggle('active', opt.getAttribute('data-theme') === theme.name);
+  });
   
-  // Optional: Log atau tampilkan theme (buat debug, hapus kalau nggak perlu)
-  console.log('Theme loaded:', randomTheme.name);
+  // Save to localStorage
+  localStorage.setItem('selectedTheme', theme.name);
+  
+  // Re-initialize particles with the new theme
+  if (typeof particlesJS !== 'undefined') {
+    try {
+      pJSDom = [];  // Clear existing particles
+      initParticlesWithTheme(theme);
+    } catch (e) {
+      console.warn('Particles re-initialization failed:', e);
+    }
+  }
 }
+
+// Initial theme load (either stored theme, or default Green)
+function initTheme() {
+  const storedTheme = localStorage.getItem('selectedTheme');
+  if (storedTheme) {
+    applyTheme(storedTheme);
+  } else {
+    applyTheme('Green');
+  }
+}
+
+// Setup Theme Switcher Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+  const themeBtn = document.getElementById('themeBtn');
+  const themeDropdown = document.getElementById('themeDropdown');
+  
+  if (themeBtn && themeDropdown) {
+    themeBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      themeDropdown.classList.toggle('show');
+    });
+    
+    // Close dropdown on click outside
+    document.addEventListener('click', (e) => {
+      if (!themeBtn.contains(e.target) && !themeDropdown.contains(e.target)) {
+        themeDropdown.classList.remove('show');
+      }
+    });
+  }
+  
+  // Handle theme option clicks
+  document.querySelectorAll('.theme-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const selectedTheme = opt.getAttribute('data-theme');
+      applyTheme(selectedTheme);
+      themeDropdown.classList.remove('show');
+    });
+  });
+});
 
 // Modified initParticles untuk Support Theme
 function initParticlesWithTheme(theme) {
@@ -2204,9 +2577,9 @@ function initParticlesWithTheme(theme) {
   });
 }
 
-// Update window.load untuk Jalankan Random Theme
+// Update window.load untuk Jalankan Theme Baru
 window.addEventListener('load', () => {
-  setRandomTheme();  // Set theme dulu, baru particles & typewriter
+  initTheme();  // Set theme dulu, baru particles & typewriter
   
   // ... (typewriter code yang udah ada tetap di sini)
   const typewriterEl = document.getElementById('typewriter');
@@ -2234,7 +2607,7 @@ window.addEventListener('load', () => {
 
 // Ganti fungsi initParticles lama jadi initParticlesWithTheme di mana-mana (kalau ada call manual)
 
-// Loading Indicator
+// Loading Indicator & Page Transition Logic
 window.addEventListener('load', () => {
   setTimeout(() => {
     const loader = document.getElementById('loader');
@@ -2242,6 +2615,31 @@ window.addEventListener('load', () => {
       loader.classList.add('hidden');
     }
   }, 500);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const loader = document.getElementById('loader');
+  
+  // Intercept all anchor link clicks for smooth fade-out transition
+  document.querySelectorAll('a').forEach(link => {
+    const href = link.getAttribute('href');
+    if (href && (href.startsWith('service-detail.html') || href === 'index.html')) {
+      link.addEventListener('click', (e) => {
+        // Only trigger transition if it's not a cmd/ctrl click
+        if (e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
+          e.preventDefault();
+          if (loader) {
+            loader.classList.remove('hidden');
+            setTimeout(() => {
+              window.location.href = href;
+            }, 400); // Wait for fade-in duration
+          } else {
+            window.location.href = href;
+          }
+        }
+      });
+    }
+  });
 });
 
 // Testimonial Carousel
@@ -2357,7 +2755,265 @@ window.addEventListener('scroll', () => {
   }
 });
 
+// ==========================================
+// KALKULATOR ESTIMASI & ORDER WHATSAPP LOGIC
+// ==========================================
+function updateDynamicInputs() {
+  const service = document.getElementById('calcService').value;
+  const container = document.getElementById('dynamicInputs');
+  if (!container) return;
+  
+  let html = '';
+  
+  if (service === 'jurnal' || service === 'laporan' || service === 'makalah') {
+    html = `
+      <div class="form-group">
+        <label for="numPages">Jumlah Halaman</label>
+        <input type="number" id="numPages" value="5" min="1" max="100" oninput="calculatePrice()">
+      </div>
+    `;
+  } else if (service === 'website') {
+    html = `
+      <div class="form-group">
+        <label for="webScale">Jenis Website</label>
+        <select id="webScale" onchange="calculatePrice()">
+          <option value="landing-page">Landing Page Sederhana</option>
+          <option value="portfolio">Portfolio / Web Blog</option>
+          <option value="e-commerce">E-Commerce / Toko Online</option>
+          <option value="custom">Custom Web Application</option>
+        </select>
+      </div>
+    `;
+  } else if (service === 'proyek') {
+    html = `
+      <div class="form-group">
+        <label for="projectScale">Skala Proyek IT</label>
+        <select id="projectScale" onchange="calculatePrice()">
+          <option value="kecil">Kecil (Tugas Kuliah / Sederhana)</option>
+          <option value="menengah">Menengah (Aplikasi Kompleksitas Sedang)</option>
+          <option value="besar">Besar (Fullstack / Integrasi AI / Database Kompleks)</option>
+        </select>
+      </div>
+    `;
+  } else if (service === 'desain') {
+    html = `
+      <div class="form-group">
+        <label for="designType">Jenis Desain Grafis</label>
+        <select id="designType" onchange="calculatePrice()">
+          <option value="logo">Desain Logo</option>
+          <option value="poster">Poster / Flyer</option>
+          <option value="ui-ux">UI/UX Design (Mobile/Web Figma)</option>
+          <option value="banner">Social Media Banner Pack</option>
+        </select>
+      </div>
+    `;
+  } else if (service === 'fish') {
+    html = `
+      <div class="form-group">
+        <label for="fishLevels">Target Jumlah Level</label>
+        <input type="number" id="fishLevels" value="5" min="1" max="50" oninput="calculatePrice()">
+      </div>
+    `;
+  } else if (service === 'mobile') {
+    html = `
+      <div class="form-group">
+        <label for="mlPackage">Paket Rank Mobile Legend</label>
+        <select id="mlPackage" onchange="toggleMlStars(); calculatePrice();">
+          <option value="gm-epic">Grandmaster ke Epic</option>
+          <option value="epic-legend">Epic ke Legend</option>
+          <option value="legend-mythic">Legend ke Mythic</option>
+          <option value="mythic-star">Mythic Star Push (Per Bintang)</option>
+        </select>
+      </div>
+      <div id="mlStarsContainer" style="display: none;">
+        <div class="form-group">
+          <label for="mlStars">Jumlah Bintang</label>
+          <input type="number" id="mlStars" value="5" min="1" max="100" oninput="calculatePrice()">
+        </div>
+      </div>
+    `;
+  } else if (service === 'video2d' || service === 'editing') {
+    html = `
+      <div class="form-group">
+        <label for="videoDuration">Durasi Video (Menit)</label>
+        <input type="number" id="videoDuration" value="1" min="1" max="30" oninput="calculatePrice()">
+      </div>
+    `;
+  }
+  
+  container.innerHTML = html;
+  calculatePrice();
+}
+
+window.toggleMlStars = function() {
+  const pkg = document.getElementById('mlPackage').value;
+  const starsContainer = document.getElementById('mlStarsContainer');
+  if (starsContainer) {
+    starsContainer.style.display = (pkg === 'mythic-star') ? 'block' : 'none';
+  }
+};
+
+window.calculatePrice = function() {
+  const service = document.getElementById('calcService').value;
+  const urgency = document.getElementById('calcUrgency').value;
+  const priceDisplay = document.getElementById('estimatedPrice');
+  if (!priceDisplay) return;
+  
+  let price = 0;
+  
+  // Base Calculations
+  if (service === 'jurnal') {
+    const pages = parseInt(document.getElementById('numPages')?.value || 5);
+    price = 150000 + (pages * 20000);
+  } else if (service === 'laporan') {
+    const pages = parseInt(document.getElementById('numPages')?.value || 5);
+    price = 100000 + (pages * 10000);
+  } else if (service === 'makalah') {
+    const pages = parseInt(document.getElementById('numPages')?.value || 5);
+    price = 120000 + (pages * 15000);
+  } else if (service === 'website') {
+    const scale = document.getElementById('webScale')?.value || 'landing-page';
+    if (scale === 'landing-page') price = 500000;
+    else if (scale === 'portfolio') price = 750000;
+    else if (scale === 'e-commerce') price = 1500000;
+    else if (scale === 'custom') price = 2000000;
+  } else if (service === 'proyek') {
+    const scale = document.getElementById('projectScale')?.value || 'kecil';
+    if (scale === 'kecil') price = 300000;
+    else if (scale === 'menengah') price = 800000;
+    else if (scale === 'besar') price = 1500000;
+  } else if (service === 'desain') {
+    const type = document.getElementById('designType')?.value || 'logo';
+    if (type === 'logo') price = 50000;
+    else if (type === 'poster') price = 100000;
+    else if (type === 'ui-ux') price = 250000;
+    else if (type === 'banner') price = 750000;
+  } else if (service === 'fish') {
+    const levels = parseInt(document.getElementById('fishLevels')?.value || 5);
+    price = levels * 10000;
+  } else if (service === 'mobile') {
+    const pkg = document.getElementById('mlPackage')?.value || 'gm-epic';
+    if (pkg === 'gm-epic') price = 50000;
+    else if (pkg === 'epic-legend') price = 100000;
+    else if (pkg === 'legend-mythic') price = 150000;
+    else if (pkg === 'mythic-star') {
+      const stars = parseInt(document.getElementById('mlStars')?.value || 5);
+      price = stars * 15000;
+    }
+  } else if (service === 'video2d') {
+    const duration = parseInt(document.getElementById('videoDuration')?.value || 1);
+    price = 300000 + (duration * 100000);
+  } else if (service === 'editing') {
+    const duration = parseInt(document.getElementById('videoDuration')?.value || 1);
+    price = 100000 + (duration * 50000);
+  }
+  
+  // Urgency multiplier
+  let multiplier = 1.0;
+  if (urgency === 'cepat') {
+    multiplier = (service === 'jurnal' || service === 'laporan' || service === 'makalah') ? 1.2 : 1.3;
+  } else if (urgency === 'sangat-cepat') {
+    multiplier = (service === 'jurnal' || service === 'laporan' || service === 'makalah') ? 1.5 : 1.6;
+  }
+  
+  price = Math.round(price * multiplier);
+  
+  // Format as Rupiah
+  priceDisplay.textContent = 'Rp ' + price.toLocaleString('id-ID');
+};
+
+function sendOrder() {
+  const service = document.getElementById('calcService').value;
+  const urgency = document.getElementById('calcUrgency').value;
+  const price = document.getElementById('estimatedPrice').textContent;
+  const clientName = document.getElementById('clientName').value.trim();
+  const projectDetails = document.getElementById('projectDetails').value.trim();
+  
+  if (!clientName || !projectDetails) {
+    alert('Silakan isi Nama dan Detail Tugas Anda terlebih dahulu!');
+    return;
+  }
+  
+  // Gather dynamic options
+  let optionsText = '';
+  if (service === 'jurnal' || service === 'laporan' || service === 'makalah') {
+    const pages = document.getElementById('numPages')?.value || '5';
+    optionsText = `\n- Jumlah Halaman: ${pages}`;
+  } else if (service === 'website') {
+    const selectEl = document.getElementById('webScale');
+    const scale = selectEl ? selectEl.options[selectEl.selectedIndex].text : '';
+    optionsText = `\n- Jenis Website: ${scale}`;
+  } else if (service === 'proyek') {
+    const selectEl = document.getElementById('projectScale');
+    const scale = selectEl ? selectEl.options[selectEl.selectedIndex].text : '';
+    optionsText = `\n- Skala Proyek: ${scale}`;
+  } else if (service === 'desain') {
+    const selectEl = document.getElementById('designType');
+    const type = selectEl ? selectEl.options[selectEl.selectedIndex].text : '';
+    optionsText = `\n- Jenis Desain: ${type}`;
+  } else if (service === 'fish') {
+    const levels = document.getElementById('fishLevels')?.value || '5';
+    optionsText = `\n- Jumlah Level: ${levels}`;
+  } else if (service === 'mobile') {
+    const selectEl = document.getElementById('mlPackage');
+    const pkg = selectEl ? selectEl.options[selectEl.selectedIndex].text : '';
+    optionsText = `\n- Paket ML: ${pkg}`;
+    if (document.getElementById('mlPackage')?.value === 'mythic-star') {
+      const stars = document.getElementById('mlStars')?.value || '5';
+      optionsText += ` (${stars} Bintang)`;
+    }
+  } else if (service === 'video2d' || service === 'editing') {
+    const duration = document.getElementById('videoDuration')?.value || '1';
+    optionsText = `\n- Durasi Video: ${duration} Menit`;
+  }
+  
+  // Map urgency name
+  let urgencyText = 'Biasa (Santai)';
+  if (urgency === 'cepat') urgencyText = 'Cepat (Urgensi Sedang)';
+  else if (urgency === 'sangat-cepat') urgencyText = 'Sangat Cepat (Urgensi Tinggi)';
+  
+  // Format service name
+  const serviceSelect = document.getElementById('calcService');
+  const serviceName = serviceSelect.options[serviceSelect.selectedIndex].text;
+  
+  // Build message template
+  const textMessage = `Halo Bang Kunyuk, saya ingin pesan jasa joki dari website.
+
+*Detail Pesanan:*
+- Nama Klien: ${clientName}
+- Jenis Layanan: ${serviceName}${optionsText}
+- Urgensi: ${urgencyText}
+- Estimasi Harga Web: ${price}
+
+*Detail Tugas & Catatan:*
+${projectDetails}
+
+Mohon info lebih lanjut untuk konfirmasi order dan pembayarannya. Terima kasih!`;
+
+  const waUrl = `https://wa.me/6285251379292?text=${encodeURIComponent(textMessage)}`;
+  window.open(waUrl, '_blank', 'noopener,noreferrer');
+}
+
+// Setup Calculator Event Listeners
+document.addEventListener('DOMContentLoaded', () => {
+  const calcService = document.getElementById('calcService');
+  const calcUrgency = document.getElementById('calcUrgency');
+  const btnSendOrder = document.getElementById('btnSendOrder');
+  
+  if (calcService) {
+    calcService.addEventListener('change', updateDynamicInputs);
+    // Initial load
+    updateDynamicInputs();
+  }
+  
+  if (calcUrgency) {
+    calcUrgency.addEventListener('change', calculatePrice);
+  }
+  
+  if (btnSendOrder) {
+    btnSendOrder.addEventListener('click', sendOrder);
+  }
+});
   </script>
 </body>
 </html>
-
