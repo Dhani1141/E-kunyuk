@@ -837,7 +837,212 @@
       border-color: #ffffff;
       box-shadow: 0 0 8px var(--accent);
     }
+
+    /* Auth Selector Styling */
+    .auth-selector-container {
+      position: relative;
+      margin-left: 0.5rem;
+      z-index: 1002;
+    }
+
+    .auth-btn-profile {
+      background: var(--glass-bg);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-primary);
+      height: 40px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0 0.75rem 0 0.25rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .auth-btn-profile img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .auth-btn-profile:hover {
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .auth-dropdown {
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 0.5rem;
+      width: 220px;
+      box-shadow: var(--shadow);
+      display: none;
+      flex-direction: column;
+      gap: 0.25rem;
+      z-index: 1003;
+    }
+
+    .auth-dropdown.show {
+      display: flex;
+    }
+
+    .auth-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 0.75rem;
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 0.85rem;
+      border-radius: 8px;
+      transition: var(--transition);
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+    }
+
+    .auth-dropdown-item:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--accent);
+    }
+
+    /* Auth Modal Styles */
+    .auth-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .auth-modal-content {
+      background: var(--bg-secondary);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      width: 100%;
+      max-width: 400px;
+      padding: 2rem;
+      box-shadow: var(--shadow);
+      position: relative;
+      text-align: center;
+      animation: modalFadeIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    }
+
+    .auth-modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.25rem;
+      font-size: 1.5rem;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .auth-modal-close:hover {
+      color: var(--text-primary);
+    }
+
+    .auth-tabs {
+      display: flex;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      margin-bottom: 1.5rem;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 0.75rem;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      border-bottom: 2px solid transparent;
+    }
+
+    .auth-tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    .auth-form {
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .auth-form.active {
+      display: flex;
+    }
+
+    .google-auth-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: #ffffff;
+      color: #000000 !important;
+      border: none;
+      border-radius: 8px;
+      padding: 0.75rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 1rem;
+      width: 100%;
+    }
+
+    .google-auth-btn:hover {
+      background: #f3f4f6;
+      transform: translateY(-1px);
+    }
+
+    .google-auth-btn i {
+      color: #ea4335;
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 1.25rem 0;
+      color: var(--text-secondary);
+      font-size: 0.8rem;
+    }
+
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .divider:not(:empty)::before {
+      margin-right: .5em;
+    }
+
+    .divider:not(:empty)::after {
+      margin-left: .5em;
+    }
   </style>
+  
+  <!-- Firebase Compat SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <!-- Loading Indicator -->
@@ -868,6 +1073,27 @@
             <div class="theme-option" data-theme="Purple" style="background: #8b5cf6;" title="Ungu"></div>
             <div class="theme-option" data-theme="Orange" style="background: #f97316;" title="Oranye"></div>
             <div class="theme-option" data-theme="Cyan" style="background: #06b6d4;" title="Cyan"></div>
+          </div>
+        </div>
+        <div class="auth-selector-container" id="authSelectorContainer">
+          <button class="cta-button" id="navLoginBtn" style="padding: 0.5rem 1rem; min-width: auto; font-size: 0.85rem; border-radius: 8px;">Login</button>
+          <div id="navUserDropdown" style="display: none; position: relative;">
+            <button class="auth-btn-profile" id="userProfileBtn">
+              <img id="userAvatar" src="image.png" alt="User Avatar">
+              <span id="userName">User</span>
+              <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+            </button>
+            <div class="auth-dropdown" id="authDropdown">
+              <a href="dashboard.html" class="auth-dropdown-item">
+                <i class="fas fa-tachometer-alt"></i> Dashboard
+              </a>
+              <a href="admin.html" class="auth-dropdown-item" id="adminLink" style="display: none;">
+                <i class="fas fa-user-shield"></i> Admin Panel
+              </a>
+              <button class="auth-dropdown-item" id="logoutBtn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </button>
+            </div>
           </div>
         </div>
         <a href="index.html" class="back-btn">
@@ -981,8 +1207,74 @@
       <div class="related-grid" id="relatedServices"></div>
     </div>
   </div>
+  <!-- Auth Modal -->
+  <div class="auth-modal" id="authModal">
+    <div class="auth-modal-content">
+      <span class="auth-modal-close" id="authModalClose">&times;</span>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tabLogin">Login</button>
+        <button class="auth-tab" id="tabRegister">Daftar</button>
+      </div>
+      
+      <!-- Login Form -->
+      <form class="auth-form active" id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" placeholder="nama@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="cta-button" style="width: 100%; min-width: auto; margin-top: 0.5rem;">Masuk</button>
+      </form>
+      
+      <!-- Register Form -->
+      <form class="auth-form" id="registerForm">
+        <div class="form-group">
+          <label for="registerName">Nama Lengkap</label>
+          <input type="text" id="registerName" placeholder="Nama Anda" required>
+        </div>
+        <div class="form-group">
+          <label for="registerEmail">Email</label>
+          <input type="email" id="registerEmail" placeholder="nama@email.com" required>
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Password</label>
+          <input type="password" id="registerPassword" placeholder="Min. 6 karakter" required>
+        </div>
+        <button type="submit" class="cta-button" style="width: 100%; min-width: auto; margin-top: 0.5rem;">Daftar</button>
+      </form>
+      
+      <div class="divider">atau</div>
+      
+      <button class="google-auth-btn" id="googleAuthBtn">
+        <i class="fab fa-google"></i> Masuk dengan Google
+      </button>
+    </div>
+  </div>
 
   <script>
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrFVJt58wjLPWdjtqM9BSh6snG9t7KMq0",
+      authDomain: "e-kunyuk.firebaseapp.com",
+      projectId: "e-kunyuk",
+      storageBucket: "e-kunyuk.firebasestorage.app",
+      messagingSenderId: "794062873678",
+      appId: "1:794062873678:web:623534fcef1f3ea2a94f1f",
+      measurementId: "G-ET3B1MWDRJ"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    // Globals for user state
+    let currentUser = null;
+    let userProfile = null;
+
     // Service Data
     const servicesData = {
       jurnal: {
@@ -1058,7 +1350,7 @@
             <li>API Development</li>
           </ul>
         `,
-        price: 'Rp 300.000 - 1.500.000',
+        price: 'Rp 300.000 - 10.000.000',
         priceNote: 'Tergantung scope & kompleksitas proyek',
         features: [
           'Kode clean & terstruktur',
@@ -1290,13 +1582,82 @@
     }
 
     // WhatsApp function
-    function openWhatsApp() {
+    window.openWhatsApp = async function() {
+      if (!auth.currentUser) {
+        alert('Silakan login terlebih dahulu untuk melakukan pemesanan dan menikmati diskon member!');
+        const authModal = document.getElementById('authModal');
+        if (authModal) authModal.style.display = 'flex';
+        return;
+      }
+
       const serviceId = getServiceFromURL();
       const service = servicesData[serviceId];
-      if (service) {
-        window.open(service.whatsapp, '_blank', 'noopener,noreferrer');
+      if (!service) return;
+
+      const whatsappButton = document.getElementById('whatsappButton');
+      const originalBtnText = whatsappButton.innerHTML;
+      whatsappButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Menyimpan Pesanan...';
+      whatsappButton.style.pointerEvents = 'none';
+
+      try {
+        let baseMin = 0;
+        let baseMax = 0;
+        let originalPrice = 0;
+        
+        const priceStr = service.price;
+        const prices = priceStr.replace(/[^\d]/g, ' ').trim().split(/\s+/).map(Number);
+        if (prices.length > 0) baseMin = prices[0];
+        if (prices.length > 1) baseMax = prices[1];
+        originalPrice = baseMin;
+
+        let discountPercent = 0.01;
+        let rankName = 'Epic';
+        if (userProfile) {
+          const points = userProfile.points || 0;
+          if (points >= 201) {
+            rankName = 'Mythic';
+            discountPercent = 0.05;
+          } else if (points >= 101) {
+            rankName = 'Legend';
+            discountPercent = 0.03;
+          }
+        }
+        
+        const discountAmount = Math.round(originalPrice * discountPercent);
+        const finalPrice = originalPrice - discountAmount;
+
+        const orderData = {
+          userId: auth.currentUser.uid,
+          userEmail: auth.currentUser.email,
+          clientName: userProfile ? userProfile.name : 'Client',
+          service: serviceId,
+          serviceName: service.title,
+          urgency: 'biasa',
+          urgencyText: 'Biasa (Santai)',
+          optionsText: service.priceNote || '',
+          originalPrice: originalPrice,
+          discountAmount: discountAmount,
+          finalPrice: finalPrice,
+          details: 'Pemesanan langsung dari detail halaman: ' + service.title,
+          status: 'diterima',
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        await db.collection('orders').add(orderData);
+        
+        let waText = service.whatsapp;
+        if (userProfile) {
+          waText += encodeURIComponent(`\n\n(Member: ${rankName}, Diskon: ${discountPercent * 100}%)`);
+        }
+        window.open(waText, '_blank', 'noopener,noreferrer');
+      } catch (err) {
+        console.error(err);
+        alert('Gagal menyimpan pesanan ke database: ' + err.message);
+      } finally {
+        whatsappButton.innerHTML = originalBtnText;
+        whatsappButton.style.pointerEvents = 'auto';
       }
-    }
+    };
 
     // Initialize
     document.addEventListener('DOMContentLoaded', loadService);
@@ -1319,19 +1680,193 @@
         const href = link.getAttribute('href');
         if (href && (href.startsWith('service-detail.html') || href === 'index.html')) {
           link.addEventListener('click', (e) => {
-            // Only trigger transition if it's not a cmd/ctrl click
             if (e.button === 0 && !e.metaKey && !e.ctrlKey && !e.shiftKey && !e.altKey) {
               e.preventDefault();
               if (loader) {
                 loader.classList.remove('hidden');
                 setTimeout(() => {
                   window.location.href = href;
-                }, 400); // Wait for fade-in duration
+                }, 400);
               } else {
                 window.location.href = href;
               }
             }
           });
+        }
+      });
+
+      // Auth UI and event listeners
+      const authModal = document.getElementById('authModal');
+      const authModalClose = document.getElementById('authModalClose');
+      const navLoginBtn = document.getElementById('navLoginBtn');
+      const navUserDropdown = document.getElementById('navUserDropdown');
+      const userProfileBtn = document.getElementById('userProfileBtn');
+      const authDropdown = document.getElementById('authDropdown');
+      const userAvatar = document.getElementById('userAvatar');
+      const userName = document.getElementById('userName');
+      const adminLink = document.getElementById('adminLink');
+      const logoutBtn = document.getElementById('logoutBtn');
+      
+      const tabLogin = document.getElementById('tabLogin');
+      const tabRegister = document.getElementById('tabRegister');
+      const loginForm = document.getElementById('loginForm');
+      const registerForm = document.getElementById('registerForm');
+      
+      const googleAuthBtn = document.getElementById('googleAuthBtn');
+
+      if (navLoginBtn) {
+        navLoginBtn.onclick = () => { authModal.style.display = 'flex'; };
+      }
+      if (authModalClose) {
+        authModalClose.onclick = () => { authModal.style.display = 'none'; };
+      }
+      window.addEventListener('click', (e) => {
+        if (e.target === authModal) {
+          authModal.style.display = 'none';
+        }
+      });
+
+      if (userProfileBtn && authDropdown) {
+        userProfileBtn.onclick = (e) => {
+          e.stopPropagation();
+          authDropdown.classList.toggle('show');
+        };
+        document.addEventListener('click', (e) => {
+          if (!userProfileBtn.contains(e.target) && !authDropdown.contains(e.target)) {
+            authDropdown.classList.remove('show');
+          }
+        });
+      }
+
+      if (tabLogin && tabRegister) {
+        tabLogin.onclick = () => {
+          tabLogin.classList.add('active');
+          tabRegister.classList.remove('active');
+          loginForm.classList.add('active');
+          registerForm.classList.remove('active');
+        };
+        tabRegister.onclick = () => {
+          tabRegister.classList.add('active');
+          tabLogin.classList.remove('active');
+          registerForm.classList.add('active');
+          loginForm.classList.remove('active');
+        };
+      }
+
+      if (registerForm) {
+        registerForm.onsubmit = async (e) => {
+          e.preventDefault();
+          const name = document.getElementById('registerName').value.trim();
+          const email = document.getElementById('registerEmail').value.trim();
+          const password = document.getElementById('registerPassword').value;
+          
+          try {
+            const cred = await auth.createUserWithEmailAndPassword(email, password);
+            await cred.user.updateProfile({ displayName: name });
+            await db.collection('users').doc(cred.user.uid).set({
+              uid: cred.user.uid,
+              name: name,
+              email: email,
+              photoURL: 'image.png',
+              points: 0,
+              createdAt: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            authModal.style.display = 'none';
+            registerForm.reset();
+            alert('Pendaftaran berhasil! Selamat datang.');
+          } catch (err) {
+            console.error(err);
+            alert('Gagal mendaftar: ' + err.message);
+          }
+        };
+      }
+
+      if (loginForm) {
+        loginForm.onsubmit = async (e) => {
+          e.preventDefault();
+          const email = document.getElementById('loginEmail').value.trim();
+          const password = document.getElementById('loginPassword').value;
+          
+          try {
+            await auth.signInWithEmailAndPassword(email, password);
+            authModal.style.display = 'none';
+            loginForm.reset();
+          } catch (err) {
+            console.error(err);
+            alert('Gagal login: ' + err.message);
+          }
+        };
+      }
+
+      if (googleAuthBtn) {
+        googleAuthBtn.onclick = async () => {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          try {
+            const result = await auth.signInWithPopup(provider);
+            const user = result.user;
+            const userDocRef = db.collection('users').doc(user.uid);
+            const doc = await userDocRef.get();
+            if (!doc.exists) {
+              await userDocRef.set({
+                uid: user.uid,
+                name: user.displayName || 'Google User',
+                email: user.email,
+                photoURL: user.photoURL || 'image.png',
+                points: 0,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+              });
+            }
+            authModal.style.display = 'none';
+          } catch (err) {
+            console.error(err);
+            alert('Gagal masuk dengan Google: ' + err.message);
+          }
+        };
+      }
+
+      if (logoutBtn) {
+        logoutBtn.onclick = () => {
+          auth.signOut().then(() => {
+            window.location.reload();
+          });
+        };
+      }
+
+      // Monitor auth state changes
+      auth.onAuthStateChanged((user) => {
+        if (user) {
+          currentUser = user;
+          db.collection('users').doc(user.uid).onSnapshot((doc) => {
+            if (doc.exists) {
+              userProfile = doc.data();
+            } else {
+              userProfile = {
+                uid: user.uid,
+                name: user.displayName || 'User',
+                email: user.email,
+                photoURL: user.photoURL || 'image.png',
+                points: 0
+              };
+            }
+            if (userName) userName.textContent = userProfile.name;
+            if (userAvatar) userAvatar.src = userProfile.photoURL || 'image.png';
+            if (navLoginBtn) navLoginBtn.style.display = 'none';
+            if (navUserDropdown) navUserDropdown.style.display = 'block';
+            
+            if (adminLink) {
+              if (user.email === 'tes81010@gmail.com') {
+                adminLink.style.display = 'flex';
+              } else {
+                adminLink.style.display = 'none';
+              }
+            }
+          });
+        } else {
+          currentUser = null;
+          userProfile = null;
+          if (navLoginBtn) navLoginBtn.style.display = 'block';
+          if (navUserDropdown) navUserDropdown.style.display = 'none';
+          if (adminLink) adminLink.style.display = 'none';
         }
       });
     });
